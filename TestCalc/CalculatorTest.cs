@@ -1,10 +1,13 @@
 using System.Data;
+using Calc;
 
 namespace TestCalc
 {
     [TestClass]
     public class CalculatorTest
     {
+        private Calculator myCalc = new Calculator();
+        
         [TestMethod]
         public void AddingTest()
         {
@@ -12,7 +15,8 @@ namespace TestCalc
             int b = 2;
 
             int expected = 3;
-            int result = a + b;
+            int result = myCalc.Adding(a, b);
+            
             Assert.AreEqual(expected, result);
         }
         [TestMethod]
@@ -20,9 +24,10 @@ namespace TestCalc
         {
             int a = 5;
             int b = 3;
+            
             int expected = 2;
-
-            int result = a - b;
+            int result = myCalc.Subtraction(a, b);
+            
             Assert.AreEqual(expected, result);
 
 
