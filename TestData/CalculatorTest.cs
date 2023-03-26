@@ -1,5 +1,5 @@
 using System.Data;
-using Calc;
+using Logic;
 
 namespace TestData
 {

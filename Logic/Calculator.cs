@@ -1,4 +1,4 @@
-﻿namespace Calc
+﻿namespace Logic
 {
     public class Calculator
     {
