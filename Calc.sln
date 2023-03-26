@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calc", "Calc\Calc.csproj", 
 		{AE0F6DFD-3A73-486F-A0FF-F4E28BA0CA35} = {AE0F6DFD-3A73-486F-A0FF-F4E28BA0CA35}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCalc", "TestCalc\TestCalc.csproj", "{AE0F6DFD-3A73-486F-A0FF-F4E28BA0CA35}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestData", "TestData\TestData.csproj", "{AE0F6DFD-3A73-486F-A0FF-F4E28BA0CA35}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementy rozwiązania", "Elementy rozwiązania", "{08686ADF-C58E-4535-B03C-B5CEE1B7DB32}"
 	ProjectSection(SolutionItems) = preProject

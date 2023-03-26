@@ -1,7 +1,7 @@
 using System.Data;
 using Calc;
 
-namespace TestCalc
+namespace TestData
 {
     [TestClass]
     public class CalculatorTest
