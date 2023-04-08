@@ -2,6 +2,8 @@ namespace Data.API;
 
 public interface IComplaint: IEvent
 {
+    
+    string Id { get; }
     public string StatusId { get; }
     
     public string CustomerId { get; }
