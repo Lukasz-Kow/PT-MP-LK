@@ -4,7 +4,12 @@ namespace Data.API;
 
 public abstract class IDataRepository
 {
-    
+
+ public static IDataRepository CDataRepository()
+ {
+  return new DataRepository();
+ }
+
     /*
      * Customer methods
      */
