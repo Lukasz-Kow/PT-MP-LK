@@ -1,4 +1,4 @@
-﻿namespace Data.Implementation;
+namespace Data.Implementation;
 
 internal class Customer : ICustomer
 {

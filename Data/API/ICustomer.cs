@@ -1,4 +1,4 @@
-﻿namespace Data;
+namespace Data;
 
 public interface ICustomer
 {

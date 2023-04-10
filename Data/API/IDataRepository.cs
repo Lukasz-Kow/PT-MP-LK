@@ -1,4 +1,4 @@
-﻿using Data.Implementation;
+using Data.Implementation;
 
 namespace Data.API;
 

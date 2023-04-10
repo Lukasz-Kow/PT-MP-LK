@@ -1,4 +1,4 @@
-﻿namespace Data.API;
+namespace Data.API;
 
 public interface IStatus
 {

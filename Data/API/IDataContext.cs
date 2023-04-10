@@ -1,4 +1,5 @@
-﻿namespace Data.API;
+namespace Data.API;
+
 public abstract class IDataContext
 {
     
