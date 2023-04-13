@@ -4,11 +4,11 @@ public interface IComplaint: IEvent
 {
     
     string Id { get; }
-    public string StatusId { get; }
+    string StatusId { get; }
     
-    public string CustomerId { get; }
+    string CustomerId { get; }
     
-    public DateTime Time { get; }
+    DateTime Time { get; }
     
-    public string Reason { get; }
+    string Reason { get; }
 }
