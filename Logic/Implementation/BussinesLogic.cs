@@ -37,5 +37,10 @@ namespace Logic.Implementation
             DataRepo.AddEvent(new Review(CustomerId, statusId));
         }
 
+        public override void Complaint(string CustomerId, string statusId, string Reason)
+        {
+            DataRepo.AddEvent(new Complaint(CustomerId,statusId, Reason));
+        }
+
     }
 }

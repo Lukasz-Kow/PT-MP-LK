@@ -10,11 +10,13 @@ namespace Logic.API
 {
     public abstract class IBussinesLogic
     {
-        public abstract void BuyBook(string CustomerId, string statusId);
+        public abstract void BuyBook(string CustomerId, string StatusId);
 
-        public abstract void ReturnBook(string CustomerId, string statusId);
+        public abstract void ReturnBook(string CustomerId, string StatusId);
 
-        public abstract void ReviewBook(string CustomerId, string statusId);
+        public abstract void ReviewBook(string CustomerId, string StatusId);
+
+        public abstract void Complaint(string CustomerId, string StatusId, string Reason);
 
     }
 }
