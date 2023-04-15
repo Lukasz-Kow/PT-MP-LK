@@ -1,4 +1,5 @@
 ﻿using Data.API;
+using Logic.Implementation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,11 @@ namespace Logic.API
         public abstract void ReviewBook(string CustomerId, string StatusId);
 
         public abstract void Complaint(string CustomerId, string StatusId, string Reason);
+
+        public static IBussinesLogic CreateLogic(IDataRepository? dataRepository = default)
+        {
+            return new BussinesLogic(dataRepository ?? IDataRepository.CDataRepository());
+        }
 
     }
 }
