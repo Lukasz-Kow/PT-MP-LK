@@ -1,12 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Logic.API;
+using Data.API;
+using Data.Implementation;
+using Logic.Implementation;
+using NUnit.Framework;
 
 namespace TestLogic
 {
-    internal class Class1
+    [TestClass]
+public class TestLogic
+{
+    [TestMethod]
+    public void BuyBook()
     {
+        var testDataRep = IDataRepository.CDataRepository();
+        ICustomer customer1 = new Customer("1", "Lukasz", "Kowalczyk", 21, "Al.Politechniki", "Lodz");
+        testDataRep.AddCustomer(customer1);
+        IBook book1 = new Book("1", "Pan Tadeusz", "Adam Mickiewicz", 400, "SR2", "Greg", "Polish");
+        testDataRep.AddBook(book1);
+        IStatus status1 = new Status("1", book1);
+        testDataRep.AddStatus(status1);
+        var logic = IBussinesLogic.CreateLogic(testDataRep);
+        logic.BuyBook("1", "1");
+
+        Assert.Throws<InvalidOperationException>(() => logic.BuyBook("2", "1"));
+
     }
+}
 }
