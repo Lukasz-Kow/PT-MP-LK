@@ -13,27 +13,27 @@ internal class DataRepository : IDataRepository
     /*
      * Customers
      */
-    public override void AddCustomer(ICustomer customer)
+    public void AddCustomer(ICustomer customer)
     {
         dataContext.Customers.Add(customer);
     }
     
-    public override ICustomer GetCustomerById(string id)
+    public ICustomer GetCustomerById(string id)
     {
         return dataContext.Customers.Single(u => u.Id == id);
     }
     
-    public override ICollection<ICustomer> GetAllUsers()
+    public ICollection<ICustomer> GetAllUsers()
     {
         return dataContext.Customers;
     }
     
-    public override void DeleteCustomerWithId(string id)
+    public void DeleteCustomerWithId(string id)
     {
         dataContext.Customers.Remove(GetCustomerById(id));
     }
     
-    public override bool CustomerExists(string id)
+    public bool CustomerExists(string id)
     {
         return dataContext.Customers.Any(u => u.Id == id);
     }
@@ -41,27 +41,27 @@ internal class DataRepository : IDataRepository
     /*
      * Books
      */
-    public override void AddBook(IBook book)
+    public void AddBook(IBook book)
     {
         dataContext.Books.Add(book.Id, book);
     }
     
-    public override IBook GetBookById(string id)
+    public IBook GetBookById(string id)
     {
         return dataContext.Books[id];
     }
     
-    public override ICollection<IBook> GetAllBooks()
+    public ICollection<IBook> GetAllBooks()
     {
         return dataContext.Books.Values;
     }
     
-    public override void DeleteBookWithId(string id)
+    public void DeleteBookWithId(string id)
     {
         dataContext.Books.Remove(id);
     }
     
-    public override bool BookExists(string id)
+    public bool BookExists(string id)
     {
         return dataContext.Books.ContainsKey(id);
     }
@@ -69,27 +69,27 @@ internal class DataRepository : IDataRepository
     /*
      * Events
      */
-    public override void AddEvent(IEvent e)
+    public void AddEvent(IEvent e)
     {
         dataContext.Events.Add(e);
     }
     
-    public override IEvent GetEventById(string id)
+    public IEvent GetEventById(string id)
     {
         return dataContext.Events.Single(e => e.Id == id);
     }
     
-    public override ICollection<IEvent> GetAllEvents()
+    public ICollection<IEvent> GetAllEvents()
     {
         return dataContext.Events;
     }
     
-    public override void DeleteEventWithId(string id)
+    public void DeleteEventWithId(string id)
     {
         dataContext.Events.Remove(GetEventById(id));
     }
     
-    public override bool EventExists(string id)
+    public bool EventExists(string id)
     {
         return dataContext.Events.Any(e => e.Id == id);
     }
@@ -97,37 +97,37 @@ internal class DataRepository : IDataRepository
     /*
      * Statuses
      */
-    public override void AddStatus(IStatus status)
+    public void AddStatus(IStatus status)
     {
         dataContext.States.Add(status);
     }
     
-    public override IStatus GetStatusById(string id)
+    public IStatus GetStatusById(string id)
     {
         return dataContext.States.Single(s => s.StatusId == id);
     }
     
-    public override ICollection<IStatus> GetAllStatuses()
+    public ICollection<IStatus> GetAllStatuses()
     {
         return dataContext.States;
     }
     
-    public override void DeleteStatusWithId(string id)
+    public void DeleteStatusWithId(string id)
     {
         dataContext.States.Remove(GetStatusById(id));
     }
     
-    public override bool StatusExists(string id)
+    public bool StatusExists(string id)
     {
         return dataContext.States.Any(s => s.StatusId == id);
     }
 
-    public override bool IsAvailable(string statusId)
+    public bool IsAvailable(string statusId)
     {
         return GetStatusById(statusId).Availability;
     }
 
-    public override void ChangeAvailability(string id)
+    public void ChangeAvailability(string id)
     {
         dataContext.States.Single(s => s.StatusId == id).Availability = !GetStatusById(id).Availability;
     }

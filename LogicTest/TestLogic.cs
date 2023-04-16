@@ -1,8 +1,6 @@
 using Logic.API;
 using Data.API;
 using Data.Implementation;
-using Logic.Implementation;
-using Newtonsoft.Json.Bson;
 
 namespace LogicTest
 {
@@ -19,7 +17,7 @@ namespace LogicTest
             testDataRep.AddBook(book1);
             IStatus status1 = new Status("1", book1);
             testDataRep.AddStatus(status1);
-            var logic = new BookShopLogic(testDataRep);
+            var logic = IBookShopLogic.CreateBookShopLogic(testDataRep);
             logic.BuyBook("1", "10", "1");
 
             Assert.IsFalse(testDataRep.IsAvailable ("1"));
@@ -35,7 +33,7 @@ namespace LogicTest
             testDataRep.AddBook(book1);
             IStatus status1 = new Status("1", book1);
             testDataRep.AddStatus(status1);
-            var logic = new BookShopLogic(testDataRep);
+            var logic = IBookShopLogic.CreateBookShopLogic(testDataRep);
             logic.BuyBook("1", "10", "1");
 
             Assert.IsFalse(testDataRep.IsAvailable("1"));
@@ -55,7 +53,7 @@ namespace LogicTest
             testDataRep.AddBook(book1);
             IStatus status1 = new Status("1", book1);
             testDataRep.AddStatus(status1);
-            var logic = new BookShopLogic(testDataRep);
+            var logic = IBookShopLogic.CreateBookShopLogic(testDataRep);
 
             logic.ReviewBook("1", "10", "1", "Great book!");
 
@@ -72,7 +70,7 @@ namespace LogicTest
             testDataRep.AddBook(book1);
             IStatus status1 = new Status("1", book1);
             testDataRep.AddStatus(status1);
-            var logic = new BookShopLogic(testDataRep);
+            var logic = IBookShopLogic.CreateBookShopLogic(testDataRep);
 
             logic.Complaint("1", "10", "1", "Boooring!");
 

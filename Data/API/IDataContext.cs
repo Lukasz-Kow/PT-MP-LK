@@ -1,6 +1,6 @@
 namespace Data.API;
 
-public abstract class IDataContext
+public interface IDataContext
 {
     
 }

@@ -1,19 +1,25 @@
 ﻿using Data.API;
 using System.Runtime.CompilerServices;
+using Logic.Implementation;
 
 [assembly: InternalsVisibleTo("LogicTest")]
 
 namespace Logic.API
 {
-    public abstract class IBookShopLogic
+    public interface IBookShopLogic
     {
-        public abstract void BuyBook(string id,string CustomerId, string StatusId);
+        public void BuyBook(string id,string CustomerId, string StatusId);
 
-        public abstract void ReturnBook(string id, string CustomerId, string StatusId);
+        public void ReturnBook(string id, string CustomerId, string StatusId);
 
-        public abstract void ReviewBook(string id, string CustomerId, string StatusId, string description);
+        public void ReviewBook(string id, string CustomerId, string StatusId, string description);
 
-        public abstract void Complaint(string id, string CustomerId, string StatusId, string Reason);
+        public void Complaint(string id, string CustomerId, string StatusId, string Reason);
+        
+        public static IBookShopLogic CreateBookShopLogic(IDataRepository dataRepo)
+        {
+            return new BookShopLogic(dataRepo);
+        }
 
     }
 }
