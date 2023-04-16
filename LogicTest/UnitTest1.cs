@@ -20,14 +20,11 @@ namespace TestLogic
             testDataRep.AddStatus(status1);
             var logic = new BussinesLogic(testDataRep);
             logic.BuyBook("1", "1");
-
-            IStatus bookStatus = testDataRep.GetStatusById("1");
             
             Assert.IsFalse(testDataRep.IsAvailable("1"));
 
 
         }
-
         [TestMethod]
         public void ReturnBook()
         {
@@ -40,6 +37,12 @@ namespace TestLogic
             testDataRep.AddStatus(status1);
             var logic = new BussinesLogic(testDataRep);
             logic.BuyBook("1", "1");
+
+            Assert.IsFalse(testDataRep.IsAvailable("1"));
+
+            logic.ReturnBook("1", "1");
+
+            Assert.IsTrue(testDataRep.IsAvailable("1"));
 
 
         }
