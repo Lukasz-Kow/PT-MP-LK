@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 namespace Logic.API
 {
-    public abstract class IBussinesLogic
+    public abstract class IBookShopLogic
     {
         public abstract void BuyBook(string id,string CustomerId, string StatusId);
 

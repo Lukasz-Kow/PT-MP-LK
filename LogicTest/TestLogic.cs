@@ -16,7 +16,7 @@ namespace LogicTest
             testDataRep.AddCustomer(customer1);
             IBook book1 = new Book("9", "Pan Tadeusz", "Adam Mickiewicz", 400, "SR2", "Greg", "Polish");
             testDataRep.AddBook(book1);
-            var logic = new BussinesLogic(testDataRep);
+            var logic = new BookShopLogic(testDataRep);
             logic.BuyBook("1", "10", "9");
 
             Assert.IsFalse(testDataRep.IsAvailable("1", "9"));
@@ -31,7 +31,7 @@ namespace LogicTest
             testDataRep.AddCustomer(customer1);
             IBook book1 = new Book("9", "Pan Tadeusz", "Adam Mickiewicz", 400, "SR2", "Greg", "Polish");
             testDataRep.AddBook(book1);
-            var logic = new BussinesLogic(testDataRep);
+            var logic = new BookShopLogic(testDataRep);
             logic.BuyBook("1", "10", "9");
 
             Assert.IsFalse(testDataRep.IsAvailable("1", "9"));

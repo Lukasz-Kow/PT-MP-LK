@@ -3,11 +3,11 @@ using Logic.API;
 
 namespace Logic.Implementation
 {
-    internal class BussinesLogic : IBookShopLogic
+    internal class BookShopLogic : IBookShopLogic
     {
         private IDataRepository DataRepo;
 
-        public BussinesLogic(IDataRepository dataRepo)
+        public BookShopLogic(IDataRepository dataRepo)
         {
             DataRepo = dataRepo;
         }
