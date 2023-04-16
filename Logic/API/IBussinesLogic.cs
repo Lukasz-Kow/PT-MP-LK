@@ -1,11 +1,13 @@
 ﻿using Data.API;
-using Logic.Implementation;
+//using Logic.Implementation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+[assembly: InternalsVisibleTo("LogicTest")]
 
 namespace Logic.API
 {
@@ -18,11 +20,6 @@ namespace Logic.API
         public abstract void ReviewBook(string CustomerId, string StatusId);
 
         public abstract void Complaint(string CustomerId, string StatusId, string Reason);
-
-        public static IBussinesLogic CreateLogic(IDataRepository? dataRepository = default)
-        {
-            return new BussinesLogic(dataRepository ?? IDataRepository.CDataRepository());
-        }
 
     }
 }

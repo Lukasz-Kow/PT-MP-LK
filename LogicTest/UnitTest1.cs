@@ -18,8 +18,10 @@ namespace TestLogic
             testDataRep.AddBook(book1);
             IStatus status1 = new Status("1", book1);
             testDataRep.AddStatus(status1);
-            var logic = IBussinesLogic.CreateLogic(testDataRep);
+            var logic = new BussinesLogic(testDataRep);
             logic.BuyBook("1", "1");
+            
+            Assert.IsNotNull(logic);
 
         
 
