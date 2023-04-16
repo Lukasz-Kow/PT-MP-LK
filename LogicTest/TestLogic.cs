@@ -16,11 +16,12 @@ namespace LogicTest
             testDataRep.AddCustomer(customer1);
             IBook book1 = new Book("9", "Pan Tadeusz", "Adam Mickiewicz", 400, "SR2", "Greg", "Polish");
             testDataRep.AddBook(book1);
+            IStatus status1 = new Status("1", book1);
+            testDataRep.AddStatus(status1);
             var logic = new BookShopLogic(testDataRep);
-            logic.BuyBook("1", "10", "9");
+            logic.BuyBook("1", "10", "1");
 
-            Assert.IsFalse(testDataRep.IsAvailable("1", "9"));
-
+            Assert.IsFalse(testDataRep.IsAvailable ("1"));
 
         }
         [TestMethod]
@@ -34,11 +35,11 @@ namespace LogicTest
             var logic = new BookShopLogic(testDataRep);
             logic.BuyBook("1", "10", "9");
 
-            Assert.IsFalse(testDataRep.IsAvailable("1", "9"));
+            Assert.IsFalse(testDataRep.IsAvailable("1"));
 
             logic.ReturnBook("1", "10", "9");
 
-            Assert.IsTrue(testDataRep.IsAvailable("1", "9"));
+            Assert.IsTrue(testDataRep.IsAvailable("1"));
 
         }
     }

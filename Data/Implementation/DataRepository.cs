@@ -122,11 +122,9 @@ internal class DataRepository : IDataRepository
         return dataContext.States.Any(s => s.StatusId == id);
     }
 
-    public override bool IsAvailable(string id, string statusId)
+    public override bool IsAvailable(string statusId)
     {
-        var status = dataContext.States.SingleOrDefault(s => s.StatusId == statusId && s.BookId == id);
-        if (status == null) return false;
-        return status.Availability;
+        return GetStatusById(statusId).Availability;
     }
 
     public override void ChangeAvailability(string id)

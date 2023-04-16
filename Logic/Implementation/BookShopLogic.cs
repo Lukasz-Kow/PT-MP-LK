@@ -14,7 +14,7 @@ namespace Logic.Implementation
 
         public override void BuyBook(string id, string customerId, string statusId)
         {
-            if (!DataRepo.IsAvailable(id,statusId)) throw new InvalidOperationException("This book has already been purchased.");
+            if (!DataRepo.IsAvailable(statusId)) throw new InvalidOperationException("This book has already been purchased.");
             IBuy buy = new Buy(id,statusId, customerId);
             DataRepo.AddEvent(buy);
             DataRepo.ChangeAvailability(statusId);
@@ -22,7 +22,7 @@ namespace Logic.Implementation
 
         public override void ReturnBook(string id, string customerId, string statusId)
         {
-            if (DataRepo.IsAvailable(id, statusId)) throw new InvalidOperationException("Can't return this book, it's available now");
+            if (DataRepo.IsAvailable(statusId)) throw new InvalidOperationException("Can't return this book, it's available now");
             DataRepo.AddEvent(new Return(id, statusId, customerId));
             DataRepo.ChangeAvailability(statusId);
         }

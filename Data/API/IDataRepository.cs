@@ -60,7 +60,7 @@ public abstract class IDataRepository
     public abstract void DeleteStatusWithId(string id);
     
     public abstract bool StatusExists(string id);
-    public abstract bool IsAvailable(string id, string statusId);
+    public abstract bool IsAvailable(string statusId);
     public abstract void ChangeAvailability(string id);
 
 }
