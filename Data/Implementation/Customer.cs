@@ -1,6 +1,8 @@
-    using Data.API;
+using Data.API;
 using System.Runtime.CompilerServices;
 [assembly:InternalsVisibleTo("TestData")]
+[assembly:InternalsVisibleTo("LogicTest")]
+
 namespace Data.Implementation;
 
 internal class Customer : ICustomer
