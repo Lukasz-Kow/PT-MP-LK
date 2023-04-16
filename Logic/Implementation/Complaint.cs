@@ -9,11 +9,13 @@ namespace Logic.Implementation
 {
     internal class Complaint : IComplaint
     {
-        public Complaint(string customerId, string statusId, string reason) 
+        public Complaint(string id, string customerId, string statusId, string reason) 
         {
+            Id = id;
             CustomerId = customerId;
             StatusId = statusId;
-            Reason = reason;            
+            Reason = reason;
+            Time = DateTime.Now;
         }
 
         public string Id { get; }

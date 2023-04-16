@@ -9,10 +9,12 @@ namespace Logic.Implementation
 {
     internal class Buy : IBuy
     {
-        public Buy(string customerId, string statusId)
+        public Buy(string id, string customerId, string statusId)
         {
+            Id = id;
             StatusId = statusId;
             CustomerId = customerId;
+            Time = DateTime.Now;
         }
         public string Id { get; }
         public string StatusId { get; }

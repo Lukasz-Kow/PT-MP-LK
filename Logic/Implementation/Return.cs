@@ -9,10 +9,12 @@ namespace Logic.Implementation
 {
     internal class Return : IReturn
     {
-        public Return(string customerId, string statusId) 
+        public Return(string id, string customerId, string statusId) 
         { 
+            Id = id;
             StatusId = statusId;
             CustomerId = customerId;
+            Time = DateTime.Now;
         }
 
         public string Id { get; }

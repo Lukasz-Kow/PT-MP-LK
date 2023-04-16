@@ -9,10 +9,13 @@ namespace Logic.Implementation
 {
     internal class Review : IReview
     {
-        public Review(string customerId, string statusId)
+        public Review(string id,string customerId, string statusId, string description)
         {
+            Id = id;
             StatusId = statusId;
             CustomerId = customerId;
+            Description = description;
+            Time = DateTime.Now;
         }
         public string Id { get; }
 
