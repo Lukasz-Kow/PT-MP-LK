@@ -6,9 +6,9 @@ internal class Status : IStatus
 {
     private readonly IBook book;
 
-    public Status(string stateId, IBook book)
+    public Status(string statusId, IBook book)
     {
-        StatusId = stateId;
+        StatusId = statusId;
         this.book = book;
         Availability = true;
     }
