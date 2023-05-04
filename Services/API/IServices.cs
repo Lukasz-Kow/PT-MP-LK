@@ -1,6 +1,6 @@
 ﻿namespace Services.API
 {
-    internal class IServices
+    public interface IServices
     {
     }
 }

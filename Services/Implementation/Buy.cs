@@ -1,6 +1,6 @@
 ﻿namespace Services.Implementation
 {
-    internal class Customer
+    internal class Buy
     {
     }
 }

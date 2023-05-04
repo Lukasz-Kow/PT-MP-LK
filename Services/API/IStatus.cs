@@ -1,6 +1,6 @@
 ﻿namespace Services.API
 {
-    internal class IStatus
+    public interface IStatus
     {
         string BookId { get; }
 
