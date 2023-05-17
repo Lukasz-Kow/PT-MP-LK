@@ -3,21 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33502.453
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic", "Logic\Logic.csproj", "{9D5EC39A-2122-4159-896C-2FD415B6801E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logic", "Logic\Logic.csproj", "{9D5EC39A-2122-4159-896C-2FD415B6801E}"
 	ProjectSection(ProjectDependencies) = postProject
 		{AE0F6DFD-3A73-486F-A0FF-F4E28BA0CA35} = {AE0F6DFD-3A73-486F-A0FF-F4E28BA0CA35}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestData", "TestData\TestData.csproj", "{AE0F6DFD-3A73-486F-A0FF-F4E28BA0CA35}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestData", "TestData\TestData.csproj", "{AE0F6DFD-3A73-486F-A0FF-F4E28BA0CA35}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementy rozwiązania", "Elementy rozwiązania", "{08686ADF-C58E-4535-B03C-B5CEE1B7DB32}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{1F0E746A-7062-47E6-987F-6F0F296E4266}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", "{1F0E746A-7062-47E6-987F-6F0F296E4266}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicTest", "LogicTest\LogicTest.csproj", "{ACF69E6E-F636-4913-ACC2-74D4CB87DABF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicTest", "LogicTest\LogicTest.csproj", "{ACF69E6E-F636-4913-ACC2-74D4CB87DABF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{7D1131D7-252F-477A-92E7-89998103F3B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{ACF69E6E-F636-4913-ACC2-74D4CB87DABF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACF69E6E-F636-4913-ACC2-74D4CB87DABF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ACF69E6E-F636-4913-ACC2-74D4CB87DABF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D1131D7-252F-477A-92E7-89998103F3B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D1131D7-252F-477A-92E7-89998103F3B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D1131D7-252F-477A-92E7-89998103F3B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D1131D7-252F-477A-92E7-89998103F3B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
