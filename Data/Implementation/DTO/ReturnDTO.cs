@@ -4,8 +4,8 @@ namespace Data.Implementation;
 
 internal class ReturnDTO: IReturn
 {
-    public string Id { get; }
-    public string StatusId { get; }
-    public string CustomerId { get; }
-    public DateTime Time { get; }
+    public string Id { get; set; }
+    public string StatusId { get; set; }
+    public string CustomerId { get; set; }
+    public DateTime Time { get; set; }
 }

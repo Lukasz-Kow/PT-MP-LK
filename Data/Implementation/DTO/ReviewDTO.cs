@@ -4,9 +4,9 @@ namespace Data.Implementation;
 
 internal class ReviewDTO: IReview
 {
-    public string Id { get; }
-    public string StatusId { get; }
-    public string CustomerId { get; }
-    public DateTime Time { get; }
-    public string Description { get; }
+    public string Id { get; set; }
+    public string StatusId { get; set; }
+    public string CustomerId { get; set; }
+    public DateTime Time { get; set; }
+    public string Description { get; set; }
 }
