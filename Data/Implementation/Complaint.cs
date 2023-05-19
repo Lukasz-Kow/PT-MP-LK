@@ -1,6 +1,6 @@
 ﻿using Data.API;
 
-namespace Logic.Implementation
+namespace Data.Implementation
 {
     internal class Complaint : IComplaint
     {

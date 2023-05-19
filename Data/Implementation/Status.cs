@@ -18,4 +18,6 @@ internal class Status : IStatus
     public string StatusId { get; set; }
 
     public bool Availability { get; set; }
+    
+    public IBook Book { get; set; }
 }

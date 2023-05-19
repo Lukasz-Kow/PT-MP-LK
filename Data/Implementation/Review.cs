@@ -1,7 +1,7 @@
 ﻿using Data.API;
 
 
-namespace Logic.Implementation
+namespace Data.Implementation
 {
     internal class Review : IReview
     {

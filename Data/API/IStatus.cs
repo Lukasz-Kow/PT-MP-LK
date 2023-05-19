@@ -2,7 +2,7 @@ namespace Data.API;
 
 public interface IStatus
 {
-    string BookId { get; }
+    IBook Book { get; set; }
     
     string StatusId { get; set; }
     
