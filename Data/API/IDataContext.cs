@@ -8,7 +8,7 @@ public interface IDataContext
 
     public IQueryable<IBook> Books { get;}
 
-    public IQueryable<IStatus> States { get;}
+    public IQueryable<IStatus> Statuses { get;}
   
     public IQueryable<IReturn> Returns { get;}
     public IQueryable<IBuy> Buys { get; }

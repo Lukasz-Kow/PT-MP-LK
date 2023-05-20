@@ -2,16 +2,16 @@ namespace Data.API;
 
 public interface IBook
 {
-    string Title { get; set; }
-    string Author { get; set; }
-    string Id { get; set; }
+    public string Title { get; set; }
+    public string Author { get; set; }
+    public string Id { get; set; }
     
-    int Pages { get; set; }
+    public string Pages { get; set; }
     
-    string ISBN { get; set; }
+    public string ISBN { get; set; }
     
-    string Publisher { get; set; }
+    public string Publisher { get; set; }
     
-    string Language { get; set; }
+    public string Language { get; set; }
     
 }

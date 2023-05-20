@@ -14,7 +14,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicTest", "LogicTest\LogicTest.csproj", "{ACF69E6E-F636-4913-ACC2-74D4CB87DABF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{7D1131D7-252F-477A-92E7-89998103F3B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{7D1131D7-252F-477A-92E7-89998103F3B7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1F0E746A-7062-47E6-987F-6F0F296E4266} = {1F0E746A-7062-47E6-987F-6F0F296E4266}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

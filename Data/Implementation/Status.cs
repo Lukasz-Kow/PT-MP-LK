@@ -8,14 +8,14 @@ internal class Status : IStatus
 
     public Status(string statusId, IBook book)
     {
-        StatusId = statusId;
-        this.book = book;
+        Id = statusId;
+        Book = book;
         Availability = true;
     }
 
     public string BookId => book.Id;
     
-    public string StatusId { get; set; }
+    public string Id { get; set; }
 
     public bool Availability { get; set; }
     

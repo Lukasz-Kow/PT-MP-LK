@@ -8,6 +8,6 @@ internal class StatusDTO: IStatus
     
     [ForeignKey(nameof(Book))]
     public IBook Book { get; set; }
-    public string StatusId { get; set; }
+    public string Id { get; set; }
     public bool Availability { get; set; }
 }
