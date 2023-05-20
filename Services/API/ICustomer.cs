@@ -1,6 +1,6 @@
 ﻿namespace Services.API;
 
-internal class ICustomer
+internal interface ICustomer
 {
     string FirstName { get; set; }
     string LastName { get; set; }
@@ -12,4 +12,8 @@ internal class ICustomer
 
     string City { get; set; }
 
+    Task AddAsync();
+    Task DeleteAsync();
+
+    
 }

@@ -27,7 +27,7 @@ namespace Services.Model
 
         public string City { get; set; }
 
-        public string Service { get; }
+        public IServices Service { get; }
 
         public async Task AddAsync()
         {

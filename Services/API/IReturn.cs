@@ -8,5 +8,6 @@
         string CustomerId { get; }
 
         DateTime Time { get; }
+
     }
 }

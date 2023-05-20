@@ -4,8 +4,11 @@
     {
         string BookId { get; }
 
-        string StatusId { get; set; }
+        string Id { get; set; }
 
         bool Availability { get; set; }
+
+        Task AddAsync();
+        Task DeleteAsync();
     }
 }

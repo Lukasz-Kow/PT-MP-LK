@@ -9,4 +9,8 @@ public interface IEvent
     string CustomerId { get; }
 
     DateTime Time { get; }
+    Task AddAsync();
+
+    Task DeleteAsync();
+
 }

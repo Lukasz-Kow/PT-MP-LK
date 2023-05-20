@@ -9,4 +9,7 @@ public interface IBuy : IEvent
     string CustomerId { get; }
 
     DateTime Time { get; }
+
+    Task AddAsync();
+
 }
