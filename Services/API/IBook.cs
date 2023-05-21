@@ -1,6 +1,6 @@
 ﻿namespace Services.API;
 
-internal interface IBook
+public interface IBook
 {
     public string Title { get; set; }
     public string Author { get; set; }

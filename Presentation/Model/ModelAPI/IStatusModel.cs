@@ -1,6 +1,8 @@
-﻿namespace Services.API
+﻿using System.Threading.Tasks;
+
+namespace Presentation.Model.ModelAPI
 {
-    public interface IStatus
+    public interface IStatusModel
     {
         string BookId { get; set; }
 

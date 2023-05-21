@@ -1,6 +1,6 @@
 ﻿namespace Services.API;
 
-internal interface ICustomer
+public interface ICustomer
 {
     string FirstName { get; set; }
     string LastName { get; set; }
