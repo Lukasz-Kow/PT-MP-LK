@@ -5,8 +5,8 @@ namespace Data.Implementation;
 internal class ComplaintDTO : IComplaint
 {
     public string Id { get; set;  }
-    public IStatus Status { get; }
-    public ICustomer Customer { get; }
+    public IStatus Status { get; set; }
+    public ICustomer Customer { get; set; }
     public DateTime Time { get; set; }
     public string Reason { get; set; }
 }

@@ -8,6 +8,6 @@ internal class ReturnDTO: IReturn
 
     public IStatus Status{ get; set;}
 
-    public ICustomer Customer { get; }
+    public ICustomer Customer { get; set; }
     public DateTime Time { get; set; }
 }

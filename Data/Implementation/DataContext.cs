@@ -50,16 +50,16 @@ internal class DataContext : DbContext, IDataContext
         modelBuilder.Entity<StatusDTO>().HasOne(state => (BookDTO)state.Book);
         
         modelBuilder.Entity<ReturnDTO>().HasOne(@return => @return.Status);
-        modelBuilder.Entity<ReturnDTO>().HasOne(@return => @return.CustomerId);
+        modelBuilder.Entity<ReturnDTO>().HasOne(@return => @return.Customer);
         
-        modelBuilder.Entity<BuyDTO>().HasOne(buy => buy.CustomerId);
-        modelBuilder.Entity<BuyDTO>().HasOne(buy => buy.StatusId);
+        modelBuilder.Entity<BuyDTO>().HasOne(buy => buy.Customer);
+        modelBuilder.Entity<BuyDTO>().HasOne(buy => buy.Status);
         
-        modelBuilder.Entity<ComplaintDTO>().HasOne(complaint => complaint.CustomerId);
-        modelBuilder.Entity<ComplaintDTO>().HasOne(review => review.StatusId);
+        modelBuilder.Entity<ComplaintDTO>().HasOne(complaint => complaint.Customer);
+        modelBuilder.Entity<ComplaintDTO>().HasOne(review => review.Status);
         
-        modelBuilder.Entity<ReviewDTO>().HasOne(review => review.CustomerId);
-        modelBuilder.Entity<ReviewDTO>().HasOne(review => review.StatusId);
+        modelBuilder.Entity<ReviewDTO>().HasOne(review => review.Customer);
+        modelBuilder.Entity<ReviewDTO>().HasOne(review => review.Status);
 
     }
     public async Task AddBookAsync(IBook book)
@@ -71,7 +71,7 @@ internal class DataContext : DbContext, IDataContext
 
     public async Task AddBuyAsync(IBuy buy)
     {
-        BuyDTO buyToAdd = new() { Id = buy.Id, CustomerId = buy.Customer, StatusId = buy.Status,
+        BuyDTO buyToAdd = new() { Id = buy.Id, Customer = buy.Customer, Status = buy.Status,
             Time = DateTime.Now};
         await _buys.AddAsync(buyToAdd);
         await SaveChangesAsync();
@@ -79,7 +79,7 @@ internal class DataContext : DbContext, IDataContext
 
     public async Task AddReturnAsync(IReturn @return)
     {
-        ReturnDTO returnToAdd = new() { Id = @return.Id, CustomerId = @return.Customer, Status = @return.Status,
+        ReturnDTO returnToAdd = new() { Id = @return.Id, Customer = @return.Customer, Status = @return.Status,
             Time = DateTime.Now};
         await _returns.AddAsync(returnToAdd);
         await SaveChangesAsync();
@@ -87,15 +87,15 @@ internal class DataContext : DbContext, IDataContext
 
     public async Task AddComplaintAsync(IComplaint complaint)
     {
-        ComplaintDTO complaintToAdd = new() { Id = complaint.Id, CustomerId = complaint.Customer,
-            StatusId = complaint.Status, Time = DateTime.Now, Reason = complaint.Reason};
+        ComplaintDTO complaintToAdd = new() { Id = complaint.Id, Customer = complaint.Customer,
+            Status = complaint.Status, Time = DateTime.Now, Reason = complaint.Reason};
         await _complaints.AddAsync(complaintToAdd);
         await SaveChangesAsync();
     }
 
     public async Task AddReviewAsync(IReview review)
     {
-        ReviewDTO reviewToAdd = new() { Id = review.Id, CustomerId = review.CustomerId, StatusId = review.StatusId,
+        ReviewDTO reviewToAdd = new() { Id = review.Id, Customer = review.Customer, Status = review.Status,
             Time = DateTime.Now, Description = review.Description};
         await _reviews.AddAsync(reviewToAdd);
         await SaveChangesAsync();
@@ -103,7 +103,7 @@ internal class DataContext : DbContext, IDataContext
 
     public async Task AddStatusAsync(IStatus status)
     {
-        StatusDTO statusToAdd = new() { Status = status.Status, Book = status.Book,
+        StatusDTO statusToAdd = new() { Id = status.Id, Book = status.Book,
             Availability = status.Availability};
         await _statuses.AddAsync(statusToAdd);
         await SaveChangesAsync();

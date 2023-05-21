@@ -3,12 +3,12 @@ namespace Data.API;
 public interface IComplaint
 {
     
-    string Id { get; }
-    public IStatus Status { get; }
+    string Id { get; set; }
+    public IStatus Status { get; set; }
     
-    public ICustomer Customer { get; }
+    public ICustomer Customer { get; set; }
     
-    DateTime Time { get; }
+    DateTime Time { get; set; }
     
-    string Reason { get; }
+    string Reason { get; set; }
 }
