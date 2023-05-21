@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:viem="clr-namespace:Presentation.ViewModel"
+      xmlns:view="clr-namespace:Presentation.ViewModel"
       xmlns:local="clr-namespace:Presentation.View"
       mc:Ignorable="d" Height="250" Width="600">
 
@@ -13,8 +13,8 @@
             <RowDefinition Height="48*"/>
             <RowDefinition Height="41*"/>
         </Grid.RowDefinitions>
-        <Rectangle HorizontalAlignment="Left" Height="17" Margin="10,1,0,0" Stroke="Black" VerticalAlignment="Top" Width="580" Grid.Row="1"/>
-        <TextBlock HorizontalAlignment="Center" Height="19" Margin="0,1,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" Grid.Row="1" FontWeight="Bold" FontSize="14"><Run Language="pl-pl" Text="BOOK"/></TextBlock>
+        <Rectangle HorizontalAlignment="Center" Margin="0,1,0,54" Stroke="Black" Width="580" Grid.Row="1"/>
+        <TextBlock HorizontalAlignment="Center" Height="20" Margin="0,1,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" Grid.Row="1" FontWeight="Bold" FontSize="14"><Run Language="pl-pl" Text="BOOK"/></TextBlock>
         <Button Content="Add" Command="{Binding AddStateCommand}" HorizontalAlignment="Left" Height="20" Margin="50,30,0,0" VerticalAlignment="Top" Width="200" Grid.Row="2"/>
         <Button Content="Delete" Command="{Binding DeleteStateCommand}" HorizontalAlignment="Center" Height="20" Margin="350,30,0,0" VerticalAlignment="Top" Width="200"  RenderTransformOrigin="0.5,0.5" Grid.Row="2"/>
         <TextBox HorizontalAlignment="Left" Text="{Binding Id}" Height="20" Margin="80,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Grid.Row="1" Grid.RowSpan="2" />
