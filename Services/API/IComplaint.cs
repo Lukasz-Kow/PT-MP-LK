@@ -1,6 +1,6 @@
 ﻿namespace Services.API;
 
-public interface IComplaint
+public interface IComplaint : IEvent
 {
 
     string Id { get; set; }

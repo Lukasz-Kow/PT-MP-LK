@@ -1,6 +1,6 @@
 ﻿namespace Services.API
 {
-    public interface IReturn
+    public interface IReturn : IEvent
     {
         string Id { get; set; }
         public string StatusId { get; set; }

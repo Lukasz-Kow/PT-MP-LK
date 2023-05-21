@@ -1,6 +1,6 @@
 namespace Data.API;
 
-public interface IBuy 
+public interface IBuy : IEvent
 {
     
     string Id { get; }

@@ -1,6 +1,6 @@
 ﻿namespace Services.API
 {
-    public interface IStatus
+    public interface IStatus 
     {
         string BookId { get; set; }
 

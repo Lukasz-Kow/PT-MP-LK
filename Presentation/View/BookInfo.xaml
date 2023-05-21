@@ -6,11 +6,19 @@
       xmlns:viem="clr-namespace:Presentation.ViewModel"
       xmlns:local="clr-namespace:Presentation.View"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="250" d:DesignWidth="600"
       Title="Page1">
 
     <Grid>
         <Rectangle HorizontalAlignment="Left" Height="16" Margin="10,4,0,0" Stroke="Black" VerticalAlignment="Top" Width="636"/>
-
+        <TextBlock HorizontalAlignment="Left" Height="17" Margin="290,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="66"><Run Language="pl-pl" Text="BOOK INFO"/></TextBlock>
+        <TextBox HorizontalAlignment="Left" Height="20" Margin="70,27,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Text="{Binding InfoId}" />
+        <TextBlock HorizontalAlignment="Left" Height="20" Margin="10,27,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50"><Run Language="pl-pl" Text="INFO "/><Run Text="ID"/><Run Text=":"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Height="20" Margin="10,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50"><Run Language="pl-pl" Text="Title:"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Height="20" Margin="422,27,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="48"><Run Language="pl-pl" Text="Author"/><Run Text=":"/></TextBlock>
+        <TextBox HorizontalAlignment="Left" Height="20" Margin="254,27,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="163" Text="{Binding Title}" />
+        <TextBox HorizontalAlignment="Left" Height="20" Margin="475,27,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="171" Text="{Binding Author}" />
+        <Button Content="Add" Command="{Binding AddCatalogCommand}" HorizontalAlignment="Left" Height="20" Margin="10,230,0,0" VerticalAlignment="Top" Width="310" />
+        <Button Content="Delete" Command="{Binding DeleteCatalogCommand}" HorizontalAlignment="Left" Height="20" Margin="323,230,0,0" VerticalAlignment="Top" Width="323"/>
     </Grid>
 </Page>
