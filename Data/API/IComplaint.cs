@@ -1,12 +1,12 @@
 namespace Data.API;
 
-public interface IComplaint: IEvent
+public interface IComplaint
 {
     
     string Id { get; }
-    string StatusId { get; }
+    public IStatus Status { get; }
     
-    string CustomerId { get; }
+    public ICustomer Customer { get; }
     
     DateTime Time { get; }
     

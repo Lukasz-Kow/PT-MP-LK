@@ -2,9 +2,9 @@ namespace Data.API;
 
 public interface IStatus
 {
-    IBook Book { get; set; }
+    public IBook Book { get; set; }
     
-    string Id { get; set; }
+    string Id { get; }
     
     bool Availability { get; set; }
 }

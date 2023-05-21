@@ -7,13 +7,13 @@ namespace Data.Implementation
         public Return(string id, string customerId, string statusId) 
         { 
             Id = id;
-            StatusId = statusId;
+            Status = statusId;
             CustomerId = customerId;
             Time = DateTime.Now;
         }
 
         public string Id { get; }
-        public string StatusId { get; }
+        public string Status { get; }
         public string CustomerId { get; }
 
         public DateTime Time { get; }

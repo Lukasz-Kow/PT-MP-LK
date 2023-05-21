@@ -1,16 +1,19 @@
 ﻿namespace Services.API;
 
-public interface IComplaint : IEvent
+public interface IComplaint
 {
 
-    string Id { get; }
-    string StatusId { get; }
+    string Id { get; set; }
+    public string StatusId { get; set; }
 
-    string CustomerId { get; }
+    public string CustomerId { get; set; }
 
-    DateTime Time { get; }
+    DateTime Time { get; set; }
 
-    string Reason { get; }
+    string Reason { get; set; }
+
+    Task AddAsync();
+
 
 
 }

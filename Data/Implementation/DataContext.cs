@@ -46,7 +46,7 @@ internal class DataContext : DbContext, IDataContext
         base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<StatusDTO>().HasOne(state => (BookDTO)state.Book);
         
-        modelBuilder.Entity<ReturnDTO>().HasOne(@return => @return.StatusId);
+        modelBuilder.Entity<ReturnDTO>().HasOne(@return => @return.Status);
         modelBuilder.Entity<ReturnDTO>().HasOne(@return => @return.CustomerId);
         
         modelBuilder.Entity<BuyDTO>().HasOne(buy => buy.CustomerId);
@@ -68,7 +68,7 @@ internal class DataContext : DbContext, IDataContext
 
     public async Task AddBuyAsync(IBuy buy)
     {
-        BuyDTO buyToAdd = new() { Id = buy.Id, CustomerId = buy.CustomerId, StatusId = buy.StatusId,
+        BuyDTO buyToAdd = new() { Id = buy.Id, CustomerId = buy.Customer, StatusId = buy.Status,
             Time = DateTime.Now};
         await _buys.AddAsync(buyToAdd);
         await SaveChangesAsync();
@@ -76,7 +76,7 @@ internal class DataContext : DbContext, IDataContext
 
     public async Task AddReturnAsync(IReturn @return)
     {
-        ReturnDTO returnToAdd = new() { Id = @return.Id, CustomerId = @return.CustomerId, StatusId = @return.StatusId,
+        ReturnDTO returnToAdd = new() { Id = @return.Id, CustomerId = @return.Customer, Status = @return.Status,
             Time = DateTime.Now};
         await _returns.AddAsync(returnToAdd);
         await SaveChangesAsync();
@@ -84,8 +84,8 @@ internal class DataContext : DbContext, IDataContext
 
     public async Task AddComplaintAsync(IComplaint complaint)
     {
-        ComplaintDTO complaintToAdd = new() { Id = complaint.Id, CustomerId = complaint.CustomerId,
-            StatusId = complaint.StatusId, Time = DateTime.Now, Reason = complaint.Reason};
+        ComplaintDTO complaintToAdd = new() { Id = complaint.Id, CustomerId = complaint.Customer,
+            StatusId = complaint.Status, Time = DateTime.Now, Reason = complaint.Reason};
         await _complaints.AddAsync(complaintToAdd);
         await SaveChangesAsync();
     }
@@ -100,7 +100,7 @@ internal class DataContext : DbContext, IDataContext
 
     public async Task AddStatusAsync(IStatus status)
     {
-        StatusDTO statusToAdd = new() { StatusId = status.StatusId, Book = status.Book,
+        StatusDTO statusToAdd = new() { Status = status.Status, Book = status.Book,
             Availability = status.Availability};
         await _statuses.AddAsync(statusToAdd);
         await SaveChangesAsync();

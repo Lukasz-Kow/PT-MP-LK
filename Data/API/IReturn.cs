@@ -1,12 +1,12 @@
 namespace Data.API;
 
-public interface IReturn : IEvent
+public interface IReturn
 {
     
     string Id { get; }
-    string StatusId { get; }
+    public IStatus Status { get; }
     
-    string CustomerId { get; }
+    public ICustomer Customer { get; }
     
     DateTime Time { get; }
 }

@@ -1,4 +1,4 @@
-namespace Data.API;
+namespace Data;
 
 public interface ICustomer
 {

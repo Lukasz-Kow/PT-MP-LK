@@ -21,19 +21,27 @@ namespace Services.Implementation
             await dataContext.AddBookAsync(new Book(Title, Author, Id, Pages, ISBN, Publisher, Language));
         }
 
-        public async Task AddBuy(string id, string statusId, string customerId, DateTime time)
+        public async Task AddBuy(string Id, string StatusId, string CustomerId, DateTime Time)
         {
-            /*await dataContext.AddBuyAsync(new Buy(
-                Id = id,
-                StatusId = dataContext.Statuses.Where(s => s.Id == statusId).First(),
-                CustomerId = dataContext.Customers.Where(c => c.Id == customerId).First(),
-                Time = time
-                )); */
+            await dataContext.AddBuyAsync(new Buy()
+            {
+                Id= Id,
+                Status = dataContext.Statuses.Where(s => s.Id == StatusId).First(),
+                Customer = dataContext.Customers.Where(c => c.Id == CustomerId).First(),
+                Time = Time
+            });
         }
 
-        public async Task AddComplaint(string id, string statusId, string customerId, DateTime time, string reason)
+        public async Task AddComplaint(string Id, string StatusId, string CustomerId, DateTime Time, string Reason)
         {
-            
+            await dataContext.AddComplaintAsync(new Complaint()
+            {
+                Id = Id,
+                Status = dataContext.Statuses.Where(s => s.Id == StatusId).First(),
+                Customer = dataContext.Customers.Where(c => c.Id == CustomerId).First(),
+                Time = Time,
+                Reason = Reason
+            });
         }
 
         public async Task AddCustomer(string FirstName, string LastName, string Id, int Age, string Address, string City)
@@ -43,7 +51,16 @@ namespace Services.Implementation
 
         public async Task AddReturn(string Id, string StatusId, string CustomerId, DateTime Time)
         {
+            await dataContext.AddReturnAsync(new Return()
+            {
+                Status = (from status in dataContext.Statuses where status.Id == StatusId select status).First(),
+                Id = Id,
+                Customer = dataContext.Customers.Where(c => c.Id == CustomerId).First()
+
+            });
         }
+                
+        
 
         public async Task AddStatus(string StatusId, string BookId)
         {
@@ -52,9 +69,9 @@ namespace Services.Implementation
                 ));
         }
 
-        public async Task DeleteBook(string Id)
+        public Task DeleteBook(string Id)
         {
-            
+            return dataContext.DeleteBookAsync(Id);
         }
 
         public Task DeleteBuy(string Id)
@@ -82,15 +99,16 @@ namespace Services.Implementation
             return dataContext.DeleteStatusAsync(Id);
         }
 
-        public Task<IEnumerable<API.IBook>> GetAllBooks()
+        public async Task<IEnumerable<API.IBook>> GetAllBooks()
         {
-            return dataContext.Books.Select(c => new BookModel(c.Title, c.Author, c.Id, c.Pages, c.ISBN, c.Publisher, c.Language, this)).ToList();
-
+            return dataContext.Books.Select(b => new BookModel(b.Title, b.Author, b.Id, b.Pages, b.ISBN, b.Publisher, b.Language, this)).ToList();
         }
 
-        public Task<IEnumerable<API.ICustomer>> GetAllCustomers()
+        public async Task<IEnumerable<API.ICustomer>> GetAllCustomers()
         {
-            
+            return dataContext.Customers.Select(c => new CustomerModel(c.Id, c.FirstName, c.LastName, c.Age, c.Address, c.City, this)).ToList();
         }
+
     }
+
 }

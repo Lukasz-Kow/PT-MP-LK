@@ -1,13 +1,16 @@
 ﻿namespace Services.API
 {
-    public interface IReturn : IEvent
+    public interface IReturn
     {
-        string Id { get; }
-        string StatusId { get; }
+        string Id { get; set; }
+        public string StatusId { get; set; }
 
-        string CustomerId { get; }
+        public string CustomerId { get; set; }
 
-        DateTime Time { get; }
+        DateTime Time { get; set; }
+
+        Task AddAsync();
+
 
     }
 }

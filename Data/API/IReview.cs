@@ -1,6 +1,6 @@
 namespace Data.API;
 
-public interface IReview: IEvent
+public interface IReview
 {
 
     string Id { get; }
