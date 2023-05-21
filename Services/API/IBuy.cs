@@ -10,7 +10,6 @@ public interface IBuy : IEvent
 
     DateTime Time { get; set; }
 
-    Task AddAsync();
 
 
 }

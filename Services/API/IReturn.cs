@@ -9,8 +9,5 @@
 
         DateTime Time { get; set; }
 
-        Task AddAsync();
-
-
     }
 }

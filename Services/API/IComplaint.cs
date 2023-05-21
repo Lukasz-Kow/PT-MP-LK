@@ -12,8 +12,6 @@ public interface IComplaint : IEvent
 
     string Reason { get; set; }
 
-    Task AddAsync();
-
 
 
 }
