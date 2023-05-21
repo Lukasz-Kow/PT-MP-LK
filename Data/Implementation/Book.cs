@@ -1,7 +1,7 @@
 using Data.API;
 namespace Data.Implementation;
 
-internal class Book : IBook
+public class Book : IBook
 {
     public Book(string id, string title, string author, int pages, string ISBN, string publisher, string language)
     {

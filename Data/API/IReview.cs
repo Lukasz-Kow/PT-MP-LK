@@ -5,9 +5,9 @@ public interface IReview
 
     string Id { get; }
     
-    string StatusId { get; }
+    IStatus Status { get; }
     
-    string CustomerId { get; }
+    ICustomer Customer { get; }
     
     DateTime Time { get; }
     

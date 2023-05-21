@@ -5,7 +5,7 @@ namespace Data.Implementation;
 internal class BuyDTO: IBuy
 {
     public string Id { get; set; }
-    public string StatusId { get; set; }
-    public string CustomerId { get; set; }
+    public IStatus Status { get; }
+    public ICustomer Customer { get; }
     public DateTime Time { get; set; }
 }

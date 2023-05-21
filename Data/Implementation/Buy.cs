@@ -4,17 +4,16 @@ namespace Data.Implementation
 {
     internal class Buy : IBuy
     {
-        public Buy(string id, string customerId, string statusId)
+        public Buy(string id, ICustomer customer, IStatus status)
         {
             Id = id;
-            StatusId = statusId;
-            CustomerId = customerId;
+            Status = status;
+            Customer = customer;
             Time = DateTime.Now;
         }
         public string Id { get; }
-        public string StatusId { get; }
-        public string CustomerId { get; }
-
+        public IStatus Status { get; }
+        public ICustomer Customer { get; }
         public DateTime Time { get; }
     }
 }

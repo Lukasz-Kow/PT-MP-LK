@@ -5,19 +5,19 @@ namespace Data.Implementation
 {
     internal class Review : IReview
     {
-        public Review(string id,string customerId, string statusId, string description)
+        public Review(string id,ICustomer customer, IStatus status, string description)
         {
             Id = id;
-            StatusId = statusId;
-            CustomerId = customerId;
+            Status = status;
+            Customer = customer;
             Description = description;
             Time = DateTime.Now;
         }
         public string Id { get; }
-
-        public string StatusId { get; }
-
-        public string CustomerId { get; }
+        
+        public IStatus Status { get; }
+        
+        public ICustomer Customer { get; }
 
         public DateTime Time { get; }
 

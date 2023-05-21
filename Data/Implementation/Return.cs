@@ -4,17 +4,21 @@ namespace Data.Implementation
 {
     internal class Return : IReturn
     {
-        public Return(string id, string customerId, string statusId) 
+        private IStatus _status;
+
+        public Return(string id, ICustomer customer, IStatus status) 
         { 
             Id = id;
-            Status = statusId;
-            CustomerId = customerId;
+            Status = status;
+            Customer = customer;
             Time = DateTime.Now;
         }
 
         public string Id { get; }
-        public string Status { get; }
-        public string CustomerId { get; }
+
+        public IStatus Status{ get; set;}
+
+        public ICustomer Customer { get; }
 
         public DateTime Time { get; }
     }

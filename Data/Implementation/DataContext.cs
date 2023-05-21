@@ -5,7 +5,9 @@ namespace Data.Implementation;
 
 internal class DataContext : DbContext, IDataContext
 {
-    private const string defaultConnectionString = @"dupa";
+    private const string defaultConnectionString = 
+        // Mateusz
+        @"Server=(localdb)\LocalDBApp1";
     
 
     private readonly string _connectionString;
@@ -20,7 +22,8 @@ internal class DataContext : DbContext, IDataContext
     
     public DbSet<BookDTO> _books { get; set; }
     public IQueryable<IBook> Books { get; }
-    
+    public IQueryable<IStatus> Statuses { get; }
+
     public DbSet<StatusDTO> _statuses { get; set; }
     public IQueryable<IStatus> States { get; }
     
