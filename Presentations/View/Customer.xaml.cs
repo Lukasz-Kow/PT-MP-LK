@@ -13,12 +13,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Presentation.View
+namespace Presentations.View
 {
     /// <summary>
-    /// Logika interakcji dla klasy Page1.xaml
+    /// Logika interakcji dla klasy Customer.xaml
     /// </summary>
-    public partial class Customer : Page
+    public partial class Customer : UserControl
     {
         public Customer()
         {

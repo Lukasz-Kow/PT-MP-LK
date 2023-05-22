@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Presentation.View
+namespace Presentations.View
 {
     /// <summary>
-    /// Logika interakcji dla klasy Complaint.xaml
+    /// Logika interakcji dla klasy UserControl1.xaml
     /// </summary>
-    public partial class Complaint : Page
+    public partial class Book : UserControl
     {
-        public Complaint()
+        public Book()
         {
             InitializeComponent();
         }

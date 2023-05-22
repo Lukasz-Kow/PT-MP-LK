@@ -13,26 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Presentation.View
+namespace Presentations.View
 {
     /// <summary>
-    /// Logika interakcji dla klasy Page1.xaml
+    /// Logika interakcji dla klasy UserControl1.xaml
     /// </summary>
-    public partial class Main : Page
+    public partial class AddCustomer : UserControl
     {
-        public Main()
+        public AddCustomer()
         {
             InitializeComponent();
-        }
-
-        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void ListView_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
-        {
-
         }
     }
 }

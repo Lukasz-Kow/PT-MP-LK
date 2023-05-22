@@ -45,13 +45,6 @@ namespace Services.Implementation
             repository.InsertEvent(new Return(Id, status, customer, Time));
         }
 
-        public async Task AddStatus(string StatusId, IBook book, bool availability)
-        {
-            repository.InsertStatus(new Status(StatusId, book, availability));
-        }
-
-
-
         public void DeleteBook(string Id)
         {
             repository.DeleteBook(int.Parse(Id));
@@ -77,11 +70,6 @@ namespace Services.Implementation
         public List<ICustomer> GetAllCustomers()
         {
             return repository.GetAllCustomers();
-        }
-
-        public void DropTables()
-        {
-            repository.DropAll();
         }
 
     }

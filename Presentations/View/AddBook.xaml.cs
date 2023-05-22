@@ -13,16 +13,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Presentation.View
+namespace Presentations.View
 {
     /// <summary>
-    /// Logika interakcji dla klasy Page1.xaml
+    /// Logika interakcji dla klasy Buy.xaml
     /// </summary>
-    public partial class Return : Page
+    public partial class AddBook : UserControl
     {
-        public Return()
+        public AddBook()
         {
             InitializeComponent();
         }
     }
+
 }
