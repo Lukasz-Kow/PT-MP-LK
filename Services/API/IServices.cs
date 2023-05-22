@@ -21,6 +21,8 @@ namespace Services.API
 
         public List<IBook> GetAllBooks();
         public List<ICustomer> GetAllCustomers();
+
+        public void DropTables();
     }
 }
     

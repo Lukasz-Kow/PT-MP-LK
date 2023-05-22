@@ -17,7 +17,7 @@ namespace Services.Implementation
 
         public void AddBook(string Title, string Author, string Id, int Pages, string ISBN, string Publisher, string Language)
         {
-            repository.InsertBook(new Book(Title, Author, Id, Pages, ISBN, Publisher, Language));
+            repository.InsertBook(new Book(Id, Title, Author, Pages, ISBN, Publisher, Language));
         }
 
         public void AddBuy(string Id, IStatus status, ICustomer customer, DateTime Time)
@@ -77,6 +77,11 @@ namespace Services.Implementation
         public List<ICustomer> GetAllCustomers()
         {
             return repository.GetAllCustomers();
+        }
+
+        public void DropTables()
+        {
+            repository.DropAll();
         }
 
     }

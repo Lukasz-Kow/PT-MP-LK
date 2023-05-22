@@ -4,12 +4,30 @@ using Data.Implementation;
 namespace TestData {
 
     [TestClass]
-public class DataTests
+    [DeploymentItem(@"Instrumentation\UnitTestDataDB.mdf", @"Instrumentation")]
+    public class DataTests
 {
+
+        //private static string m_ConnectionString;
+
+        
+        /*[ClassInitialize]
+        public static void ClassInitializeMethod()
+        {
+            string _DBRelativePath = @"Instrumentation\UnitTestDataDB.mdf";
+            string _TestingWorkingFolder = Environment.CurrentDirectory;
+            string _DBPath = Path.Combine(_TestingWorkingFolder, _DBRelativePath);
+            FileInfo _databaseFile = new FileInfo(_DBPath);
+            Assert.IsTrue(_databaseFile.Exists, $"{Environment.CurrentDirectory}");
+            m_ConnectionString = $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={_DBPath};Integrated Security = True;";
+        }*/
+        
+
+        // DB Connection string needs to be adjusted to work on a different computer
         [TestMethod]
         public void InsertCustomer_ThenGet_ThenDropTable()
         {
-            IDataRepository repository = IDataRepository.CDataRepository("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\Studia\\PrijectPT\\Data\\BookShopDB.mdf;Integrated Security=True");
+            IDataRepository repository = IDataRepository.CDataRepository("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\Studia\\PrijectPT\\TestData\\Instrumentation\\UnitTestDataDB.mdf;Integrated Security=True");
 
             repository.DropAll();
 
@@ -30,7 +48,7 @@ public class DataTests
         [TestMethod]
         public void InsertBook_ThenGet_ThenDropTable()
         {
-            IDataRepository repository = new DataRepository("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\Studia\\PrijectPT\\Data\\BookShopDB.mdf;Integrated Security=True");
+            IDataRepository repository = new DataRepository("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\Studia\\PrijectPT\\TestData\\Instrumentation\\UnitTestDataDB.mdf;Integrated Security=True");
 
             repository.DropAll();
 
@@ -48,7 +66,7 @@ public class DataTests
         [TestMethod]
         public void InsertStatus_ThenGet_ThenDropTable()
         {
-            IDataRepository repository = new DataRepository("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\Studia\\PrijectPT\\Data\\BookShopDB.mdf;Integrated Security=True");
+            IDataRepository repository = new DataRepository("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\Studia\\PrijectPT\\TestData\\Instrumentation\\UnitTestDataDB.mdf;Integrated Security=True");
 
             repository.DropAll();
 
@@ -69,7 +87,7 @@ public class DataTests
         [TestMethod]
         public void InsertEvent_ThenGet_ThenDropTable()
         {
-            IDataRepository repository = new DataRepository("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\Studia\\PrijectPT\\Data\\BookShopDB.mdf;Integrated Security=True");
+            IDataRepository repository = new DataRepository("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\Studia\\PrijectPT\\TestData\\Instrumentation\\UnitTestDataDB.mdf;Integrated Security=True");
 
             repository.DropAll();
 
@@ -96,7 +114,7 @@ public class DataTests
         [TestMethod]
         public void UpdateCustomer_ThenGet()
         {
-            IDataRepository repository = new DataRepository("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\Studia\\PrijectPT\\Data\\BookShopDB.mdf;Integrated Security=True");
+            IDataRepository repository = new DataRepository("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\Studia\\PrijectPT\\TestData\\Instrumentation\\UnitTestDataDB.mdf;Integrated Security=True");
 
             repository.DropAll();
 
@@ -118,7 +136,7 @@ public class DataTests
         [TestMethod]
         public void UpdateBook_ThenGet()
         {
-            IDataRepository repository = new DataRepository("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\Studia\\PrijectPT\\Data\\BookShopDB.mdf;Integrated Security=True");
+            IDataRepository repository = new DataRepository("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\Studia\\PrijectPT\\TestData\\Instrumentation\\UnitTestDataDB.mdf;Integrated Security=True");
 
             repository.DropAll();
 
@@ -140,7 +158,7 @@ public class DataTests
         [TestMethod]
         public void UpdateStatus_ThenGet()
         {
-            IDataRepository repository = new DataRepository("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\Studia\\PrijectPT\\Data\\BookShopDB.mdf;Integrated Security=True");
+            IDataRepository repository = new DataRepository("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\Studia\\PrijectPT\\TestData\\Instrumentation\\UnitTestDataDB.mdf;Integrated Security=True");
 
             repository.DropAll();
 
@@ -164,7 +182,7 @@ public class DataTests
         [TestMethod]
         public void UpdateEvent_ThenGet()
         {
-            IDataRepository repository = new DataRepository("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\Studia\\PrijectPT\\Data\\BookShopDB.mdf;Integrated Security=True");
+            IDataRepository repository = new DataRepository("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\Studia\\PrijectPT\\TestData\\Instrumentation\\UnitTestDataDB.mdf;Integrated Security=True");
 
             repository.DropAll();
 

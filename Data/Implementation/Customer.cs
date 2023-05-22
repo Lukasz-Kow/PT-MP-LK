@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 
 [assembly:InternalsVisibleTo("TestData")]
-[assembly:InternalsVisibleTo("LogicTest")]
+[assembly:InternalsVisibleTo("ServiceTest")]
 
 namespace Data.Implementation;
 

@@ -12,14 +12,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementy rozwiązania", "El
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", "{1F0E746A-7062-47E6-987F-6F0F296E4266}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicTest", "LogicTest\LogicTest.csproj", "{ACF69E6E-F636-4913-ACC2-74D4CB87DABF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceTest", "LogicTest\ServiceTest.csproj", "{ACF69E6E-F636-4913-ACC2-74D4CB87DABF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{7D1131D7-252F-477A-92E7-89998103F3B7}"
 	ProjectSection(ProjectDependencies) = postProject
 		{1F0E746A-7062-47E6-987F-6F0F296E4266} = {1F0E746A-7062-47E6-987F-6F0F296E4266}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation", "Presentation\Presentation.csproj", "{26E08040-1EA8-4880-A3AF-2EAE4354E1F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Presentation", "Presentation\Presentation.csproj", "{26E08040-1EA8-4880-A3AF-2EAE4354E1F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
