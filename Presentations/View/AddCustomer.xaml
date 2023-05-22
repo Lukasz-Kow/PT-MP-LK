@@ -29,10 +29,10 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock Text="First Name" Grid.Row="0" Margin="10 0 0 0"/>
-            <TextBox Grid.Row="1" Grid.Column="0" Text="" Margin="10 10 0 0" Width="100"/>
+            <TextBox Grid.Row="1" Grid.Column="0" Text="{Binding FirstName}" Margin="10 10 0 0" Width="100"/>
 
             <TextBlock Text="Last Name" Grid.Row="0" Grid.Column="1" Margin="10 0 0 0"/>
-            <TextBox Grid.Row="1" Grid.Column="1" Text="" Margin="10 10 0 0" Width="100"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding LastName}" Margin="10 10 0 0" Width="100"/>
         </Grid>
 
         <Grid Grid.Row="2" Margin="10 10 0 0">
@@ -46,10 +46,10 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock Text="Age" Grid.Row="0" Grid.Column="0" Margin="10 0 0 0"/>
-            <TextBox Grid.Row="1" Grid.Column="0" Text="" Margin="10 10 0 0" Width="50"/>
+            <TextBox Grid.Row="1" Grid.Column="0" Text="{Binding Age}" Margin="10 10 0 0" Width="50"/>
 
             <TextBlock Text="ID" Grid.Row="0" Grid.Column="1" Margin="10 0 0 0"/>
-            <TextBox Grid.Row="1" Grid.Column="1" Text="" Margin="10 10 0 0" Width="50"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ID}" Margin="10 10 0 0" Width="50"/>
         </Grid>
 
         <Grid Grid.Row="3" Margin="10 10 0 0">
@@ -63,15 +63,15 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock Text="Address" Grid.Row="0" Grid.Column="0" Margin="10 0 0 0"/>
-            <TextBox Grid.Row="1" Grid.Column="0" Text="" Margin="10 10 0 0" Width="100"/>
+            <TextBox Grid.Row="1" Grid.Column="0" Text="{Binding Address}" Margin="10 10 0 0" Width="100"/>
 
 
             <TextBlock Text="City" Grid.Row="0" Grid.Column="21" Margin="10 0 0 0"/>
-            <TextBox Grid.Row="1" Grid.Column="2" Text="" Margin="10 10 0 0" Width="100"/>
+            <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding City}" Margin="10 10 0 0" Width="100"/>
         </Grid>
 
         <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="10 10 0 0">
-            <Button Content="Add" Margin="10 0 0 0" Width="50"/>
+            <Button Content="Add" Margin="10 0 0 0" Width="50" Command="{Binding AddCommand}"/>
         </StackPanel>
 
     </Grid>

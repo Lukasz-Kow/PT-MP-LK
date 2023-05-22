@@ -72,6 +72,15 @@ namespace Services.Implementation
             return repository.GetAllCustomers();
         }
 
+        public void AddStatus(string StatusId, IBook book, bool availability)
+        {
+            repository.InsertStatus(new Status(StatusId, book, availability));
+        }
+
+        public void DropTables()
+        {
+            repository.DropAll();
+        }
     }
 
 }

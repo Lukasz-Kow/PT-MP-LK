@@ -27,6 +27,7 @@ namespace Presentation.Model
             Service.AddStatus(StatusId, book, availability);
         }
 
+
         public void DeleteStatus(string Id)
         {
             Service.DeleteStatus(Id);

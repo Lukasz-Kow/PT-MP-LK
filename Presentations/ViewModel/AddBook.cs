@@ -12,7 +12,7 @@ namespace Presentations.ViewModel
         private string _title;
         public string Title 
         { 
-            get { return _title; } 
+            get  { return _title; } 
             set
             {
                 _title = value;
@@ -26,7 +26,7 @@ namespace Presentations.ViewModel
             get { return _author; }
             set
             {
-                _title = value;
+                _author = value;
                 OnPropertyChanged(nameof(Author));
             }
         }
@@ -37,7 +37,7 @@ namespace Presentations.ViewModel
             get { return _pages; }
             set
             {
-                _title = value;
+                _pages = value;
                 OnPropertyChanged(nameof(Pages));
             }
         }
@@ -48,7 +48,7 @@ namespace Presentations.ViewModel
             get { return _id; }
             set
             {
-                _title = value;
+                _id = value;
                 OnPropertyChanged(nameof(Id));
             }
         }
@@ -59,7 +59,7 @@ namespace Presentations.ViewModel
             get { return _isbn; }
             set
             {
-                _title = value;
+                _isbn = value;
                 OnPropertyChanged(nameof(ISBN));
             }
         }
@@ -70,7 +70,7 @@ namespace Presentations.ViewModel
             get { return _publisher; }
             set
             {
-                _title = value;
+                _publisher = value;
                 OnPropertyChanged(nameof(Publisher));
             }
         }
@@ -81,7 +81,7 @@ namespace Presentations.ViewModel
             get { return _language; }
             set
             {
-                _title = value;
+                _language = value;
                 OnPropertyChanged(nameof(Language));
             }
         }

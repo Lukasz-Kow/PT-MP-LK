@@ -12,7 +12,6 @@ namespace Presentation.Model.ModelAPI
         bool Availability { get; set; }
 
         public void AddStatus(string StatusId, IBook book, bool availability);
-        void AddStatus();
         public void DeleteStatus(string Id);
 
 
