@@ -14,12 +14,12 @@ namespace Data.Implementation
             Time = date ?? DateTime.Now;
         }
 
-        public string Id { get; }
+        public string Id { get; set; }
 
         public IStatus Status{ get; set;}
 
-        public ICustomer Customer { get; }
+        public ICustomer Customer { get; set; }
 
-        public DateTime Time { get; }
+        public DateTime Time { get; set; }
     }
 }

@@ -33,6 +33,18 @@ internal class DataRepository : IDataRepository
         }
     }
 
+    public List<ICustomer> GetAllCustomers()
+    {
+        using (var dbContext = new BookShopDBLDataContext(_connectionString))
+        {
+            var customerEntities = dbContext.Customers.ToList();
+            List<ICustomer> customers = customerEntities
+                .Select(c => new Customer(c.Id.ToString(), c.FirstName, c.LastName, c.Age ?? 0, c.Address, c.City) as ICustomer)
+                .ToList();
+            return customers;
+        }
+    }
+
     public void InsertCustomer(ICustomer customer)
     {
         using (BookShopDBLDataContext dbContext = new BookShopDBLDataContext(this._connectionString))
@@ -101,6 +113,18 @@ internal class DataRepository : IDataRepository
 
             return new Book(bookEntity.Id.ToString(), bookEntity.Title.TrimEnd(), bookEntity.Author.TrimEnd(), (int)bookEntity.Pages,
                 bookEntity.ISBN.TrimEnd(), bookEntity.Publisher.TrimEnd(), bookEntity.Language.TrimEnd());
+        }
+    }
+
+    public List<IBook> GetAllBooks()
+    {
+        using (var dbContext = new BookShopDBLDataContext(_connectionString))
+        {
+            var bookEntities = dbContext.Books.ToList();
+            List<IBook> books = bookEntities
+                .Select(b => new Book(b.Id.ToString(), b.Title.TrimEnd(), b.Author.TrimEnd(), (int)b.Pages, b.ISBN.TrimEnd(), b.Publisher.TrimEnd(), b.Language.TrimEnd()) as IBook)
+                .ToList();
+            return books;
         }
     }
 
@@ -177,6 +201,23 @@ internal class DataRepository : IDataRepository
         }
     }
 
+    public List<IStatus> GetAllStatuses()
+    {
+        using (var dbContext = new BookShopDBLDataContext(_connectionString))
+        {
+            var statusEntities = dbContext.Statuses.ToList();
+            List<IStatus> statuses = new List<IStatus>();
+            foreach (var statusEntity in statusEntities)
+            {
+                IBook book = GetBook(statusEntity.BookId ?? -1);
+                statuses.Add(new Status(statusEntity.Id.ToString(), book, statusEntity.Availability ?? true));
+            }
+
+            
+            return statuses;
+        }
+    }
+
     public void InsertStatus(IStatus newStatus)
     {
         using (var dbContext = new BookShopDBLDataContext(_connectionString))
@@ -231,31 +272,32 @@ internal class DataRepository : IDataRepository
     {
         using (var dbContext = new BookShopDBLDataContext(_connectionString))
         {
+
             var eventEntity = dbContext.Events.FirstOrDefault(e => e.Id == id);
             if (eventEntity == null)
             {
                 return null;
             }
 
-            if(eventEntity.Type == "Buy")
+            if(eventEntity.Type.TrimEnd() == "Buy")
             {
                 IStatus status = GetStatus(eventEntity.StatusId);
                 ICustomer customer = GetCustomer(eventEntity.CustomerId);
                 return new Buy(eventEntity.Id.ToString(), customer, status, eventEntity.Time);
             } 
-               else if (eventEntity.Type == "Return")
+               else if (eventEntity.Type.TrimEnd() == "Return")
             {
                 IStatus status = GetStatus(eventEntity.StatusId);
                 ICustomer customer = GetCustomer(eventEntity.CustomerId);
                 return new Return(eventEntity.Id.ToString(), customer, status, eventEntity.Time);
             }
-                else if (eventEntity.Type == "Review")
+                else if (eventEntity.Type.TrimEnd() == "Review")
             {
                 IStatus status = GetStatus(eventEntity.StatusId);
                 ICustomer customer = GetCustomer(eventEntity.CustomerId);
                 return new Review(eventEntity.Id.ToString(), customer, status, eventEntity.Description, eventEntity.Time);
             }
-                else if (eventEntity.Type == "Complaint")
+                else if (eventEntity.Type.TrimEnd() == "Complaint")
             {
                 IStatus status = GetStatus(eventEntity.StatusId);
                 ICustomer customer = GetCustomer(eventEntity.CustomerId);
@@ -269,6 +311,45 @@ internal class DataRepository : IDataRepository
         }
     }
 
+    public List<IEvent> GetAllEvents()
+    {
+        using (var dbContext = new BookShopDBLDataContext(_connectionString))
+        {
+            var eventEntities = dbContext.Events.ToList();
+            var events = new List<IEvent>();
+
+            foreach (var eventEntity in eventEntities)
+            {
+                if (eventEntity.Type == "Buy")
+                {
+                    var customer = GetCustomer(eventEntity.CustomerId);
+                    var status = GetStatus(eventEntity.StatusId);
+                    events.Add(new Buy(eventEntity.Id.ToString(), customer, status, eventEntity.Time));
+                }
+                else if (eventEntity.Type == "Return")
+                {
+                    var customer = GetCustomer(eventEntity.CustomerId);
+                    var status = GetStatus(eventEntity.StatusId);
+                    events.Add(new Return(eventEntity.Id.ToString(), customer, status, eventEntity.Time));
+                }
+                else if (eventEntity.Type == "Review")
+                {
+                    var customer = GetCustomer(eventEntity.CustomerId);
+                    var status = GetStatus(eventEntity.StatusId);
+                    events.Add(new Review(eventEntity.Id.ToString(), customer, status, eventEntity.Description, eventEntity.Time));
+                }
+                else if (eventEntity.Type == "Complaint")
+                {
+                    var customer = GetCustomer(eventEntity.CustomerId);
+                    var status = GetStatus(eventEntity.StatusId);
+                    events.Add(new Complaint(eventEntity.Id.ToString(), customer, status, eventEntity.Reason, eventEntity.Time));
+                }
+            }
+
+            return events;
+        }
+    }
+
     public void InsertEvent(IEvent newEvent)
     {
         using (var dbContext = new BookShopDBLDataContext(_connectionString))
@@ -279,6 +360,7 @@ internal class DataRepository : IDataRepository
 
                 var eventEntity = new Events()
                 {
+                    Id = int.Parse(buyEvent.Id),
                     StatusId = int.Parse(buyEvent.Status.Id),
                     CustomerId = int.Parse(buyEvent.Customer.Id),
                     Time = buyEvent.Time,
@@ -294,6 +376,7 @@ internal class DataRepository : IDataRepository
 
                 var eventEntity = new Events()
                 {
+                    Id = int.Parse(returnEvent.Id),
                     StatusId = int.Parse(returnEvent.Status.Id),
                     CustomerId = int.Parse(returnEvent.Customer.Id),
                     Time = returnEvent.Time,
@@ -309,6 +392,7 @@ internal class DataRepository : IDataRepository
 
                 var eventEntity = new Events()
                 {
+                    Id = int.Parse(reviewEvent.Id),
                     StatusId = int.Parse(reviewEvent.Status.Id),
                     CustomerId = int.Parse(reviewEvent.Customer.Id),
                     Time = reviewEvent.Time,
@@ -325,6 +409,7 @@ internal class DataRepository : IDataRepository
 
                 var eventEntity = new Events()
                 {
+                    Id = int.Parse(complaintEvent.Id),
                     StatusId = int.Parse(complaintEvent.Status.Id),
                     CustomerId = int.Parse(complaintEvent.Customer.Id),
                     Time = complaintEvent.Time,
@@ -391,6 +476,58 @@ internal class DataRepository : IDataRepository
                 dbContext.Events.DeleteOnSubmit(eventToDelete);
                 dbContext.SubmitChanges();
             }
+        }
+    }
+
+    #endregion
+
+    #region OTHERS
+
+    public void DropAllCustomers()
+    {
+        using (var dbContext = new BookShopDBLDataContext(_connectionString))
+        {
+            dbContext.ExecuteCommand("DELETE FROM Customers");
+            dbContext.SubmitChanges();
+        }
+    }
+
+    public void DropAllBooks()
+    {
+        using (var dbContext = new BookShopDBLDataContext(_connectionString))
+        {
+            dbContext.ExecuteCommand("DELETE FROM Books");
+            dbContext.SubmitChanges();
+        }
+    }
+
+    public void DropAllStatuses()
+    {
+        using (var dbContext = new BookShopDBLDataContext(_connectionString))
+        {
+            dbContext.ExecuteCommand("DELETE FROM Statuses");
+            dbContext.SubmitChanges();
+        }
+    }
+
+    public void DropAllEvents()
+    {
+        using (var dbContext = new BookShopDBLDataContext(_connectionString))
+        {
+            dbContext.ExecuteCommand("DELETE FROM Events");
+            dbContext.SubmitChanges();
+        }
+    }
+
+    public void DropAll()
+    {
+        using (var dbContext = new BookShopDBLDataContext(_connectionString))
+        {
+            DropAllEvents();
+            DropAllStatuses();
+            DropAllBooks();
+            DropAllCustomers();
+            dbContext.SubmitChanges();
         }
     }
 

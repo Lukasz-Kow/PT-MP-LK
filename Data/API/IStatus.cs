@@ -4,7 +4,7 @@ public interface IStatus
 {
     public IBook Book { get; set; }
     
-    string Id { get; }
+    string Id { get; set; }
     
     bool Availability { get; set; }
 }

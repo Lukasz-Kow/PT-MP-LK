@@ -11,9 +11,9 @@ namespace Data.Implementation
             Customer = customer;
             Time = date ?? DateTime.Now;
         }
-        public string Id { get; }
-        public IStatus Status { get; }
-        public ICustomer Customer { get; }
-        public DateTime Time { get; }
+        public string Id { get; set; }
+        public IStatus Status { get; set; }
+        public ICustomer Customer { get; set; }
+        public DateTime Time { get; set; }
     }
 }

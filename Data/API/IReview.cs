@@ -3,14 +3,14 @@ namespace Data.API;
 public interface IReview : IEvent
 {
 
-    string Id { get; }
+    string Id { get; set; }
     
-    IStatus Status { get; }
+    IStatus Status { get; set; }
     
-    ICustomer Customer { get; }
+    ICustomer Customer { get; set; }
     
-    DateTime Time { get; }
+    DateTime Time { get; set; }
     
-    string Description { get; }
+    string Description { get; set; }
     
 }

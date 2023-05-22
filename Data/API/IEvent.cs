@@ -2,11 +2,11 @@
 {
     public interface IEvent
     {
-        string Id { get; }
-        IStatus Status { get; }
+        string Id { get; set; }
+        IStatus Status { get; set; }
 
-        ICustomer Customer { get; }
+        ICustomer Customer { get; set; }
 
-        DateTime Time { get; }
+        DateTime Time { get; set; }
     }
 }
