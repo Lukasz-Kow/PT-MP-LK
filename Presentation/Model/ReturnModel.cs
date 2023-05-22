@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Data.API;
 using Presentation.Model.ModelAPI;
 using Services.API;
 
@@ -25,9 +26,9 @@ namespace Presentation.Model
 
         public IServices Service { get; }
 
-        public async Task AddAsync()
+        public void AddReturn(string Id, IStatus status, ICustomer customer, DateTime Time)
         {
-            await Service.AddReturn(Id, StatusId, CustomerId, Time);    
+            Service.AddReturn(Id, status, customer, Time);
         }
     }
 }

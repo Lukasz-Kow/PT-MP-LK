@@ -33,10 +33,5 @@ namespace Presentation.Model.ViewModel
             }
         }
 
-        [ICommand]
-        private async Task AddReturn()
-        {
-            await _return.AddAsync();
-        }
     }
 }

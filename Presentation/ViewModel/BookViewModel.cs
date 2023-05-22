@@ -15,37 +15,22 @@ namespace Presentation.Model.ViewModel
             _status = status;
         }
 
-        public string Id
+        private string _statusId;
+        public string StatusId
         {
             get { return _status.Id; }
-            set
-            {
-                _status.Id = value;
-                OnPropertyChanged();
-            }
+            set => SetProperty(ref _statusId, value);
+
         }
 
+        private string _bookId;
         public string BookId
         {
             get { return _status.BookId; }
-            set
-            {
-                _status.BookId = value;
-                OnPropertyChanged();
-            }
+            set => SetProperty(ref _bookId, value);
+
         }
 
-        [ICommand]
-        private async Task AddStatus()
-        {
-            await _status.AddAsync();
-        }
-
-        [ICommand]
-        private async Task DeleteStatus()
-        {
-            await _status.DeleteAsync();
-        }
 
     }
 }

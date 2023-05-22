@@ -1,6 +1,7 @@
 ﻿
 using System.Threading.Tasks;
 using System;
+using Data.API;
 
 namespace Presentation.Model.ModelAPI
 {
@@ -15,7 +16,7 @@ namespace Presentation.Model.ModelAPI
 
         string Reason { get; set; }
 
-        Task AddAsync();
+        public void AddComplaint(string Id, IStatus status, ICustomer customer, DateTime Time, string Reason);
 
 
     }

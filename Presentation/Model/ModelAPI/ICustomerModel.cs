@@ -14,7 +14,7 @@ namespace Presentation.Model.ModelAPI
 
         string City { get; set; }
 
-        Task AddAsync();
-        Task DeleteAsync();
+        public void AddCustomer(string FirstName, string LastName, string Id, int Age, string Address, string City);
+
     }
 }

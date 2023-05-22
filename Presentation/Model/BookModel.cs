@@ -29,14 +29,14 @@ namespace Presentation.Model
         public string Language { get; set; }
         public IServices Service { get; }
 
-        public async Task AddAsync()
+        public void AddBook(string Title, string Author, string Id, int Pages, string ISBN, string Publisher, string Language)
         {
-            await Service.AddBook(Title, Author, Id, Pages, ISBN, Publisher, Language);
+            Service.AddBook(Title, Author, Id, Pages, ISBN, Publisher, Language);
         }
 
-        public async Task DeleteAsync()
+        public void DeleteBook(string Id)
         {
-            await Service.DeleteBook(Id);
+            Service.DeleteBook(Id);
         }
     }
 }

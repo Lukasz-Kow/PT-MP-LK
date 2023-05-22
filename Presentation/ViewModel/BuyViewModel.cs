@@ -24,7 +24,7 @@ namespace Presentation.Model.ViewModel
             }
         }
 
-        public string StateId
+        public string StatusId
         {
             get { return _buy.StatusId; }
             set
@@ -33,11 +33,7 @@ namespace Presentation.Model.ViewModel
                 OnPropertyChanged();
             }
         }
-        [ICommand]
-        private async Task AddBuy()
-        {
-            await _buy.AddAsync();
-        }
+
 
     }
 }

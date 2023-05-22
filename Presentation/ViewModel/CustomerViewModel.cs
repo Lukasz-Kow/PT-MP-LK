@@ -44,15 +44,5 @@ namespace Presentation.Model.ViewModel
             }
         }
 
-        [ICommand]
-        private async Task AddCustomer()
-        {
-            await _customer.AddAsync();
-        }
-        [ICommand]
-        private async Task DeleteCustomer()
-        {
-            await _customer.DeleteAsync();
-        }
     }
 }

@@ -11,45 +11,36 @@ namespace Presentation.Model.ViewModel
         [ObservableProperty]
         private IBookModel _book;
 
-        private bool _newBook = false;
-
-        public BookInfoViewModel() { }
 
         public BookInfoViewModel(IBookModel book)
         {
             _book = book;
 
         }
-        public string InfoId
+        private string _bookId;
+        public string BookId
         {
             get => _book.Id;
-            set
-            {
-                _book.Id = value;
-                OnPropertyChanged();
-            }
+            set => SetProperty(ref _bookId, value);
+
         }
 
+        private string _author;
         public string Author
         {
             get => _book.Author;
-            set
-            {
-                _book.Author = value;
-                OnPropertyChanged();
-            }
+            set => SetProperty(ref _author, value);
+
         }
 
-        [ICommand]
-        private async Task AddStatus()
+        private string _title;
+        public string Title
         {
-            await _book.AddAsync();
+            get => _book.Title;
+            set => SetProperty(ref _title, value);
+
         }
 
-        [ICommand]
-        private async Task DeleteStatus()
-        {
-            await _book.DeleteAsync();
-        }
+
     }
 }

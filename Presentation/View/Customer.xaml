@@ -10,9 +10,9 @@
 
     <Grid>
         <Rectangle HorizontalAlignment="Left" Height="20" Margin="10,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="580"/>
-        <TextBlock HorizontalAlignment="Left" Height="20" Margin="280,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" RenderTransformOrigin="-0.933,0.579" FontWeight="Bold"><Run Language="pl-pl" Text="USERS"/></TextBlock>
-        <TextBox HorizontalAlignment="Left" Text="{Binding UserId}" Height="20" Margin="60,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" />
-        <TextBlock HorizontalAlignment="Left" Height="20" Margin="15,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="45"><Run Language="pl-pl" Text="User"/><Run Text=" ID"/><Run Text=":"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Height="20" Margin="270,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" RenderTransformOrigin="-0.933,0.579" FontWeight="Bold" Text="Customers"/>
+        <TextBox HorizontalAlignment="Left" Text="{Binding UserId}" Height="20" Margin="90,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="60" />
+        <TextBlock HorizontalAlignment="Left" Height="20" Margin="15,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" Text="Customer ID:"/>
         <TextBlock HorizontalAlignment="Left" Height="20" Margin="180,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40"><Run Language="pl-pl" Text="Name"/><Run Text=":"/></TextBlock>
         <TextBlock HorizontalAlignment="Left" Height="20" Margin="390,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50"><Run Language="pl-pl" Text="Surname"/><Run Text=":"/></TextBlock>
         <TextBox HorizontalAlignment="Left" Text="{Binding Name}" Height="20" Margin="220,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" />

@@ -10,8 +10,8 @@ namespace Presentation.Model.ViewModel
         {
             BookViewModel = new BookViewModel(new StatusModel("", ""));
             BookInfoViewModel = new BookInfoViewModel(new BookModel("", "", "", 0, "", "", ""));
-            BuyViewModel = new BuyViewModel(new BuyModel("", "", ));
-            ReturnViewModel = new ReturnViewModel(new ReturnModel("", "", ));
+            //BuyViewModel = new BuyViewModel(new BuyModel("", "", ));
+            //ReturnViewModel = new ReturnViewModel(new ReturnModel("", "", ));
             CustomerViewModel = new CustomerViewModel(new CustomerModel("", "", "", 0, "", ""));
 
         }
@@ -56,7 +56,7 @@ namespace Presentation.Model.ViewModel
                 try
                 {
                     _activeCustomer = new MainViewModel();
-                    OnPropertyChanged(nameof(ActiveCustomer))
+                    OnPropertyChanged(nameof(ActiveCustomer));
                 }
                 catch (ArgumentOutOfRangeException) { }
             }

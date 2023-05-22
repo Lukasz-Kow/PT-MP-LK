@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using Data.API;
+using System.Threading.Tasks;
 
 namespace Presentation.Model.ModelAPI
 {
@@ -10,7 +11,10 @@ namespace Presentation.Model.ModelAPI
 
         bool Availability { get; set; }
 
-        Task AddAsync();
-        Task DeleteAsync();
+        public void AddStatus(string StatusId, IBook book, bool availability);
+        void AddStatus();
+        public void DeleteStatus(string Id);
+
+
     }
 }
