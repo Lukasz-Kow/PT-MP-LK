@@ -2,7 +2,7 @@
 using Presentation.Model.ModelAPI;
 using Services.API;
 using System;
-
+using Data.API;
 
 namespace Presentation.Model
 {
@@ -26,9 +26,9 @@ namespace Presentation.Model
         public string Reason { get; set; }
         public IServices Service { get; }
 
-        public async Task AddAsync()
+        public void AddComplaint(string Id, IStatus status, ICustomer customer, DateTime Time, string Reason)
         {
-            await Service.AddComplaint(Id, StatusId, CustomerId, Time, Reason);
+            Service.AddComplaint(Id, status, customer, Time, Reason);
         }
     }
 }

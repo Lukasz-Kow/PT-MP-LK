@@ -9,10 +9,10 @@
     
     <Grid Margin="0,0,0,10">
         <Rectangle HorizontalAlignment="Left" Height="20" Margin="10,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="580"/>
-        <TextBlock HorizontalAlignment="Left" Height="20" Margin="283,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="34" RenderTransformOrigin="-1.005,0.508" FontWeight="Bold"><Run Language="pl-pl" Text="RENT"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Height="20" Margin="283,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="34" RenderTransformOrigin="-1.005,0.508" FontWeight="Bold" Text="Buy"/>
         <TextBox HorizontalAlignment="Left" Text="{Binding StateId}" Height="20" Margin="60,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" />
         <TextBlock HorizontalAlignment="Left" Height="20" Margin="10,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50"><Run Language="pl-pl" Text="Book "/><Run Text="ID"/><Run Text=":"/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" Height="20" Margin="310,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50"><Run Language="pl-pl" Text="User ID"/><Run Text=":"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Height="20" Margin="290,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" Text="Customer ID:"/>
         <TextBox HorizontalAlignment="Left" Text="{Binding UserId}" Height="20" Margin="360,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" />
         <Button Content="Add" HorizontalAlignment="Left" Command="{Binding AddRentCommand}" Height="20" Margin="10,110,0,0" VerticalAlignment="Top" Width="580" />
 

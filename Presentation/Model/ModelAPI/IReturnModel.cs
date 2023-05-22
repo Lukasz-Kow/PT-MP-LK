@@ -1,6 +1,7 @@
 ﻿    
 using System.Threading.Tasks;
 using System;
+using Data.API;
 
 namespace Presentation.Model.ModelAPI
 {
@@ -13,7 +14,7 @@ namespace Presentation.Model.ModelAPI
 
         DateTime Time { get; set; }
 
-        Task AddAsync();
+        public void AddReturn(string Id, IStatus status, ICustomer customer, DateTime Time);
 
     }
 }

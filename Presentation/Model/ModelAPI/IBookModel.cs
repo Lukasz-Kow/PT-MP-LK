@@ -1,5 +1,6 @@
 ﻿
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Presentation.Model.ModelAPI
 {
@@ -16,8 +17,8 @@ namespace Presentation.Model.ModelAPI
         public string Publisher { get; set; }
 
         public string Language { get; set; }
+        public void AddBook(string Title, string Author, string Id, int Pages, string ISBN, string Publisher, string Language);
 
-        Task AddAsync();
-        Task DeleteAsync();
+        public void DeleteBook(string Id);
     }
 }

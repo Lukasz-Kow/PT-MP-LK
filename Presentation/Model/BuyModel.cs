@@ -1,4 +1,5 @@
-﻿using Presentation.Model.ModelAPI;
+﻿using Data.API;
+using Presentation.Model.ModelAPI;
 using Services.API;
 using System;
 using System.Threading.Tasks;
@@ -24,10 +25,14 @@ namespace Presentation.Model
         public DateTime Time { get; set; }
         public IServices Service { get; }
 
-
-        public async Task AddAsync()
+        public void AddBuy(string Id, IStatus status, ICustomer customer, DateTime Time)
         {
-            await Service.AddBuy(Id, StatusId, CustomerId, Time);
+            Service.AddBuy(Id, status, customer, Time);
+        }
+
+        public void DeleteBuy(string Id)
+        {
+            Service.DeleteBuy(Id);
         }
     }
 }

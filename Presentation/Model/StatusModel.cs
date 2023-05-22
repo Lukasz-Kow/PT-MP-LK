@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Data.API;
 using Presentation.Model.ModelAPI;
 using Services.API;
 
@@ -21,14 +22,14 @@ namespace Presentation.Model
         public bool Availability { get; set; }
         public IServices Service { get; }
 
-        public async Task AddAsync()
+        public void AddStatus(string StatusId, IBook book, bool availability)
         {
-            await Service.AddStatus(Id, BookId);
+            Service.AddStatus(StatusId, book, availability);
         }
 
-        public async Task DeleteAsync()
+        public void DeleteStatus(string Id)
         {
-            await Service.DeleteStatus(Id);
+            Service.DeleteStatus(Id);
         }
     }
 }

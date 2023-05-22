@@ -28,14 +28,9 @@ namespace Presentation.Model
         public string City { get; set; }
         public IServices Service { get; }
 
-        public async Task AddAsync()
+        public void AddCustomer(string FirstName, string LastName, string Id, int Age, string Address, string City)
         {
-            await Service.AddCustomer(FirstName, LastName, Id, Age, Address, City);
-        }
-
-        public async Task DeleteAsync()
-        {
-            await Service.DeleteCustomer(Id);
+            Service.AddCustomer(FirstName, LastName, Id, Age, Address, City);
         }
     }
 }
