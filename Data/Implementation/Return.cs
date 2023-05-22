@@ -6,12 +6,12 @@ namespace Data.Implementation
     {
         private IStatus _status;
 
-        public Return(string id, ICustomer customer, IStatus status) 
+        public Return(string id, ICustomer customer, IStatus status, DateTime? date) 
         { 
             Id = id;
             Status = status;
             Customer = customer;
-            Time = DateTime.Now;
+            Time = date ?? DateTime.Now;
         }
 
         public string Id { get; }

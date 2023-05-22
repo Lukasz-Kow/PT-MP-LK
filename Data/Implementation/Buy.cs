@@ -4,12 +4,12 @@ namespace Data.Implementation
 {
     internal class Buy : IBuy
     {
-        public Buy(string id, ICustomer customer, IStatus status)
+        public Buy(string id, ICustomer customer, IStatus status, DateTime? date)
         {
             Id = id;
             Status = status;
             Customer = customer;
-            Time = DateTime.Now;
+            Time = date ?? DateTime.Now;
         }
         public string Id { get; }
         public IStatus Status { get; }

@@ -5,13 +5,13 @@ namespace Data.Implementation
 {
     internal class Review : IReview
     {
-        public Review(string id,ICustomer customer, IStatus status, string description)
+        public Review(string id,ICustomer customer, IStatus status, string description, DateTime? date)
         {
             Id = id;
             Status = status;
             Customer = customer;
             Description = description;
-            Time = DateTime.Now;
+            Time = date ?? DateTime.Now;
         }
         public string Id { get; }
         

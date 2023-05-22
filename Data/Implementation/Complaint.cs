@@ -4,13 +4,13 @@ namespace Data.Implementation
 {
     internal class Complaint : IComplaint
     {
-        public Complaint(string id, ICustomer customer, IStatus status, string reason) 
+        public Complaint(string id, ICustomer customer, IStatus status, string reason, DateTime? date) 
         {
             Id = id;
             Customer = customer;
             Status = status;
             Reason = reason;
-            Time = DateTime.Now;
+            Time = date ?? DateTime.Now;
         }
 
         public string Id { get; set; }

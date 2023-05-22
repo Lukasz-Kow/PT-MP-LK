@@ -6,11 +6,11 @@ internal class Status : IStatus
 {
     private readonly IBook book;
 
-    public Status(string statusId, IBook book)
+    public Status(string statusId, IBook book, bool available)
     {
         Id = statusId;
         Book = book;
-        Availability = true;
+        Availability = available;
     }
 
     public string BookId => book.Id;
