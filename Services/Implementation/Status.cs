@@ -6,11 +6,11 @@ namespace Services.Implementation;
     {
         private readonly IBook book;
 
-        public Status(string statusId, IBook book)
+        public Status(string statusId, IBook book, bool availability)
         {
             Id = statusId;
             Book = book;
-            Availability = true;
+            Availability = availability;
         }
 
         public string BookId => book.Id;

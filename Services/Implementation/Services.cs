@@ -1,6 +1,5 @@
 ﻿using Services.API;
 using Data.API;
-using Services.Model;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("ServicesTests")]
@@ -9,104 +8,75 @@ namespace Services.Implementation
 {
     internal class dataServices : IServices
     {
-        private IDataContext dataContext;
+        private IDataRepository repository;
 
-        internal dataServices(IDataContext dataContext)
+        internal dataServices(string connectionString)
         {
-            this.dataContext = dataContext;
+            this.repository = IDataRepository.CDataRepository(connectionString);
         }
 
-        public async Task AddBook(string Title, string Author, string Id, int Pages, string ISBN, string Publisher, string Language)
+        public void AddBook(string Title, string Author, string Id, int Pages, string ISBN, string Publisher, string Language)
         {
-            await dataContext.AddBookAsync(new Book(Title, Author, Id, Pages, ISBN, Publisher, Language));
+            repository.InsertBook(new Book(Title, Author, Id, Pages, ISBN, Publisher, Language));
         }
 
-        public async Task AddBuy(string Id, string StatusId, string CustomerId, DateTime Time)
+        public void AddBuy(string Id, IStatus status, ICustomer customer, DateTime Time)
         {
-            await dataContext.AddBuyAsync(new Buy()
-            {
-                Id= Id,
-                Status = dataContext.Statuses.Where(s => s.Id == StatusId).First(),
-                Customer = dataContext.Customers.Where(c => c.Id == CustomerId).First(),
-                Time = Time
-            });
+            repository.InsertEvent(new Buy(Id, status, customer, Time));
         }
 
-        public async Task AddComplaint(string Id, string StatusId, string CustomerId, DateTime Time, string Reason)
+        public void AddComplaint(string Id, IStatus status, ICustomer customer, DateTime Time, string Reason)
         {
-            await dataContext.AddComplaintAsync(new Complaint()
-            {
-                Id = Id,
-                Status = dataContext.Statuses.Where(s => s.Id == StatusId).First(),
-                Customer = dataContext.Customers.Where(c => c.Id == CustomerId).First(),
-                Time = Time,
-                Reason = Reason
-            });
+            repository.InsertEvent(new Complaint(Id, status, customer, Reason, Time));
         }
 
-        public async Task AddCustomer(string FirstName, string LastName, string Id, int Age, string Address, string City)
+        public void AddReview(string Id, IStatus status, ICustomer customer, DateTime Time, string description)
         {
-            await dataContext.AddCustomerAsync(new Customer(FirstName, LastName, Id, Age, Address, City));
+            repository.InsertEvent(new Review(Id, status, customer,description, Time));
         }
 
-        public async Task AddReturn(string Id, string StatusId, string CustomerId, DateTime Time)
+        public void AddCustomer(string FirstName, string LastName, string Id, int Age, string Address, string City)
         {
-            await dataContext.AddReturnAsync(new Return()
-            {
-                Status = (from status in dataContext.Statuses where status.Id == StatusId select status).First(),
-                Id = Id,
-                Customer = dataContext.Customers.Where(c => c.Id == CustomerId).First()
-
-            });
-        }
-                
-        
-
-        public async Task AddStatus(string StatusId, string BookId)
-        {
-            await dataContext.AddStatusAsync(new Status(StatusId,
-                dataContext.Books.Where(c => c.Id == BookId).First()
-                ));
+            repository.InsertCustomer(new Customer(Id, FirstName, LastName, Age, Address, City));
         }
 
-        public Task DeleteBook(string Id)
+        public void AddReturn(string Id, IStatus status, ICustomer customer, DateTime Time)
         {
-            return dataContext.DeleteBookAsync(Id);
+            repository.InsertEvent(new Return(Id, status, customer, Time));
         }
 
-        public Task DeleteBuy(string Id)
+        public async Task AddStatus(string StatusId, IBook book, bool availability)
         {
-            return dataContext.DeleteBuyAsync(Id);
+            repository.InsertStatus(new Status(StatusId, book, availability));
         }
 
-        public Task DeleteComplaint(string Id)
+
+
+        public void DeleteBook(string Id)
         {
-            return dataContext.DeleteComplaintAsync(Id);
+            repository.DeleteBook(int.Parse(Id));
         }
 
-        public Task DeleteCustomer(string Id)
+        public void DeleteBuy(string Id)
         {
-            return dataContext.DeleteCustomerAsync(Id);
+            repository.DeleteEvent(int.Parse(Id));
         }
 
-        public Task DeleteReturn(string Id)
+        public void DeleteStatus(string Id)
         {
-            return dataContext.DeleteReturnAsync(Id);
+            repository.DeleteStatus(int.Parse(Id));
         }
 
-        public Task DeleteStatus(string Id)
+
+
+        public List<IBook> GetAllBooks()
         {
-            return dataContext.DeleteStatusAsync(Id);
+            return repository.GetAllBooks();
         }
 
-        public async Task<IEnumerable<API.IBook>> GetAllBooks()
+        public List<ICustomer> GetAllCustomers()
         {
-            return dataContext.Books.Select(b => new BookModel(b.Title, b.Author, b.Id, b.Pages, b.ISBN, b.Publisher, b.Language, this)).ToList();
-        }
-
-        public async Task<IEnumerable<API.ICustomer>> GetAllCustomers()
-        {
-            return dataContext.Customers.Select(c => new CustomerModel(c.Id, c.FirstName, c.LastName, c.Age, c.Address, c.City, this)).ToList();
+            return repository.GetAllCustomers();
         }
 
     }

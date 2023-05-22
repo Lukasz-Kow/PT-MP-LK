@@ -5,33 +5,22 @@ namespace Services.API
 {
     public interface IServices
     {
-        public static IServices Create() => new dataServices(IDataContext.CreateContext());
+        public static IServices Create() => new dataServices("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\Studia\\PrijectPT\\Data\\BookShopDB.mdf;Integrated Security=True");
 
-        //Books
-        Task<IEnumerable<IBook>> GetAllBooks();
-        Task AddBook(string Title, string Author, string Id, int Pages, string ISBN, string Publisher, string Language);
-        Task DeleteBook(string Id);
+        public void AddBook(string Title, string Author, string Id, int Pages, string ISBN, string Publisher, string Language);
+        public void AddBuy(string Id, IStatus status, ICustomer customer, DateTime Time);
+        public void AddComplaint(string Id, IStatus status, ICustomer customer, DateTime Time, string Reason);
+        public void AddReview(string Id, IStatus status, ICustomer customer, DateTime Time, string description);
+        public void AddCustomer(string FirstName, string LastName, string Id, int Age, string Address, string City);
+        public void AddReturn(string Id, IStatus status, ICustomer customer, DateTime Time);
+        public Task AddStatus(string StatusId, IBook book, bool availability);
 
-        //Customer
-        Task<IEnumerable<ICustomer>> GetAllCustomers();
-        Task AddCustomer(string FirstName, string LastName, string Id, int Age, string Address, string City);
-        Task DeleteCustomer(string Id);
+        public void DeleteBook(string Id);
+        public void DeleteBuy(string Id);
+        public void DeleteStatus(string Id);
 
-        //Status
-        Task AddStatus(string BookId, string StatusId);
-        Task DeleteStatus(string StatusId);
-
-        //Buy
-        Task AddBuy(string id, string statusId, string customerId, DateTime time);
-        Task DeleteBuy(string id);
-
-        //Return
-        Task AddReturn(string Id, string StatusId, string CustomerId, DateTime Time);
-        Task DeleteReturn(string Id);
-
-        //Complaint
-        Task AddComplaint(string Id, string StatusId, string CustomerId, DateTime Time, string Reason);
-        Task DeleteComplaint(string Id);
+        public List<IBook> GetAllBooks();
+        public List<ICustomer> GetAllCustomers();
     }
 }
     

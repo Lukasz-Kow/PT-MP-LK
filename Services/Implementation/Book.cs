@@ -15,18 +15,18 @@ namespace Services.Implementation
             Language = language;
         }
 
-        public string Title { get; }
+        public string Title { get; set; }
 
-        public string Author { get; }
+        public string Author { get; set; }
 
-        public string Id { get; }
+        public string Id { get; set; }
 
-        public int Pages { get; }
+        public int Pages { get; set; }
 
-        public string ISBN { get; }
+        public string ISBN { get; set; }
 
-        public string Publisher { get; }
+        public string Publisher { get; set; }
 
-        public string Language { get; }
+        public string Language { get; set; }
     }
 }
