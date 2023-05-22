@@ -1,5 +1,8 @@
 using Data.API;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.CompilerServices;
+
+
 [assembly:InternalsVisibleTo("TestData")]
 [assembly:InternalsVisibleTo("LogicTest")]
 

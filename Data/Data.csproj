@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
@@ -9,10 +9,31 @@
     <ItemGroup>
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0-preview.4.23259.3" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0-preview.4.23259.3" />
+      <PackageReference Include="Mindbox.Data.Linq" Version="10.5.0" />
+      <PackageReference Include="System.Linq" Version="4.3.0" />
     </ItemGroup>
 
     <ItemGroup>
       <Folder Include="Migrations\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Service Include="{3259aa49-8aa1-44d3-9025-a0b520596a8c}" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="BookShopDBL.designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>BookShopDBL.dbml</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="BookShopDBL.dbml">
+        <Generator>MSLinqToSQLGenerator</Generator>
+        <LastGenOutput>BookShopDBL.designer.cs</LastGenOutput>
+      </None>
     </ItemGroup>
 
 </Project>
