@@ -8,6 +8,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <view:ReturnBook DataContext="{Binding CurrentViewModel}"/>
+        <view:AddBook DataContext="{Binding CurrentViewModel}"/>
     </Grid>
 </Window>

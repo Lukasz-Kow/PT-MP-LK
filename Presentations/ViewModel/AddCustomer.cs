@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 
 namespace Presentations.ViewModel
 {
-    class AddCustomer : ViewModelBase
+    public class AddCustomer : ViewModelBase
     {
         private string _firstName;
         public string FirstName

@@ -90,6 +90,9 @@ namespace Presentations.ViewModel
 
         public ICommand DeleteCommand { get; }
 
-        public AddBook() { }
+        public AddBook() 
+        {
+            AddCommand = new BuyBookCommand();
+        }
     }
 }
