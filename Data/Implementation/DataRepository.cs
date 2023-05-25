@@ -1,9 +1,6 @@
-using Castle.Core.Resource;
+
 using Data.API;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.Extensions.Logging;
-using System.ComponentModel.DataAnnotations.Schema;
+
 using System.Data.Linq;
 
 namespace Data.Implementation;
@@ -23,13 +20,40 @@ internal class DataRepository : IDataRepository
     {
         using (BookShopDBLDataContext dbContext = new BookShopDBLDataContext(this._connectionString))
         {
-            var customerEntity = dbContext.Customers.FirstOrDefault(c => c.Id == id);
-            if (customerEntity == null)
+            var customerEntity = dbContext.Customers.Where(c => c.Id == id);
+            if (customerEntity is not null)
             {
-                return null;
+                var customerToReturn_Entity = customerEntity.First();
+
+                return new Customer(customerToReturn_Entity.Id.ToString(), customerToReturn_Entity.FirstName.TrimEnd(), customerToReturn_Entity.LastName.TrimEnd(),
+                                                      customerToReturn_Entity.Age ?? 0, customerToReturn_Entity.Address.TrimEnd(), customerToReturn_Entity.City.TrimEnd());
+            } else
+            {
+                throw new Exception("Customer not found");
             }
-            return new Customer(customerEntity.Id.ToString(), customerEntity.FirstName.TrimEnd(), customerEntity.LastName.TrimEnd(),
-                customerEntity.Age ?? 0, customerEntity.Address.TrimEnd(), customerEntity.City.TrimEnd());
+            
+        }
+    }
+
+    public ICustomer GetCustomer_QuerySyntax(int id)
+    {
+        using (BookShopDBLDataContext dbContext = new BookShopDBLDataContext(this._connectionString))
+        {
+            IQueryable<Customers> query =
+                 from c in dbContext.Customers
+                 where c.Id == id
+                 select c;
+
+            if (query == null)
+            {
+                throw new Exception("Customer not found");
+            }
+
+            ICustomer customerToReturn = new Customer(query.First().Id.ToString(), query.First().FirstName.TrimEnd(), query.First().LastName.TrimEnd(),
+                               query.First().Age ?? 0, query.First().Address.TrimEnd(), query.First().City.TrimEnd());
+
+            return customerToReturn;
+
         }
     }
 
@@ -105,14 +129,43 @@ internal class DataRepository : IDataRepository
     {
         using (BookShopDBLDataContext dbContext = new BookShopDBLDataContext(this._connectionString))
         {
-            var bookEntity = dbContext.Books.FirstOrDefault(c => c.Id == id);
+            var bookEntity = dbContext.Books.Where(c => c.Id == id);
             if (bookEntity == null)
             {
                 return null;
             }
 
-            return new Book(bookEntity.Id.ToString(), bookEntity.Title.TrimEnd(), bookEntity.Author.TrimEnd(), (int)bookEntity.Pages,
-                bookEntity.ISBN.TrimEnd(), bookEntity.Publisher.TrimEnd(), bookEntity.Language.TrimEnd());
+            if (bookEntity is not null)
+            {
+                var bookToReturn_entity = bookEntity.First();
+
+                return new Book(bookToReturn_entity.Id.ToString(), bookToReturn_entity.Title.TrimEnd(), bookToReturn_entity.Author.TrimEnd(),
+                    (int)bookToReturn_entity.Pages, bookToReturn_entity.ISBN.TrimEnd(), bookToReturn_entity.Publisher.TrimEnd(),
+                    bookToReturn_entity.Language.TrimEnd());
+            } else
+            {
+                throw new Exception("Book not found");
+            }
+ 
+        }
+    }
+
+    public IBook GetBook_QuerySyntax(int id)
+    {
+        using (BookShopDBLDataContext dbContext = new BookShopDBLDataContext(this._connectionString))
+        {
+            IQueryable<Books> query = 
+                from b in dbContext.Books where b.Id == id
+                select b; 
+            
+            if (query == null)
+            {
+                throw new Exception("Book not found");
+            }
+            IBook bookToReturn = new Book(query.First().Id.ToString(), query.First().Title.TrimEnd(), query.First().Author.TrimEnd(), (int)query.First().Pages,
+                query.First().ISBN.TrimEnd(), query.First().Publisher.TrimEnd(), query.First().Language.TrimEnd());
+
+            return bookToReturn;
         }
     }
 
@@ -126,6 +179,16 @@ internal class DataRepository : IDataRepository
                 .ToList();
             return books;
         }
+    }
+
+    public List<IBook> GetAllBooks_QuerySyntax()
+    {
+        using (var dbContext = new BookShopDBLDataContext(_connectionString))
+        {
+            return (from b in dbContext.Books
+                            select new Book(b.Id.ToString(), b.Title.TrimEnd(), b.Author.TrimEnd(), (int)b.Pages, b.ISBN.TrimEnd(), b.Publisher.TrimEnd(), b.Language.TrimEnd()) as IBook)
+                            .ToList();
+        }   
     }
 
     public void InsertBook(IBook newBook)

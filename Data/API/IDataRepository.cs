@@ -14,13 +14,16 @@ public interface IDataRepository
     // Customers
     List<ICustomer> GetAllCustomers();
     ICustomer GetCustomer(int id);
+    ICustomer GetCustomer_QuerySyntax(int id);
     void InsertCustomer(ICustomer newCustomer);
     void UpdateCustomer(ICustomer updatedCustomer);
     void DeleteCustomer(int customerId);
 
     // Books
     List<IBook> GetAllBooks();
+    public List<IBook> GetAllBooks_QuerySyntax();
     IBook GetBook(int id);
+    public IBook GetBook_QuerySyntax(int id);
     void InsertBook(IBook newBook);
     void UpdateBook(IBook updatedBook);
     void DeleteBook(int bookId);

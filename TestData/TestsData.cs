@@ -46,6 +46,27 @@ namespace TestData {
         }
 
         [TestMethod]
+        public void InsertCustomer_ThenGet_ThenDropTable_QuerySyntax()
+        {
+            IDataRepository repository = new DataRepository("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\Studia\\PrijectPT\\TestData\\Instrumentation\\UnitTestDataDB.mdf;Integrated Security=True");
+
+            repository.DropAll();
+
+            ICustomer c = new Customer("1", "John", "Poe", 10, "lalalal", "Lodz");
+            repository.InsertCustomer(c);
+
+            ICustomer testCustomer = repository.GetCustomer_QuerySyntax(1);
+
+            Assert.IsNotNull(testCustomer);
+
+            Assert.AreEqual("1", testCustomer.Id);
+            Type type = testCustomer.FirstName.GetType();
+            Console.WriteLine(type);
+            Assert.IsTrue(string.Equals(testCustomer.FirstName, "John"));
+            Assert.IsTrue(string.Equals(testCustomer.LastName, "Poe"));
+        }
+
+        [TestMethod]
         public void InsertBook_ThenGet_ThenDropTable()
         {
             IDataRepository repository = new DataRepository("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\Studia\\PrijectPT\\TestData\\Instrumentation\\UnitTestDataDB.mdf;Integrated Security=True");
@@ -60,6 +81,24 @@ namespace TestData {
             Assert.IsNotNull(testBook);
             Assert.AreEqual("1", testBook.Id);
             Assert.IsTrue(string.Equals(testBook.Title, "The Great Gatsby"));
+            Assert.IsTrue(string.Equals(testBook.Author, "F. Scott Fitzgerald"));
+        }
+
+        [TestMethod]
+        public void InsertBook_ThenGet_ThenDropTable_QuerySyntax()
+        {
+            IDataRepository repository = new DataRepository("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\Studia\\PrijectPT\\TestData\\Instrumentation\\UnitTestDataDB.mdf;Integrated Security=True");
+
+            repository.DropAll();
+
+            IBook book = new Book("1", "The Great Gatsby", "F. Scott Fitzgerald", 320, "9780743273565", "Scribner", "English");
+            repository.InsertBook(book);
+
+            IBook testBook = repository.GetBook_QuerySyntax(1);
+
+            Assert.IsNotNull(testBook);
+            Assert.AreEqual("1", testBook.Id);
+            Assert.IsTrue(string.Equals(testBook.Title, "The Great Gatsby"));    
             Assert.IsTrue(string.Equals(testBook.Author, "F. Scott Fitzgerald"));
         }
 
