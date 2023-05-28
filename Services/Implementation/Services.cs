@@ -60,6 +60,11 @@ namespace Services.Implementation
             repository.DeleteStatus(int.Parse(Id));
         }
 
+        public void DeleteCustomer(string Id)
+        {
+              repository.DeleteCustomer(int.Parse(Id));
+        }
+
 
 
         public List<IBook> GetAllBooks()
@@ -80,6 +85,37 @@ namespace Services.Implementation
         public void DropTables()
         {
             repository.DropAll();
+        }
+
+
+        public List<IStatus> GetAllStatuses()
+        {
+            return repository.GetAllStatuses();
+        }
+
+        public List<IEvent> GetAllEvents()
+        {
+            return repository.GetAllEvents();
+        }
+
+        public IBook GetBookById(string Id)
+        {
+            return repository.GetBook(int.Parse(Id));
+        }
+
+        public ICustomer GetCustomerById(string Id)
+        {
+            return repository.GetCustomer(int.Parse(Id));
+        }
+
+        public IStatus GetStatusById(string Id)
+        {
+            return repository.GetStatus(int.Parse(Id));
+        }
+
+        public IEvent GetEventById(string Id)
+        {
+            return repository.GetEvent(int.Parse(Id));
         }
     }
 

@@ -252,15 +252,38 @@ internal class DataRepository : IDataRepository
     {
         using (var dbContext = new BookShopDBLDataContext(_connectionString))
         {
-            var statusEntity = dbContext.Statuses.FirstOrDefault(s => s.Id == id);
-            if (statusEntity == null)
+            var statusEntity = dbContext.Statuses.Where(s => s.Id == id);
+            if (statusEntity is not null)
             {
-                return null;
+                var statusToReturn_Entity = statusEntity.First();
+
+                IBook assignedBook = GetBook(statusToReturn_Entity.BookId ?? 0);
+
+                return new Status(statusToReturn_Entity.Id.ToString(), assignedBook, statusToReturn_Entity.Availability ?? true);
             }
+            else
+            {
+                throw new Exception("Status not found");
+            }
+        }
+    }
 
-            IBook assignedBook = GetBook(statusEntity.BookId ?? 0);
+    public IStatus GetStatus_QuerySyntax(int id)
+    {
+        using (var dbContext = new BookShopDBLDataContext(_connectionString))
+        {
+            IQueryable<Statuses> query =
+                from s in dbContext.Statuses
+                where s.Id == id
+                select s;
 
-            return new Status(statusEntity.Id.ToString(), assignedBook, statusEntity.Availability ?? true);
+            if (query == null)
+            {
+                throw new Exception("Status not found");
+            }
+            IStatus statusToReturn = new Status(query.First().Id.ToString(), GetBook(query.First().BookId ?? 0), query.First().Availability ?? true);
+
+            return statusToReturn;
         }
     }
 
@@ -336,41 +359,87 @@ internal class DataRepository : IDataRepository
         using (var dbContext = new BookShopDBLDataContext(_connectionString))
         {
 
-            var eventEntity = dbContext.Events.FirstOrDefault(e => e.Id == id);
+            var eventEntity = dbContext.Events.Where(e => e.Id == id);
             if (eventEntity == null)
             {
                 return null;
             }
 
-            if(eventEntity.Type.TrimEnd() == "Buy")
+            var eventToReturn_Entity = eventEntity.First();
+
+            if(eventToReturn_Entity.Type.TrimEnd() == "Buy")
             {
-                IStatus status = GetStatus(eventEntity.StatusId);
-                ICustomer customer = GetCustomer(eventEntity.CustomerId);
-                return new Buy(eventEntity.Id.ToString(), customer, status, eventEntity.Time);
+                IStatus status = GetStatus(eventToReturn_Entity.StatusId);
+                ICustomer customer = GetCustomer(eventToReturn_Entity.CustomerId);
+                return new Buy(eventToReturn_Entity.Id.ToString(), customer, status, eventToReturn_Entity.Time);
             } 
-               else if (eventEntity.Type.TrimEnd() == "Return")
+               else if (eventToReturn_Entity.Type.TrimEnd() == "Return")
             {
-                IStatus status = GetStatus(eventEntity.StatusId);
-                ICustomer customer = GetCustomer(eventEntity.CustomerId);
-                return new Return(eventEntity.Id.ToString(), customer, status, eventEntity.Time);
+                IStatus status = GetStatus(eventToReturn_Entity.StatusId);
+                ICustomer customer = GetCustomer(eventToReturn_Entity.CustomerId);
+                return new Return(eventToReturn_Entity.Id.ToString(), customer, status, eventToReturn_Entity.Time);
             }
-                else if (eventEntity.Type.TrimEnd() == "Review")
+                else if (eventToReturn_Entity.Type.TrimEnd() == "Review")
             {
-                IStatus status = GetStatus(eventEntity.StatusId);
-                ICustomer customer = GetCustomer(eventEntity.CustomerId);
-                return new Review(eventEntity.Id.ToString(), customer, status, eventEntity.Description, eventEntity.Time);
+                IStatus status = GetStatus(eventToReturn_Entity.StatusId);
+                ICustomer customer = GetCustomer(eventToReturn_Entity.CustomerId);
+                return new Review(eventToReturn_Entity.Id.ToString(), customer, status, eventToReturn_Entity.Description, eventToReturn_Entity.Time);
             }
-                else if (eventEntity.Type.TrimEnd() == "Complaint")
+                else if (eventToReturn_Entity.Type.TrimEnd() == "Complaint")
             {
-                IStatus status = GetStatus(eventEntity.StatusId);
-                ICustomer customer = GetCustomer(eventEntity.CustomerId);
-                return new Complaint(eventEntity.Id.ToString(), customer, status, eventEntity.Reason, eventEntity.Time);
+                IStatus status = GetStatus(eventToReturn_Entity.StatusId);
+                ICustomer customer = GetCustomer(eventToReturn_Entity.CustomerId);
+                return new Complaint(eventToReturn_Entity.Id.ToString(), customer, status, eventToReturn_Entity.Reason, eventToReturn_Entity.Time);
             } 
                 else
             {
                 return null;
             }
 
+        }
+    }
+
+    public IEvent GetEvent_QuerySyntax(int id)
+    {
+        IQueryable<Events> query =
+                from e in dbContext.Events
+                where e.Id == id
+                select e;
+
+        if (query == null)
+        {
+            throw new Exception("Event not found");
+        }
+
+        var eventToReturn_Entity = query.First();
+
+        if (eventToReturn_Entity.Type.TrimEnd() == "Buy")
+        {
+            IStatus status = GetStatus(eventToReturn_Entity.StatusId);
+            ICustomer customer = GetCustomer(eventToReturn_Entity.CustomerId);
+            return new Buy(eventToReturn_Entity.Id.ToString(), customer, status, eventToReturn_Entity.Time);
+        }
+        else if (eventToReturn_Entity.Type.TrimEnd() == "Return")
+        {
+            IStatus status = GetStatus(eventToReturn_Entity.StatusId);
+            ICustomer customer = GetCustomer(eventToReturn_Entity.CustomerId);
+            return new Return(eventToReturn_Entity.Id.ToString(), customer, status, eventToReturn_Entity.Time);
+        }
+        else if (eventToReturn_Entity.Type.TrimEnd() == "Review")
+        {
+            IStatus status = GetStatus(eventToReturn_Entity.StatusId);
+            ICustomer customer = GetCustomer(eventToReturn_Entity.CustomerId);
+            return new Review(eventToReturn_Entity.Id.ToString(), customer, status, eventToReturn_Entity.Description, eventToReturn_Entity.Time);
+        }
+        else if (eventToReturn_Entity.Type.TrimEnd() == "Complaint")
+        {
+            IStatus status = GetStatus(eventToReturn_Entity.StatusId);
+            ICustomer customer = GetCustomer(eventToReturn_Entity.CustomerId);
+            return new Complaint(eventToReturn_Entity.Id.ToString(), customer, status, eventToReturn_Entity.Reason, eventToReturn_Entity.Time);
+        }
+        else
+        {
+            return null;
         }
     }
 

@@ -9,7 +9,9 @@ namespace Services.API
         //public static IServices Create() => new dataServices("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\Studia\\PrijectPT\\Data\\BookShopDB.mdf;Integrated Security=True");
 
         //Lukasz
-        public static IServices Create() => new dataServices("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"D:\\4IT\\Programming Technologies\\GIT\\ProjectPT\\Data\\BookShopDB.mdf\";Integrated Security=True");
+        // Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"D:\\4IT\\Programming Technologies\\GIT\\ProjectPT\\Data\\BookShopDB.mdf\";Integrated Security=True
+        
+        public static IServices Create(string connectionLink) => new dataServices(connectionLink);
 
         public void AddBook(string Title, string Author, string Id, int Pages, string ISBN, string Publisher, string Language);
         public void AddBuy(string Id, IStatus status, ICustomer customer, DateTime Time);
@@ -22,9 +24,18 @@ namespace Services.API
         public void DeleteBook(string Id);
         public void DeleteBuy(string Id);
         public void DeleteStatus(string Id);
+        public void DeleteCustomer(string Id);
 
         public List<IBook> GetAllBooks();
         public List<ICustomer> GetAllCustomers();
+        public List<IStatus> GetAllStatuses();
+        public List<IEvent> GetAllEvents();
+
+        public IBook GetBookById(string Id);
+        public ICustomer GetCustomerById(string Id);
+        public IStatus GetStatusById(string Id);
+        public IEvent GetEventById(string Id);
+
 
         public void DropTables();
     }

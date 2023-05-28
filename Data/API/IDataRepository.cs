@@ -31,6 +31,7 @@ public interface IDataRepository
     // Statuses
     List<IStatus> GetAllStatuses();
     IStatus GetStatus(int id);
+    public IStatus GetStatus_QuerySyntax(int id);
     void InsertStatus(IStatus newStatus);
     void UpdateStatus(IStatus updatedStatus);
     void DeleteStatus(int statusId);
@@ -38,6 +39,7 @@ public interface IDataRepository
     // Events
     List<IEvent> GetAllEvents();
     IEvent GetEvent(int id);
+    public IEvent GetEvent_QuerySyntax(int id);
     void InsertEvent(IEvent newEvent);
     void UpdateEvent(IEvent updatedEvent);
     void DeleteEvent(int eventId);
