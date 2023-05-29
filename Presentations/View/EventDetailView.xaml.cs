@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Presentations.View
 {
     /// <summary>
-    /// Logika interakcji dla klasy Customer.xaml
+    /// Logika interakcji dla klasy EventDetailView.xaml
     /// </summary>
-    public partial class Customer : UserControl
+    public partial class EventDetailView : Window
     {
-        public Customer()
+        public EventDetailView()
         {
             InitializeComponent();
         }

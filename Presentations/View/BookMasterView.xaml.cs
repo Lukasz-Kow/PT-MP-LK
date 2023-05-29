@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Presentations.View
 {
     /// <summary>
-    /// Logika interakcji dla klasy ReturnBook.xaml
+    /// Logika interakcji dla klasy BookMasterView.xaml
     /// </summary>
-    public partial class ReturnBook : UserControl
+    public partial class BookMasterView : Window
     {
-        public ReturnBook()
+        public BookMasterView()
         {
             InitializeComponent();
         }

@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="Presentations.View.CustomerMasterView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:Presentations.View"
+        xmlns:vm="clr-namespace:Presentations.ViewModel">
+
+
+
+    <Grid>
+        <ListView ItemsSource="{Binding Customers}"
+                  SelectedItem="{Binding SelectedCustomer}"
+                  Margin="10">
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding FirstName}" FontWeight="Bold"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <StackPanel Grid.Column="1" Margin="10">
+            <TextBlock Text="First Name:"/>
+            <TextBox Text="{Binding SelectedCustomer.FirstName, Mode=TwoWay}" Margin="5"/>
+
+            <TextBlock Text="Last Name:"/>
+            <TextBox Text="{Binding SelectedCustomer.LastName, Mode=TwoWay}" Margin="5"/>
+
+            <TextBlock Text="ID:"/>
+            <TextBox Text="{Binding SelectedCustomer.Id, Mode=TwoWay}" Margin="5"/>
+
+            <TextBlock Text="Age:"/>
+            <TextBox Text="{Binding SelectedCustomer.Age, Mode=TwoWay}" Margin="5"/>
+
+            <TextBlock Text="Address:"/>
+            <TextBox Text="{Binding SelectedCustomer.Address, Mode=TwoWay}" Margin="5"/>
+
+            <TextBlock Text="City:"/>
+            <TextBox Text="{Binding SelectedCustomer.City, Mode=TwoWay}" Margin="5"/>
+
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <Button Content="Add Customer" Command="{Binding AddCustomerCommand}" Margin="5"/>
+                <Button Content="Delete Customer" Command="{Binding DeleteCustomerCommand}" Margin="5"/>
+                <Button Content="Fetch Data" Command="{Binding FetchDataCommand}" Margin="5"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

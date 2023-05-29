@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Presentations.View
 {
     /// <summary>
-    /// Logika interakcji dla klasy UserControl1.xaml
+    /// Logika interakcji dla klasy StatusMasterView.xaml
     /// </summary>
-    public partial class AddCustomer : UserControl
+    public partial class StatusMasterView : Window
     {
-        public AddCustomer()
+        public StatusMasterView()
         {
             InitializeComponent();
         }

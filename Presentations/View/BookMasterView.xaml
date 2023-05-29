@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="Presentations.View.BookMasterView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:Presentations.View"
+        xmlns:vm="clr-namespace:Presentations.ViewModel" >
+
+
+    <Grid>
+        <ListBox ItemsSource="{Binding Books}" SelectedItem="{Binding SelectedBook}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Title}" Margin="5"/>
+                        <TextBlock Text="{Binding Author}" Margin="5"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <Grid Grid.Row="1" Visibility="{Binding SelectedBook}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="Title:"/>
+                <TextBlock Text="Author:"/>
+                <TextBlock Text="ID:"/>
+                <TextBlock Text="Pages:"/>
+                <TextBlock Text="ISBN:"/>
+                <TextBlock Text="Publisher:"/>
+                <TextBlock Text="Language:"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1">
+                <TextBlock Text="{Binding SelectedBook.Title}"/>
+                <TextBlock Text="{Binding SelectedBook.Author}"/>
+                <TextBlock Text="{Binding SelectedBook.Id}"/>
+                <TextBlock Text="{Binding SelectedBook.Pages}"/>
+                <TextBlock Text="{Binding SelectedBook.ISBN}"/>
+                <TextBlock Text="{Binding SelectedBook.Publisher}"/>
+                <TextBlock Text="{Binding SelectedBook.Language}"/>
+            </StackPanel>
+        </Grid>
+
+        <Button Content="Show Details" Command="{Binding ShowDetailsCommand}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10"/>
+    </Grid>
+</UserControl>

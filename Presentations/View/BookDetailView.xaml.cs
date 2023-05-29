@@ -1,5 +1,4 @@
-﻿using Presentations.View;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,21 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Presentations
+namespace Presentations.View
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Logika interakcji dla klasy BookDetailView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class BookDetailView : Window
     {
-        public MainWindow()
+        public BookDetailView()
         {
             InitializeComponent();
-
         }
-
     }
 }
