@@ -1,12 +1,9 @@
-﻿using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
-using Presentation.Model.ModelAPI;
+﻿
 using Services.API;
 
-namespace Presentation.Model
+namespace Presentations.Model
 {
-    internal class CustomerModel : ICustomerModel
+    public class CustomerModel
     {
 
         public CustomerModel(string firstName, string lastName, string id, int age, string address, string city) 
@@ -17,8 +14,6 @@ namespace Presentation.Model
             Age = age;
             Address = address;
             City = city;
-
-            Service = IServices.Create();
         }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -26,11 +21,11 @@ namespace Presentation.Model
         public int Age { get; set; }
         public string Address { get; set; }
         public string City { get; set; }
-        public IServices Service { get; }
+       
 
-        public void AddCustomer(string FirstName, string LastName, string Id, int Age, string Address, string City)
+        public override string ToString()
         {
-            Service.AddCustomer(FirstName, LastName, Id, Age, Address, City);
+            return $"{FirstName} {LastName} {Id}";
         }
     }
 }

@@ -1,23 +1,21 @@
-﻿using System.Threading.Tasks;
-using Presentation.Model.ModelAPI;
-using Services.API;
+﻿using Services.API;
+using System.Collections.Generic;
+using System.Windows.Documents;
 
-namespace Presentation.Model
+namespace Presentations.Model
 {
-    public class BookModel : IBookModel
+    public class BookModel
     {
 
-        public BookModel(string title, string author, string id, int pages, string iSBN, string publisher, string language) 
-        { 
+        public BookModel(string title, string author, string Id, int pages, string isbn, string publisher, string language) 
+        {
             Title = title;
             Author = author;
-            Id = id;
+            this.Id = Id;
             Pages = pages;
+            ISBN = isbn;
             Publisher = publisher;
             Language = language;
-
-            Service = IServices.Create();
-
         }
 
         public string Title { get; set; }
@@ -27,16 +25,11 @@ namespace Presentation.Model
         public string ISBN { get; set; }
         public string Publisher { get; set; }
         public string Language { get; set; }
-        public IServices Service { get; }
 
-        public void AddBook(string Title, string Author, string Id, int Pages, string ISBN, string Publisher, string Language)
+        public override string ToString()
         {
-            Service.AddBook(Title, Author, Id, Pages, ISBN, Publisher, Language);
+            return $"{Title} {Author} {Id}";
         }
 
-        public void DeleteBook(string Id)
-        {
-            Service.DeleteBook(Id);
-        }
     }
 }

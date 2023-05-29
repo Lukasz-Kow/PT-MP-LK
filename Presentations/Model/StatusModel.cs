@@ -1,19 +1,17 @@
-﻿using System.Threading.Tasks;
-using Data.API;
-using Presentation.Model.ModelAPI;
+﻿
 using Services.API;
 
-namespace Presentation.Model
+namespace Presentations.Model
 {
-    internal class StatusModel : IStatusModel
+    public class StatusModel
     {
-        public StatusModel(string statusId, string bookId)
+        public StatusModel(string statusId, string bookId, bool availability)
         {
             Id = statusId;
             BookId = bookId;
-            Availability = true;
+            Availability = availability;
 
-            Service = IServices.Create();
+            Service = IServices.Create("");
         }
 
         public string BookId { get; set; }
@@ -22,15 +20,20 @@ namespace Presentation.Model
         public bool Availability { get; set; }
         public IServices Service { get; }
 
-        public void AddStatus(string StatusId, IBook book, bool availability)
+        public void AddStatus(string StatusId, string bookId, bool availability)
         {
-            Service.AddStatus(StatusId, book, availability);
+            Service.AddStatus(StatusId, bookId, availability);
         }
 
 
         public void DeleteStatus(string Id)
         {
             Service.DeleteStatus(Id);
+        }
+
+        public override string ToString()
+        {
+            return $"{Id} {BookId} {Availability}";
         }
     }
 }

@@ -20,19 +20,14 @@ namespace Services.Implementation
             repository.InsertBook(new Book(Id, Title, Author, Pages, ISBN, Publisher, Language));
         }
 
-        public void AddBuy(string Id, IStatus status, ICustomer customer, DateTime Time)
+        public void AddBuy(string Id, string statusId, string customerId, DateTime Time)
         {
-            repository.InsertEvent(new Buy(Id, status, customer, Time));
-        }
-
-        public void AddComplaint(string Id, IStatus status, ICustomer customer, DateTime Time, string Reason)
-        {
-            repository.InsertEvent(new Complaint(Id, status, customer, Reason, Time));
-        }
-
-        public void AddReview(string Id, IStatus status, ICustomer customer, DateTime Time, string description)
-        {
-            repository.InsertEvent(new Review(Id, status, customer,description, Time));
+            repository.InsertEvent(new Buy(
+                Id,
+                GetStatusById(statusId),
+                GetCustomerById(customerId),
+                Time
+                ));
         }
 
         public void AddCustomer(string FirstName, string LastName, string Id, int Age, string Address, string City)
@@ -40,17 +35,12 @@ namespace Services.Implementation
             repository.InsertCustomer(new Customer(Id, FirstName, LastName, Age, Address, City));
         }
 
-        public void AddReturn(string Id, IStatus status, ICustomer customer, DateTime Time)
-        {
-            repository.InsertEvent(new Return(Id, status, customer, Time));
-        }
-
         public void DeleteBook(string Id)
         {
             repository.DeleteBook(int.Parse(Id));
         }
 
-        public void DeleteBuy(string Id)
+        public void DeleteEvent(string Id)
         {
             repository.DeleteEvent(int.Parse(Id));
         }
@@ -77,9 +67,12 @@ namespace Services.Implementation
             return repository.GetAllCustomers();
         }
 
-        public void AddStatus(string StatusId, IBook book, bool availability)
+        public void AddStatus(string StatusId, string bookId, bool availability)
         {
-            repository.InsertStatus(new Status(StatusId, book, availability));
+            repository.InsertStatus(new Status(
+                StatusId, 
+                GetBookById(bookId), 
+                availability));
         }
 
         public void DropTables()
@@ -116,6 +109,38 @@ namespace Services.Implementation
         public IEvent GetEventById(string Id)
         {
             return repository.GetEvent(int.Parse(Id));
+        }
+
+        public void AddComplaint(string Id, string statusId, string customerId, DateTime Time, string Reason)
+        {
+            repository.InsertEvent(new Complaint(
+                Id,
+                GetStatusById(statusId),
+                GetCustomerById(customerId),
+                Reason,
+                Time
+            ));
+        }
+
+        public void AddReview(string Id, string statusId, string customerId, DateTime Time, string description)
+        {
+            repository.InsertEvent(new Review(
+                Id,
+                GetStatusById(statusId),
+                GetCustomerById(customerId),
+                description,
+                Time
+            ));
+        }
+
+        public void AddReturn(string Id, string statusId, string customerId, DateTime Time)
+        {
+            repository.InsertEvent(new Return(
+                Id,
+                GetStatusById(statusId),
+                GetCustomerById(customerId),
+                Time
+            ));
         }
     }
 

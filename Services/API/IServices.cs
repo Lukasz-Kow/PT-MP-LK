@@ -14,15 +14,15 @@ namespace Services.API
         public static IServices Create(string connectionLink) => new dataServices(connectionLink);
 
         public void AddBook(string Title, string Author, string Id, int Pages, string ISBN, string Publisher, string Language);
-        public void AddBuy(string Id, IStatus status, ICustomer customer, DateTime Time);
-        public void AddComplaint(string Id, IStatus status, ICustomer customer, DateTime Time, string Reason);
-        public void AddReview(string Id, IStatus status, ICustomer customer, DateTime Time, string description);
+        public void AddBuy(string Id, string statusId, string customerId, DateTime Time);
+        public void AddComplaint(string Id, string statusId, string customerId, DateTime Time, string Reason);
+        public void AddReview(string Id, string statusId, string customerId, DateTime Time, string description);
         public void AddCustomer(string FirstName, string LastName, string Id, int Age, string Address, string City);
-        public void AddReturn(string Id, IStatus status, ICustomer customer, DateTime Time);
-        public void AddStatus(string StatusId, IBook book, bool availability);
+        public void AddReturn(string Id, string statusId, string customerId, DateTime Time);
+        public void AddStatus(string StatusId, string bookId, bool availability);
 
         public void DeleteBook(string Id);
-        public void DeleteBuy(string Id);
+        public void DeleteEvent(string Id);
         public void DeleteStatus(string Id);
         public void DeleteCustomer(string Id);
 

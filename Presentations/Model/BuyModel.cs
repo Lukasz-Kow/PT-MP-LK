@@ -1,22 +1,20 @@
-﻿using Data.API;
-using Presentation.Model.ModelAPI;
-using Services.API;
+﻿using Services.API;
 using System;
-using System.Threading.Tasks;
 
-namespace Presentation.Model
+
+namespace Presentations.Model
 {
-    public class BuyModel : IBuyModel
+    public class BuyModel: IEventModel
     {
 
-        public BuyModel(string statusId, string customerId, DateTime time)
+        public BuyModel(string id, string statusId, string customerId, DateTime time)
         {
-            Id = Guid.NewGuid().ToString();
+            Id = id;
             StatusId = statusId;
             CustomerId = customerId;
             Time = time;
 
-            Service = IServices.Create();
+            Service = IServices.Create("");
         }
 
         public string Id { get; set; }
@@ -25,14 +23,19 @@ namespace Presentation.Model
         public DateTime Time { get; set; }
         public IServices Service { get; }
 
-        public void AddBuy(string Id, IStatus status, ICustomer customer, DateTime Time)
+        public void AddBuy(string Id, string statusId, string customerId, DateTime Time)
         {
-            Service.AddBuy(Id, status, customer, Time);
+            Service.AddBuy(Id, statusId, customerId, Time);
         }
 
         public void DeleteBuy(string Id)
         {
-            Service.DeleteBuy(Id);
+            Service.DeleteEvent(Id);
+        }
+
+        public override string ToString()
+        {
+            return $"{Id} {StatusId} {CustomerId} {Time}";
         }
     }
 }

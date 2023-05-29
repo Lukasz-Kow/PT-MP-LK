@@ -1,22 +1,19 @@
 ﻿using System;
-using System.Threading.Tasks;
-using Data.API;
-using Presentation.Model.ModelAPI;
 using Services.API;
 
 
-namespace Presentation.Model
+namespace Presentations.Model
 {
-    internal class ReturnModel : IReturnModel
+    internal class ReturnModel: IEventModel
     {
-        public ReturnModel(string statusId, string customerId, DateTime time) 
+        public ReturnModel(string id, string statusId, string customerId, DateTime time) 
         { 
-            Id = Guid.NewGuid().ToString();
+            Id = id;
             StatusId = statusId;
             CustomerId = customerId;
             Time = time;
 
-            Service = IServices.Create();
+            Service = IServices.Create("");
         }
 
         public string Id { get; set ; }
@@ -26,9 +23,19 @@ namespace Presentation.Model
 
         public IServices Service { get; }
 
-        public void AddReturn(string Id, IStatus status, ICustomer customer, DateTime Time)
+        public void AddReturn(string Id, string statusId, string customerId, DateTime Time)
         {
-            Service.AddReturn(Id, status, customer, Time);
+            Service.AddReturn(Id, statusId, customerId, Time);
+        }
+
+        public void DeleteReturn(string Id)
+        {
+            Service.DeleteEvent(Id);
+        }
+
+        public override string ToString()
+        {
+            return $"{Id} {StatusId} {CustomerId} {Time}";
         }
     }
 }

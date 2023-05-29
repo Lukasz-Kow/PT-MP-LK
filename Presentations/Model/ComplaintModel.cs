@@ -1,22 +1,20 @@
-﻿using System.Threading.Tasks;
-using Presentation.Model.ModelAPI;
+﻿
 using Services.API;
 using System;
-using Data.API;
 
-namespace Presentation.Model
+namespace Presentations.Model
 {
-    internal class ComplaintModel : IComplaintModel
+    internal class ComplaintModel: IEventModel
     {
-        public ComplaintModel(string statusId, string customerId, DateTime time, string reason)
+        public ComplaintModel(string id, string statusId, string customerId, DateTime time, string reason)
         {
-            Id = Guid.NewGuid().ToString();
+            Id = id;
             StatusId = statusId;
             CustomerId = customerId;
             Time = time;
             Reason = reason;
 
-            Service = IServices.Create();
+            Service = IServices.Create("");
         }
 
         public string Id { get; set; }
@@ -26,9 +24,19 @@ namespace Presentation.Model
         public string Reason { get; set; }
         public IServices Service { get; }
 
-        public void AddComplaint(string Id, IStatus status, ICustomer customer, DateTime Time, string Reason)
+        public void AddComplaint(string Id, string statusId, string customerId, DateTime Time, string Reason)
         {
-            Service.AddComplaint(Id, status, customer, Time, Reason);
+            Service.AddComplaint(Id, statusId, customerId, Time, Reason);
+        }
+
+        public void DeleteComplaint(string Id)
+        {
+            Service.DeleteEvent(Id);
+        }
+
+        public override string ToString()
+        {
+            return $"{Id} {StatusId} {CustomerId} {Time}";
         }
     }
 }
