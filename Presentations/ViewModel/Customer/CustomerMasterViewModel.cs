@@ -1,11 +1,10 @@
-﻿
-using Presentations.Model;
+﻿using Presentations.Model;
 
 using Presentations.ViewModel.MVVMLight;
 
 using System.Collections.ObjectModel;
 
-namespace Presentations.ViewModel
+namespace Presentations.ViewModel.Customer
 {
     public class CustomerMasterViewModel : ViewModelBase
     {

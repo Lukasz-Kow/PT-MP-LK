@@ -7,6 +7,8 @@ namespace Presentations.ViewModel.MVVMLight
     {
         #region INotifyPropertyChanged
 
+        public ViewModelBase SelectedViewModel;
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion INotifyPropertyChanged

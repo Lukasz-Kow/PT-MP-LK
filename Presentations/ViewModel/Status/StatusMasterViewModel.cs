@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Presentations.ViewModel
+namespace Presentations.ViewModel.Status
 {
     public class StatusMasterViewModel : ViewModelBase
     {

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Presentations.ViewModel
+namespace Presentations.ViewModel.Event
 {
     public class EventMasterViewModel : ViewModelBase
     {
@@ -95,7 +95,7 @@ namespace Presentations.ViewModel
                 Events.Add(eventModel);
                 _eventModelOperations.AddEvent(_eventId, _statusId, _customerId, _eventDate, _type, _descriptionOrReason);
             }
-            
+
         }
 
         private void DeleteEvent()

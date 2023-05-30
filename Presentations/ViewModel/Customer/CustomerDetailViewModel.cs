@@ -1,9 +1,9 @@
 ﻿using Presentations.ViewModel.MVVMLight;
 using Presentations.Model;
 
-namespace Presentations.ViewModel
+namespace Presentations.ViewModel.Customer
 {
-    public class CustomerDetailViewModel: ViewModelBase
+    public class CustomerDetailViewModel : ViewModelBase
     {
         private CustomerModel _customerModel;
 

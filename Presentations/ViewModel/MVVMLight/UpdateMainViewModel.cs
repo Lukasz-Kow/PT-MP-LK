@@ -1,32 +1,53 @@
 ﻿using System;
+using System.Windows.Controls;
+using System.Windows;
 using System.Windows.Input;
+using Presentations.ViewModel.Event;
+using Presentations.ViewModel.Status;
+using Presentations.ViewModel;
+using Presentations.ViewModel.Customer;
+using Presentations.ViewModel.Book;
 
-namespace Presentations.ViewModel.MVVMLight
+namespace Presentations.ViewModel;
+
+internal class UpdateMainViewModel : ICommand
 {
-    public class UpdateMainViewModel : ICommand
+    public event EventHandler CanExecuteChanged;
+
+    private string _switchToViewModel;
+
+    public UpdateMainViewModel(string viewModel)
     {
-        private readonly MainViewModel _viewModel;
+        this._switchToViewModel = viewModel;
+    }
 
-        public UpdateMainViewModel(MainViewModel viewModel)
+    public bool CanExecute(object parameter)
+    {
+        return true;
+    }
+
+    public void Execute(object parameter)
+    {
+        UserControl userControl = parameter as UserControl;
+
+        Window parentWindow = Window.GetWindow(userControl);
+
+        if (parentWindow != null)
         {
-            _viewModel = viewModel;
-        }
-
-        public event EventHandler CanExecuteChanged;
-
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
-
-        public void Execute(object? parameter)
-        {
-            if (parameter.ToString() == "Customers")
-                _viewModel.SelectedViewModel = new CustomerMasterViewModel();
-            else if (parameter.ToString() == "Books")
-                _viewModel.SelectedViewModel = new BookMasterViewModel();
-            else
-                _viewModel.SelectedViewModel = new MainViewModel();
+            if (parentWindow.DataContext is MainWindowViewModel mainViewModel)
+            {
+                switch (this._switchToViewModel)
+                {
+                    case "UserMasterView":
+                        mainViewModel.SelectedViewModel = new CustomerMasterViewModel(); break;
+                    case "EventMasterView":
+                        mainViewModel.SelectedViewModel = new EventMasterViewModel(); break;
+                    case "StateMasterView":
+                        mainViewModel.SelectedViewModel = new StatusMasterViewModel(); break;
+                    case "ProductMasterView":
+                        mainViewModel.SelectedViewModel = new BookMasterViewModel(); break;
+                }
+            }
         }
     }
 }

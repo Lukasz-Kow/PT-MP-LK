@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace Presentations.View
 {
     /// <summary>
-    /// Logika interakcji dla klasy BookDetailView.xaml
+    /// Logika interakcji dla klasy EventMasterView.xaml
     /// </summary>
-    public partial class BookDetailView : Window
+    public partial class EventMasterView : UserControl
     {
-        public BookDetailView()
+        public EventMasterView()
         {
             InitializeComponent();
         }

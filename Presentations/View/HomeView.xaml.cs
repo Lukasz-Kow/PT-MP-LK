@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Presentations.View
 {
     /// <summary>
-    /// Logika interakcji dla klasy EventMasterView.xaml
+    /// Logika interakcji dla klasy HomeView.xaml
     /// </summary>
-    public partial class EventMasterView : Window
+    public partial class HomeView : UserControl
     {
-        public EventMasterView()
+        public HomeView()
         {
             InitializeComponent();
         }

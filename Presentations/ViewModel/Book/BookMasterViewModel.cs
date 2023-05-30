@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
-namespace Presentations.ViewModel
+namespace Presentations.ViewModel.Book
 {
     public class BookMasterViewModel : ViewModelBase
     {
