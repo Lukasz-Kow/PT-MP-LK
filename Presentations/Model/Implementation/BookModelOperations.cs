@@ -1,10 +1,11 @@
 ﻿
 using System.Collections.Generic;
+using Presentations.Model.API;
 using Services.API;
 
-namespace Presentations.Model
+namespace Presentations.Model.Implementation
 {
-    public class BookModelOperations
+    internal class BookModelOperations: IBookModelOperations
     {
 
         public BookModelOperations()
@@ -24,7 +25,7 @@ namespace Presentations.Model
             Services.DeleteBook(Id);
         }
 
-        public List<BookModel> GetAllBooks()
+        public IEnumerable<IBookModel> GetAllBooks()
         {
             var books = Services.GetAllBooks();
             var bookModels = new List<BookModel>();

@@ -1,10 +1,11 @@
-﻿using Services.API;
+﻿using Presentations.Model.API;
+using Services.API;
 using System;
 using System.Collections.Generic;
 
-namespace Presentations.Model
+namespace Presentations.Model.Implementation
 {
-    public class StatusModelOperations
+    internal class StatusModelOperations: IStatusModelOperations
     {
 
         public StatusModelOperations()
@@ -24,7 +25,7 @@ namespace Presentations.Model
             services.DeleteStatus(statusId);
         }
 
-        public List<StatusModel> GetAllStatuses()
+        public IEnumerable<StatusModel> GetAllStatuses()
         {
             var statuses = services.GetAllStatuses();
             var statusModels = new List<StatusModel>();

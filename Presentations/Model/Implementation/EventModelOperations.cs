@@ -1,10 +1,11 @@
 ﻿using Services.API;
 using System;
 using System.Collections.Generic;
+using Presentations.Model.API;
 
-namespace Presentations.Model
+namespace Presentations.Model.Implementation
 {
-    public class EventModelOperations
+    internal class EventModelOperations: IEventModelOperations
     {
         private readonly IServices services;
 
@@ -38,7 +39,7 @@ namespace Presentations.Model
             services.DeleteEvent(eventId);
         }
 
-        public List<IEventModel> GetAllEvents()
+        public IEnumerable<IEventModel> GetAllEvents()
         {
             var events = services.GetAllEvents();
             var eventModels = new List<IEventModel>();

@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Presentations.Model.API;
 
-namespace Presentations.Model
+namespace Presentations.Model.Implementation
 {
-    public class ReviewModel: IEventModel
+    internal class ReviewModel: IEventModel
     {
         public string Id { get; set; }
         public string StatusId { get; set; }
@@ -21,6 +18,11 @@ namespace Presentations.Model
             CustomerId = customerId;
             Time = time;
             Description = desc;
+        }
+
+        public override string ToString()
+        {
+            return $"Review {Id} {StatusId} {CustomerId} {Time}";
         }
     }
 }

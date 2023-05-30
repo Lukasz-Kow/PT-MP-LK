@@ -1,10 +1,11 @@
-﻿using Services.API;
+﻿using Presentations.Model.API;
+using Services.API;
 using System.Collections.Generic;
 using System.Windows.Documents;
 
-namespace Presentations.Model
+namespace Presentations.Model.Implementation
 {
-    public class BookModel
+    internal class BookModel: IBookModel
     {
 
         public BookModel(string title, string author, string Id, int pages, string isbn, string publisher, string language) 

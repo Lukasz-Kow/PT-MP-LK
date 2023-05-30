@@ -1,8 +1,9 @@
 ﻿
 using Services.API;
 using System;
+using Presentations.Model.API;
 
-namespace Presentations.Model
+namespace Presentations.Model.Implementation
 {
     internal class ComplaintModel: IEventModel
     {
@@ -14,7 +15,6 @@ namespace Presentations.Model
             Time = time;
             Reason = reason;
 
-            Service = IServices.Create("");
         }
 
         public string Id { get; set; }
@@ -22,21 +22,11 @@ namespace Presentations.Model
         public string CustomerId { get; set; }
         public DateTime Time { get; set; }
         public string Reason { get; set; }
-        public IServices Service { get; }
-
-        public void AddComplaint(string Id, string statusId, string customerId, DateTime Time, string Reason)
-        {
-            Service.AddComplaint(Id, statusId, customerId, Time, Reason);
-        }
-
-        public void DeleteComplaint(string Id)
-        {
-            Service.DeleteEvent(Id);
-        }
+        
 
         public override string ToString()
         {
-            return $"{Id} {StatusId} {CustomerId} {Time}";
+            return $"Complaint {Id} {StatusId} {CustomerId} {Time}";
         }
     }
 }

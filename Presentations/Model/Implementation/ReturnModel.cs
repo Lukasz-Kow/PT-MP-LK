@@ -1,8 +1,9 @@
 ﻿using System;
 using Services.API;
+using Presentations.Model.API;
 
 
-namespace Presentations.Model
+namespace Presentations.Model.Implementation
 {
     internal class ReturnModel: IEventModel
     {
@@ -13,7 +14,6 @@ namespace Presentations.Model
             CustomerId = customerId;
             Time = time;
 
-            Service = IServices.Create("");
         }
 
         public string Id { get; set ; }
@@ -21,21 +21,10 @@ namespace Presentations.Model
         public string CustomerId { get; set; }
         public DateTime Time { get; set; }
 
-        public IServices Service { get; }
-
-        public void AddReturn(string Id, string statusId, string customerId, DateTime Time)
-        {
-            Service.AddReturn(Id, statusId, customerId, Time);
-        }
-
-        public void DeleteReturn(string Id)
-        {
-            Service.DeleteEvent(Id);
-        }
 
         public override string ToString()
         {
-            return $"{Id} {StatusId} {CustomerId} {Time}";
+            return $"Return {Id} {StatusId} {CustomerId} {Time}";
         }
     }
 }

@@ -1,9 +1,10 @@
-﻿using Services.API;
+﻿using Presentations.Model.API;
+using Services.API;
 using System.Collections.Generic;
 
-namespace Presentations.Model
+namespace Presentations.Model.Implementation
 {
-    public class CustomerModelOperations
+    internal class CustomerModelOperations: ICustomerModelOperations
     {
         private readonly IServices services;
 
@@ -22,7 +23,7 @@ namespace Presentations.Model
             services.DeleteCustomer(customerId);
         }
 
-        public List<CustomerModel> GetAllCustomers()
+        public IEnumerable<ICustomerModel> GetAllCustomers()
         {
             var customers = services.GetAllCustomers();
             var customerModels = new List<CustomerModel>();

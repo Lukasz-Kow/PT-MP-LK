@@ -1,9 +1,10 @@
 ﻿
+using Presentations.Model.API;
 using Services.API;
 
-namespace Presentations.Model
+namespace Presentations.Model.Implementation
 {
-    public class CustomerModel
+    internal class CustomerModel: ICustomerModel
     {
 
         public CustomerModel(string firstName, string lastName, string id, int age, string address, string city) 
@@ -25,7 +26,7 @@ namespace Presentations.Model
 
         public override string ToString()
         {
-            return $"{FirstName} {LastName} {Id}";
+            return $"Customer {FirstName} {LastName} {Id}";
         }
     }
 }
