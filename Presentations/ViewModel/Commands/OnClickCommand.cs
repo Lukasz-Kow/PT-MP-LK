@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace Presentation.ViewModel;
+namespace Presentations.ViewModel.Commands;
 
 internal class OnClickCommand : ICommand
 {

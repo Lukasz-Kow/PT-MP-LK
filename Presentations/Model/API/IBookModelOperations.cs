@@ -14,6 +14,7 @@ namespace Presentations.Model.API
         }
 
         public void AddBook(string Title, string Author, string Id, int Pages, string ISBN, string Publisher, string Language);
+        public void UpdateBook(string Title, string Author, string Id, int Pages, string ISBN, string Publisher, string Language);
         public void DeleteBook(string Id);
         public IEnumerable<IBookModel> GetAllBooks();
     }

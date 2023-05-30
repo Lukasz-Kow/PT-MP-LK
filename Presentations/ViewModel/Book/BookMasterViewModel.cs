@@ -1,109 +1,240 @@
-﻿using Presentations.Model;
-using Presentations.ViewModel.MVVMLight;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
+using Presentations.Model;
+using Presentations.Model.API;
+using Presentations.ViewModel.Book;
+using Presentations.ViewModel.Commands;
 
-namespace Presentations.ViewModel.Book
+namespace Presentations.ViewModel;
+
+internal class BookMasterViewModel: ViewModelBase
 {
-    public class BookMasterViewModel : ViewModelBase
+    public ICommand SwitchToUserMasterPage { get; set; }
+
+    public ICommand SwitchToStateMasterPage { get; set; }
+
+    public ICommand SwitchToEventMasterPage { get; set; }
+
+    public ICommand AddBook { get; set; }
+
+    public ICommand DeleteBook { get; set; }
+
+    private readonly IBookModelOperations _modelOperation;
+
+    private readonly IErrorPopup _informer;
+
+    private ObservableCollection<BookDetailViewModel> _books;
+
+    public ObservableCollection<BookDetailViewModel> Books
     {
-        private ObservableCollection<BookModel> _books;
-        private BookModel _selectedBook;
-        private BookModelOperations _bookModelOperations;
-        private string _actionText;
-
-        public BookMasterViewModel()
+        get => _books;
+        set
         {
-            _books = new ObservableCollection<BookModel>();
-            _bookModelOperations = new BookModelOperations();
-            AddBookCommand = new RelayCommand(AddBook);
-            DeleteBookCommand = new RelayCommand(DeleteBook);
-            FetchDataCommand = new RelayCommand(FetchData);
+            _books = value;
+            OnPropertyChanged(nameof(Books));
         }
+    }
 
-        private string m_title;
-        private string m_author;
-        private string m_id;
-        private int m_pages;
-        private string m_isbn;
-        private string m_publisher;
-        private string m_language;
+    private string _title;
 
-        public ObservableCollection<BookModel> Books
+    public string Title
+    {
+        get => _title;
+        set
         {
-            get => _books;
-            set
-            {
-                _books = value;
-                RaisePropertyChanged();
-            }
+            _title = value;
+            OnPropertyChanged(nameof(Title));
         }
+    }
 
-        public BookModel SelectedBook
+    private string _author;
+
+    public string Author
+    {
+        get => _author;
+        set
         {
-            get => _selectedBook;
-            set
-            {
-                _selectedBook = value;
-                RaisePropertyChanged();
-                LoadDetailViewModel();
-            }
+            _author = value;
+            OnPropertyChanged(nameof(Author));
         }
+    }
 
-        public string ActionText
+    private string _Id;
+
+    public string Id
+    {
+        get => _Id;
+        set
         {
-            get => _actionText;
-            set
-            {
-                _actionText = value;
-                DisplayTextCommand.RaiseCanExecuteChanged();
-                RaisePropertyChanged();
-            }
+            _Id = value;
+            OnPropertyChanged(nameof(Id));
         }
+    }
 
-        public RelayCommand AddBookCommand { get; }
-        public RelayCommand DeleteBookCommand { get; }
-        public RelayCommand FetchDataCommand { get; }
-        public RelayCommand DisplayTextCommand { get; }
+    private int _pages;
 
-        private void AddBook()
+    public int Pages
+    {
+        get => _pages;
+        set
         {
-            var bookModel = new BookModel(m_title, m_author, m_id, m_pages, m_isbn, m_publisher, m_language);
-            Books.Add(bookModel);
-            _bookModelOperations.AddBook(m_title, m_author, m_id, m_pages, m_isbn, m_publisher, m_language);
-
+            _pages = value;
+            OnPropertyChanged(nameof(Pages));
         }
+    }
 
-        private void DeleteBook()
+    private string _ISBN;
+
+    public string ISBN
+    {
+        get => _ISBN;
+        set
         {
-            if (SelectedBook != null)
-            {
-                Books.Remove(SelectedBook);
-                _bookModelOperations.DeleteBook(SelectedBook.Id);
-                SelectedBook = null;
-            }
+            _ISBN = value;
+            OnPropertyChanged(nameof(ISBN));
         }
+    }
 
-        private void FetchData()
+    private string _publisher;
+
+    public string Publisher
+    {
+        get => _publisher;
+        set
         {
-            var books = _bookModelOperations.GetAllBooks();
-            Books = new ObservableCollection<BookModel>(books);
+            _publisher = value;
+            OnPropertyChanged(nameof(Publisher));
         }
+    }
 
-        private void LoadDetailViewModel()
+    private string _language;
+
+    public string Language
+    {
+        get => _language;
+        set
         {
-            if (SelectedBook != null)
-            {
-                var detailViewModel = new BookDetailViewModel(SelectedBook);
-                // TODO: Pass the detailViewModel instance to the View for displaying additional info
-            }
+            _language = value;
+            OnPropertyChanged(nameof(Language));
         }
+    }
 
+    private bool _isBookSelected;
 
-        private void ShowPopupWindow()
+    public bool IsBookSelected
+    {
+        get => _isBookSelected;
+        set
         {
-            // TODO: Implement logic to show the popup window with ActionText
+            this.IsBookDetailVisible = value ? Visibility.Visible : Visibility.Hidden;
+
+            _isBookSelected = value;
+            OnPropertyChanged(nameof(IsBookSelected));
         }
+    }
+
+    private Visibility _isBookDetailVisible;
+
+    public Visibility IsBookDetailVisible
+    {
+        get => _isBookDetailVisible;
+        set
+        {
+            _isBookDetailVisible = value;
+            OnPropertyChanged(nameof(IsBookDetailVisible));
+        }
+    }
+
+    private BookDetailViewModel _selectedDetailViewModel;
+
+    public BookDetailViewModel SelectedDetailViewModel
+    {
+        get => _selectedDetailViewModel;
+        set
+        {
+            _selectedDetailViewModel = value;
+            this.IsBookSelected = true;
+
+            OnPropertyChanged(nameof(SelectedDetailViewModel));
+        }
+    }
+
+    public BookMasterViewModel(IBookModelOperations? model = null, IErrorPopup? informer = null)
+    {
+        this.SwitchToUserMasterPage = new SwitchViewCommand("CustomerMasterView");
+        this.SwitchToStateMasterPage = new SwitchViewCommand("StatusMasterView");
+        this.SwitchToEventMasterPage = new SwitchViewCommand("EventMasterView");
+
+        this.AddBook = new OnClickCommand(e => this.StoreBook(), c => this.CanStoreBook());
+        this.DeleteBook = new OnClickCommand(e => this.DeleteProduct());
+
+        this.Books = new ObservableCollection<BookDetailViewModel>();
+
+        this._modelOperation = model ?? IBookModelOperations.CreateModelOperation();
+        this._informer = informer ?? new ErrorPopupHandler();
+
+        this.IsBookSelected = false;
+
+        Task.Run(this.LoadBooks);
+    }
+
+    private bool CanStoreBook()
+    {
+        return !(
+            string.IsNullOrWhiteSpace(this.Title) ||
+            string.IsNullOrWhiteSpace(this.Id) ||
+            string.IsNullOrWhiteSpace(this.Author.ToString()) ||
+            string.IsNullOrWhiteSpace(this.ISBN.ToString()) ||
+            string.IsNullOrWhiteSpace(this.Publisher) ||
+            string.IsNullOrWhiteSpace(this.Language)
+        );
+    }
+
+    private void StoreBook()
+    {
+        
+        this._modelOperation.AddBook(Title, Author, Id, Pages, ISBN, Publisher, Language);
+
+        this.LoadBooks();
+
+        this._informer.InformSuccess("Book added successfully!");
+
+    }
+
+    private void DeleteProduct()
+    {
+        
+        try
+        {
+            this._modelOperation.DeleteBook(this.SelectedDetailViewModel.Id);
+
+            this.LoadBooks();
+
+            this._informer.InformSuccess("Product deleted successfully!");
+        }
+        catch (Exception e)
+        {
+            this._informer.InformError("Error while deleting product! Remember to remove all associated statuses!");
+        }
+       
+    }
+
+    private async void LoadBooks()
+    {
+        List<IBookModel> Books = (List<IBookModel>) this._modelOperation.GetAllBooks();
+
+        
+        this._books.Clear();
+
+        foreach (IBookModel b in Books)
+        {
+            this._books.Add(new BookDetailViewModel(b));
+        }
+       
+        OnPropertyChanged(nameof(Books));
     }
 }

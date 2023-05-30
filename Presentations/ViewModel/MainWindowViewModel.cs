@@ -1,11 +1,6 @@
-﻿using Presentations.Model;
+﻿using Presentations.Model.Implementation;
 using Presentations.ViewModel;
-using Presentations.ViewModel.MVVMLight;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Presentations.ViewModel
 {
@@ -26,7 +21,7 @@ namespace Presentations.ViewModel
             {
                 _selectedViewModel = value;
 
-                RaisePropertyChanged(nameof(SelectedViewModel));
+                OnPropertyChanged(nameof(SelectedViewModel));
             }
         }
     }

@@ -1,90 +1,139 @@
-﻿using Presentations.Model;
-using Presentations.ViewModel.MVVMLight;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Presentations.Model.API;
+using Presentations.ViewModel.Commands;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Presentations.ViewModel.Book
 {
-    public class BookDetailViewModel : ViewModelBase
+    internal class BookDetailViewModel : ViewModelBase
     {
-        private BookModel _bookModel;
+        private IBookModel _bookModel;
 
-        public BookDetailViewModel(BookModel bookModel)
+        public BookDetailViewModel(IBookModel bookModel, IBookModelOperations? model = null, IErrorPopup? errorHandler = null)
         {
-            _bookModel = bookModel;
+            this.Id = bookModel.Id;
+            this.Title = bookModel.Title;
+            this.Author = bookModel.Author;
+            this.Pages = bookModel.Pages;
+            this.ISBN = bookModel.ISBN;
+            this.Publisher = bookModel.Publisher;
+            this.Language = bookModel.Language;
+
+            this.UpdateProduct = new OnClickCommand(e => this.Update(), c => this.CanUpdate());
+
+            this._modelOperation = model ?? IBookModelOperations.CreateModelOperation();
+            this._errorHandler = errorHandler ?? new ErrorPopupHandler();
+
         }
+
+        public ICommand UpdateProduct { get; set; }
+
+        private readonly IBookModelOperations _modelOperation;
+
+        private readonly IErrorPopup _errorHandler;
+
+        private string _title;
 
         public string Title
         {
-            get => _bookModel.Title;
+            get => _title;
             set
             {
-                _bookModel.Title = value;
-                RaisePropertyChanged();
+                _title = value;
+                OnPropertyChanged(nameof(Title));
             }
         }
+
+        private string _author;
 
         public string Author
         {
-            get => _bookModel.Author;
+            get => _author;
             set
             {
-                _bookModel.Author = value;
-                RaisePropertyChanged();
+                _author = value;
+                OnPropertyChanged(nameof(Author));
             }
         }
+
+        private string _id;
 
         public string Id
         {
-            get => _bookModel.Id;
+            get => _id;
             set
             {
-                _bookModel.Id = value;
-                RaisePropertyChanged();
+                _id = value;
+                OnPropertyChanged(nameof(Id));
             }
         }
+
+        private int _pages;
 
         public int Pages
         {
-            get => _bookModel.Pages;
+            get => _pages;
             set
             {
-                _bookModel.Pages = value;
-                RaisePropertyChanged();
+                _pages = value;
+                OnPropertyChanged(nameof(Pages));
             }
         }
+
+        private string _isbn;
 
         public string ISBN
         {
-            get => _bookModel.ISBN;
+            get => _isbn;
             set
             {
-                _bookModel.ISBN = value;
-                RaisePropertyChanged();
+                _isbn = value;
+                OnPropertyChanged(nameof(ISBN));
             }
         }
+
+        private string _publisher;
 
         public string Publisher
         {
-            get => _bookModel.Publisher;
+            get => _publisher;
             set
             {
-                _bookModel.Publisher = value;
-                RaisePropertyChanged();
+                _publisher = value;
+                OnPropertyChanged(nameof(Publisher));
             }
         }
 
+        private string _language;
+
         public string Language
         {
-            get => _bookModel.Language;
+            get => _language;
             set
             {
-                _bookModel.Language = value;
-                RaisePropertyChanged();
+                _language = value;
+                OnPropertyChanged(nameof(Language));
             }
+        }
+
+        private void Update()
+        {
+            this._modelOperation.UpdateBook(this.Id, this.Title, this.Author, this.Pages, this.ISBN, this.Publisher, this.Language);
+
+            this._errorHandler.InformSuccess("Product successfully updated!");   
+        }
+
+        private bool CanUpdate()
+        {
+            return !(
+                string.IsNullOrWhiteSpace(this.Title) ||
+                string.IsNullOrWhiteSpace(this.Author) ||
+                string.IsNullOrWhiteSpace(this.Id) ||
+                string.IsNullOrWhiteSpace(this.ISBN) ||
+                string.IsNullOrWhiteSpace(this.Publisher) ||
+                string.IsNullOrWhiteSpace(this.Language) || 
+                this.Pages <= 0
+            );
         }
     }
 }

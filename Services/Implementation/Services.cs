@@ -142,6 +142,41 @@ namespace Services.Implementation
                 Time
             ));
         }
+
+        public void UpdateBook(string Title, string Author, string Id, int Pages, string ISBN, string Publisher, string Language)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateCustomer(string FirstName, string LastName, string Id, int Age, string Address, string City)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateStatus(string StatusId, string bookId, bool availability)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateBuy(string Id, string statusId, string customerId, DateTime Time)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateComplaint(string Id, string statusId, string customerId, DateTime Time, string Reason)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateReview(string Id, string statusId, string customerId, DateTime Time, string description)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateReturn(string Id, string statusId, string customerId, DateTime Time)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

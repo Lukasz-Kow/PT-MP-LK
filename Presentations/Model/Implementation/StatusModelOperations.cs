@@ -37,6 +37,11 @@ namespace Presentations.Model.Implementation
 
             return statusModels;
         }
+
+        public void UpdateStatus(string statusId, string bookId, bool availability)
+        {
+            services.UpdateStatus(statusId, bookId, availability);
+        }
     }
 }
 

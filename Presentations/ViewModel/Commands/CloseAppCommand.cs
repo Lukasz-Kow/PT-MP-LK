@@ -2,16 +2,13 @@
 using System.Windows;
 using System.Windows.Input;
 
-namespace Presentation.ViewModel;
+namespace Presentations.ViewModel.Commands;
 
 internal class CloseAppCommand : ICommand
 {
     public event EventHandler CanExecuteChanged;
 
-    public CloseAppCommand()
-    {
-
-    }
+    public CloseAppCommand() { }
 
     public bool CanExecute(object parameter)
     {

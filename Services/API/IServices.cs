@@ -21,6 +21,14 @@ namespace Services.API
         public void AddReturn(string Id, string statusId, string customerId, DateTime Time);
         public void AddStatus(string StatusId, string bookId, bool availability);
 
+        public void UpdateBook(string Title, string Author, string Id, int Pages, string ISBN, string Publisher, string Language);
+        public void UpdateCustomer(string FirstName, string LastName, string Id, int Age, string Address, string City);
+        public void UpdateStatus(string StatusId, string bookId, bool availability);
+        public void UpdateBuy(string Id, string statusId, string customerId, DateTime Time);
+        public void UpdateComplaint(string Id, string statusId, string customerId, DateTime Time, string Reason);
+        public void UpdateReview(string Id, string statusId, string customerId, DateTime Time, string description);
+        public void UpdateReturn(string Id, string statusId, string customerId, DateTime Time);
+
         public void DeleteBook(string Id);
         public void DeleteEvent(string Id);
         public void DeleteStatus(string Id);

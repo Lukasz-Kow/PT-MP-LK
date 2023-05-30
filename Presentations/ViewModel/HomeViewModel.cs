@@ -1,11 +1,7 @@
-﻿using Presentations.Model;
-using Presentations.ViewModel.MVVMLight;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using System.Windows.Input;
+using Presentations.ViewModel;
+using Presentations.ViewModel.Commands;
 
 namespace Presentations.ViewModel
 {
@@ -19,7 +15,7 @@ namespace Presentations.ViewModel
         {
             this.StartAppCommand = new SwitchViewCommand("UserMasterView");
 
-            this.ExitAppCommand = new CloseApplicationCommand();
+            this.ExitAppCommand = new CloseAppCommand();
         }
     }
 }

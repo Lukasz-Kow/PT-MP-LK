@@ -6,17 +6,16 @@ using Presentations.ViewModel.Event;
 using Presentations.ViewModel.Status;
 using Presentations.ViewModel;
 using Presentations.ViewModel.Customer;
-using Presentations.ViewModel.Book;
 
-namespace Presentations.ViewModel;
+namespace Presentations.ViewModel.Commands;
 
-internal class UpdateMainViewModel : ICommand
+internal class SwitchViewCommand : ICommand
 {
     public event EventHandler CanExecuteChanged;
 
     private string _switchToViewModel;
 
-    public UpdateMainViewModel(string viewModel)
+    public SwitchViewCommand(string viewModel)
     {
         this._switchToViewModel = viewModel;
     }
@@ -38,13 +37,13 @@ internal class UpdateMainViewModel : ICommand
             {
                 switch (this._switchToViewModel)
                 {
-                    case "UserMasterView":
+                    case "CustomerMasterView":
                         mainViewModel.SelectedViewModel = new CustomerMasterViewModel(); break;
                     case "EventMasterView":
                         mainViewModel.SelectedViewModel = new EventMasterViewModel(); break;
-                    case "StateMasterView":
+                    case "StatusMasterView":
                         mainViewModel.SelectedViewModel = new StatusMasterViewModel(); break;
-                    case "ProductMasterView":
+                    case "BookMasterView":
                         mainViewModel.SelectedViewModel = new BookMasterViewModel(); break;
                 }
             }

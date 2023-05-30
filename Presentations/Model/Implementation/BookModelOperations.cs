@@ -38,5 +38,9 @@ namespace Presentations.Model.Implementation
             return bookModels;
         }
 
+        public void UpdateBook(string Title, string Author, string Id, int Pages, string ISBN, string Publisher, string Language)
+        {
+            Services.UpdateBook(Title, Author, Id, Pages, ISBN, Publisher, Language);
+        }
     }
 }
