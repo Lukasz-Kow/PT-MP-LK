@@ -1,10 +1,10 @@
-﻿using Data.API;
+﻿using Services.API;
 
 namespace Services.Implementation
 {
-    internal class Book : IBook
+    internal class BookDTO : IBookDTO
     {
-        public Book(string id, string title, string author, int pages, string ISBN, string publisher, string language)
+        public BookDTO(string id, string title, string author, int pages, string ISBN, string publisher, string language)
         {
             Title = title;
             Author = author;

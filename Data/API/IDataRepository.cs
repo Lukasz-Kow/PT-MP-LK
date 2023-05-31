@@ -32,16 +32,16 @@ public interface IDataRepository
     List<IStatus> GetAllStatuses();
     IStatus GetStatus(int id);
     public IStatus GetStatus_QuerySyntax(int id);
-    void InsertStatus(string statusId, IBook book, bool available);
-    void UpdateStatus(string statusId, IBook book, bool available);
+    void InsertStatus(string statusId, string book, bool available);
+    void UpdateStatus(string statusId, string book, bool available);
     void DeleteStatus(int statusId);
 
     // Events
     List<IEvent> GetAllEvents();
     IEvent GetEvent(int id);
     public IEvent GetEvent_QuerySyntax(int id);
-    void InsertEvent(string id, ICustomer customer, IStatus status, DateTime date, string type, string reasonOrDescription = "");
-    void UpdateEvent(string id, ICustomer customer, IStatus status, DateTime date, string type, string reasonOrDescription = "");
+    void InsertEvent(string id, string customer, string status, DateTime date, string type, string reasonOrDescription = "");
+    void UpdateEvent(string id, string customer, string status, DateTime date, string type, string reasonOrDescription = "");
     void DeleteEvent(int eventId);
 
     // Other methods

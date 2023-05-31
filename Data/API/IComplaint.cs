@@ -8,7 +8,7 @@ public interface IComplaint : IEvent
     
     public ICustomer Customer { get; set; }
     
-    DateTime Time { get; set; }
+    public DateTime Time { get; set; }
     
-    string Reason { get; set; }
+    public string Reason { get; set; }
 }

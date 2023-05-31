@@ -1,10 +1,10 @@
-﻿using Data.API;
+﻿using Services.API;
 
 namespace Services.Implementation
 {
-    internal class Customer : ICustomer
+    internal class CustomerDTO : ICustomerDTO
     {
-        public Customer(string id, string firstName, string lastName, int age, string address, string city)
+        public CustomerDTO(string id, string firstName, string lastName, int age, string address, string city)
         {
             Id = id;
             FirstName = firstName;

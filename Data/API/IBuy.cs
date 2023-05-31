@@ -8,5 +8,5 @@ public interface IBuy : IEvent
     
     public ICustomer Customer { get; set; }
     
-    DateTime Time { get; set; }
+    public DateTime Time { get; set; }
 }

@@ -1,5 +1,7 @@
-﻿using Services.API;
-using Data.API;
+﻿using Data.API;
+using Microsoft.Identity.Client;
+using Services.API;
+using System.Diagnostics.Eventing.Reader;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("ServicesTests")]
@@ -15,24 +17,59 @@ namespace Services.Implementation
             this.repository = IDataRepository.CDataRepository(connectionString);
         }
 
+        private IBookDTO MAP(IBook book)
+        {
+            return new BookDTO(book.Id, book.Title, book.Author, book.Pages, book.ISBN, book.Publisher, book.Language);
+        }   
+        
+        private ICustomerDTO MAP(ICustomer customer)
+        {
+            return new CustomerDTO(customer.Id, customer.FirstName, customer.LastName, customer.Age, customer.Address, customer.City);
+        }
+
+        private IStatusDTO MAP(IStatus status)
+        {
+            return new StatusDTO(status.Id, status.Book.Id, status.Availability);
+        }
+
+        private IEventDTO MAP(IEvent eventO)
+        {
+            if (eventO is IBuy)
+            {
+                return new EventDTO(eventO.Id, eventO.Status.Id, eventO.Customer.Id, "Buy", eventO.Time);
+            }
+            else if (eventO is IReturn)
+            {
+                return new EventDTO(eventO.Id, eventO.Status.Id, eventO.Customer.Id, "Return", eventO.Time);
+            }
+            else if (eventO is IComplaint complaintEvent)
+            {
+                return new EventDTO(eventO.Id, eventO.Status.Id, eventO.Customer.Id, "Complaint", eventO.Time, complaintEvent.Reason);
+            } 
+            else if (eventO is IReview reviewEvent)
+            {
+                return new EventDTO(eventO.Id, eventO.Status.Id, eventO.Customer.Id, "Review", eventO.Time, reviewEvent.Description);
+            } 
+            else
+            {
+                throw new Exception("Impossinble to map event"); 
+            }
+            
+        }
+
         public void AddBook(string Title, string Author, string Id, int Pages, string ISBN, string Publisher, string Language)
         {
-            repository.InsertBook(new Book(Id, Title, Author, Pages, ISBN, Publisher, Language));
+            repository.InsertBook(Id, Title, Author, Pages, ISBN, Publisher, Language);
         }
 
         public void AddBuy(string Id, string statusId, string customerId, DateTime Time)
         {
-            repository.InsertEvent(new Buy(
-                Id,
-                GetStatusById(statusId),
-                GetCustomerById(customerId),
-                Time
-                ));
+            repository.InsertEvent(Id, customerId, statusId, Time, "Buy");
         }
 
         public void AddCustomer(string FirstName, string LastName, string Id, int Age, string Address, string City)
         {
-            repository.InsertCustomer(new Customer(Id, FirstName, LastName, Age, Address, City));
+            repository.InsertCustomer(Id, FirstName, LastName, Age, Address, City);
         }
 
         public void DeleteBook(string Id)
@@ -57,22 +94,31 @@ namespace Services.Implementation
 
 
 
-        public List<IBook> GetAllBooks()
+        public List<IBookDTO> GetAllBooks()
         {
-            return repository.GetAllBooks();
+            List<IBook> books = repository.GetAllBooks();
+            List<IBookDTO> bookDTOs = new List<IBookDTO>();
+            foreach (IBook book in books)
+            {
+                bookDTOs.Add(MAP(book));
+            }
+            return bookDTOs;
         }
 
-        public List<ICustomer> GetAllCustomers()
+        public List<ICustomerDTO> GetAllCustomers()
         {
-            return repository.GetAllCustomers();
+            List<ICustomer> customers = repository.GetAllCustomers();
+            List<ICustomerDTO> customerDTOs = new List<ICustomerDTO>();
+            foreach (ICustomer customer in customers)
+            {
+                customerDTOs.Add(MAP(customer));
+            }
+            return customerDTOs;
         }
 
         public void AddStatus(string StatusId, string bookId, bool availability)
         {
-            repository.InsertStatus(new Status(
-                StatusId, 
-                GetBookById(bookId), 
-                availability));
+            repository.InsertStatus(StatusId, bookId, availability);
         }
 
         public void DropTables()
@@ -81,66 +127,74 @@ namespace Services.Implementation
         }
 
 
-        public List<IStatus> GetAllStatuses()
+        public List<IStatusDTO> GetAllStatuses()
         {
-            return repository.GetAllStatuses();
+            List<IStatus> statuses = repository.GetAllStatuses();
+            List<IStatusDTO> statusDTOs = new List<IStatusDTO>();
+            foreach (IStatus status in statuses)
+            {
+                statusDTOs.Add(MAP(status));
+            }
+            return statusDTOs;
         }
 
-        public List<IEvent> GetAllEvents()
+        public List<IEventDTO> GetAllEvents()
         {
-            return repository.GetAllEvents();
+            List<IEvent> events = repository.GetAllEvents();
+            List<IEventDTO> eventDTOs = new List<IEventDTO>();
+            foreach (IEvent eventO in events)
+            {
+                eventDTOs.Add(MAP(eventO));
+            }
+            return eventDTOs;
         }
 
-        public IBook GetBookById(string Id)
+        public IBookDTO GetBookById(string Id)
         {
-            return repository.GetBook(int.Parse(Id));
+            return MAP(repository.GetBook(int.Parse(Id)));
         }
 
-        public ICustomer GetCustomerById(string Id)
+        public ICustomerDTO GetCustomerById(string Id)
         {
-            return repository.GetCustomer(int.Parse(Id));
+            return MAP(repository.GetCustomer(int.Parse(Id)));
         }
 
-        public IStatus GetStatusById(string Id)
+        public IStatusDTO GetStatusById(string Id)
         {
-            return repository.GetStatus(int.Parse(Id));
+            return MAP(repository.GetStatus(int.Parse(Id)));
         }
 
-        public IEvent GetEventById(string Id)
+        public IEventDTO GetEventById(string Id)
         {
-            return repository.GetEvent(int.Parse(Id));
+            return MAP(repository.GetEvent(int.Parse(Id)));
         }
 
         public void AddComplaint(string Id, string statusId, string customerId, DateTime Time, string Reason)
         {
-            repository.InsertEvent(new Complaint(
-                Id,
-                GetStatusById(statusId),
-                GetCustomerById(customerId),
-                Reason,
-                Time
-            ));
+            repository.InsertEvent(Id, customerId, statusId, Time, "Complaint", Reason);
         }
 
         public void AddReview(string Id, string statusId, string customerId, DateTime Time, string description)
         {
-            repository.InsertEvent(new Review(
+            repository.InsertEvent(
                 Id,
-                GetStatusById(statusId),
-                GetCustomerById(customerId),
-                description,
-                Time
-            ));
+                customerId,
+                statusId,
+                Time,
+                "Review",
+                description
+            );
         }
 
         public void AddReturn(string Id, string statusId, string customerId, DateTime Time)
         {
-            repository.InsertEvent(new Return(
+            repository.InsertEvent(
                 Id,
-                GetStatusById(statusId),
-                GetCustomerById(customerId),
-                Time
-            ));
+                statusId,
+                customerId,
+                Time,
+                "Return"
+            );
         }
 
         public void UpdateBook(string Title, string Author, string Id, int Pages, string ISBN, string Publisher, string Language)
@@ -177,6 +231,8 @@ namespace Services.Implementation
         {
             throw new NotImplementedException();
         }
+
+      
     }
 
 }

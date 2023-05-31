@@ -34,15 +34,15 @@ namespace Services.API
         public void DeleteStatus(string Id);
         public void DeleteCustomer(string Id);
 
-        public List<IBook> GetAllBooks();
-        public List<ICustomer> GetAllCustomers();
-        public List<IStatus> GetAllStatuses();
-        public List<IEvent> GetAllEvents();
+        public List<IBookDTO> GetAllBooks();
+        public List<ICustomerDTO> GetAllCustomers();
+        public List<IStatusDTO> GetAllStatuses();
+        public List<IEventDTO> GetAllEvents();
 
-        public IBook GetBookById(string Id);
-        public ICustomer GetCustomerById(string Id);
-        public IStatus GetStatusById(string Id);
-        public IEvent GetEventById(string Id);
+        public IBookDTO GetBookById(string Id);
+        public ICustomerDTO GetCustomerById(string Id);
+        public IStatusDTO GetStatusById(string Id);
+        public IEventDTO GetEventById(string Id);
 
 
         public void DropTables();

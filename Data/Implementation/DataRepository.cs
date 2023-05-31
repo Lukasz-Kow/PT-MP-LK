@@ -304,14 +304,14 @@ internal class DataRepository : IDataRepository
         }
     }
 
-    public void InsertStatus(string statusId, IBook book, bool available)
+    public void InsertStatus(string statusId, string book, bool available)
     {
         using (var dbContext = new BookShopDBLDataContext(_connectionString))
         {
             var statusEntity = new Statuses()
             {
                 Id = int.Parse(statusId),
-                BookId = int.Parse(book.Id),
+                BookId = int.Parse(book),
                 Availability = available
             };
 
@@ -320,7 +320,7 @@ internal class DataRepository : IDataRepository
         }
     }
 
-    public void UpdateStatus(string statusId, IBook book, bool available)
+    public void UpdateStatus(string statusId, string book, bool available)
     {
         using (var dbContext = new BookShopDBLDataContext(_connectionString))
         {
@@ -329,7 +329,7 @@ internal class DataRepository : IDataRepository
             if (existingStatus != null)
             {
                 // Update the properties of the existing status with the new values
-                existingStatus.BookId = int.Parse(book.Id);
+                existingStatus.BookId = int.Parse(book);
                 existingStatus.Availability = available;
 
                 dbContext.SubmitChanges();
@@ -482,7 +482,7 @@ internal class DataRepository : IDataRepository
         }
     }
 
-    public void InsertEvent(string id, ICustomer customer, IStatus status, DateTime date, string type, string reasonOrDescription = "")
+    public void InsertEvent(string id, string customer, string status, DateTime date, string type, string reasonOrDescription = "")
     {
         using (var dbContext = new BookShopDBLDataContext(_connectionString))
         {
@@ -492,8 +492,8 @@ internal class DataRepository : IDataRepository
                 var eventEntity = new Events()
                 {
                     Id = int.Parse(id),
-                    StatusId = int.Parse(status.Id),
-                    CustomerId = int.Parse(customer.Id),
+                    StatusId = int.Parse(status),
+                    CustomerId = int.Parse(customer),
                     Time = date,
                     Type = type,
                     Reason = reasonOrDescription
@@ -507,8 +507,8 @@ internal class DataRepository : IDataRepository
                 var eventEntity = new Events()
                 {
                     Id = int.Parse(id),
-                    StatusId = int.Parse(status.Id),
-                    CustomerId = int.Parse(customer.Id),
+                    StatusId = int.Parse(status),
+                    CustomerId = int.Parse(customer),
                     Time = date,
                     Type = type,
                     Description = reasonOrDescription
@@ -522,8 +522,8 @@ internal class DataRepository : IDataRepository
                 var eventEntity = new Events()
                 {
                     Id = int.Parse(id),
-                    StatusId = int.Parse(status.Id),
-                    CustomerId = int.Parse(customer.Id),
+                    StatusId = int.Parse(status),
+                    CustomerId = int.Parse(customer),
                     Time = date,
                     Type = type
                 };
@@ -536,7 +536,7 @@ internal class DataRepository : IDataRepository
         }
     }
 
-    public void UpdateEvent(string id, ICustomer customer, IStatus status, DateTime date, string type, string reasonOrDescription = "")
+    public void UpdateEvent(string id, string customer, string status, DateTime date, string type, string reasonOrDescription = "")
     {
         using (var dbContext = new BookShopDBLDataContext(_connectionString))
         {
@@ -544,8 +544,8 @@ internal class DataRepository : IDataRepository
 
             if (existingEvent != null)
             {
-                existingEvent.StatusId = int.Parse(status.Id);
-                existingEvent.CustomerId = int.Parse(customer.Id);
+                existingEvent.StatusId = int.Parse(status);
+                existingEvent.CustomerId = int.Parse(customer);
                 existingEvent.Time = date;
 
                 if (type ==  "Review")
