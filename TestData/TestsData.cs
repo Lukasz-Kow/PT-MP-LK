@@ -1,3 +1,5 @@
+using Castle.Core.Resource;
+using Data;
 using Data.API;
 using Data.Implementation;
 
@@ -24,36 +26,46 @@ namespace TestData {
         
 
         // DB Connection string needs to be adjusted to work on a different computer
+
         [TestMethod]
-        public void InsertCustomer_ThenGet_ThenDropTable()
+        public void InsertCustomer_ThenUpdate()
         {
             IDataRepository repository = IDataRepository.CDataRepository("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\Studia\\PrijectPT\\TestData\\Instrumentation\\UnitTestDataDB.mdf;Integrated Security=True");
 
             repository.DropAll();
 
-            ICustomer c = new Customer("1", "John", "Poe", 10, "lalalal", "Lodz");
-            repository.InsertCustomer(c);
+            repository.InsertCustomer("1", "John", "Poe", 10, "lalalal", "Lodz");
 
             ICustomer testCustomer = repository.GetCustomer(1);
            
             Assert.IsNotNull(testCustomer);
 
             Assert.AreEqual("1", testCustomer.Id);
-            Type type = testCustomer.FirstName.GetType();
-            Console.WriteLine(type);
+
             Assert.IsTrue(string.Equals(testCustomer.FirstName, "John"));
             Assert.IsTrue(string.Equals(testCustomer.LastName, "Poe"));
+
+            repository.UpdateCustomer("1", "Lukasz", "Kow", 19, "lalalal", "Lodz");
+
+
+            Assert.AreEqual("1", testCustomer.Id);
+            Assert.IsTrue(string.Equals(testCustomer.FirstName, "Lukasz"));
+            Assert.IsTrue(string.Equals(testCustomer.LastName, "Kow"));
+            Assert.AreEqual(19, testCustomer.Age);
+
+            repository.DeleteCustomer(1);
+
+            Assert.IsNull(repository.GetCustomer(1));
         }
 
         [TestMethod]
-        public void InsertCustomer_ThenGet_ThenDropTable_QuerySyntax()
+        public void InsertCustomer_ThenUpdate_QuerySyntax()
         {
             IDataRepository repository = new DataRepository("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\Studia\\PrijectPT\\TestData\\Instrumentation\\UnitTestDataDB.mdf;Integrated Security=True");
 
             repository.DropAll();
 
-            ICustomer c = new Customer("1", "John", "Poe", 10, "lalalal", "Lodz");
-            repository.InsertCustomer(c);
+            repository.InsertCustomer("1", "John", "Poe", 10, "lalalal", "Lodz");
 
             ICustomer testCustomer = repository.GetCustomer_QuerySyntax(1);
 
@@ -67,16 +79,45 @@ namespace TestData {
         }
 
         [TestMethod]
-        public void InsertBook_ThenGet_ThenDropTable()
+        public void InsertBook_ThenUpdate()
         {
             IDataRepository repository = new DataRepository("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\Studia\\PrijectPT\\TestData\\Instrumentation\\UnitTestDataDB.mdf;Integrated Security=True");
 
             repository.DropAll();
 
-            IBook book = new Book("1", "The Great Gatsby", "F. Scott Fitzgerald", 320, "9780743273565", "Scribner", "English");
-            repository.InsertBook(book);
+            repository.InsertBook("1", "The Great Gatsby", "F. Scott Fitzgerald", 320, "9780743273565", "Scribner", "English");
 
             IBook testBook = repository.GetBook(1);
+
+            Assert.IsNotNull(testBook);
+            Assert.AreEqual("1", testBook.Id);
+            Assert.IsTrue(string.Equals(testBook.Title, "The Great Gatsby"));
+            Assert.IsTrue(string.Equals(testBook.Author, "F. Scott Fitzgerald"));
+
+            repository.UpdateBook("1", "The Great Gatsby", "F. Scott Fitzgerald", 320, "9780743273565", "Scribner", "English");
+
+            Assert.AreEqual("1", testBook.Id);
+            Assert.IsTrue(string.Equals(testBook.Title, "The Great Gatsby"));
+            Assert.IsTrue(string.Equals(testBook.Author, "F. Scott Fitzgerald"));
+
+            repository.DeleteBook(1);
+
+            Assert.IsNull(repository.GetBook(1));
+
+
+        }
+
+        [TestMethod]
+        public void InsertBook_ThenUpdate_QuerySyntax()
+        {
+            IDataRepository repository = new DataRepository("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\Studia\\PrijectPT\\TestData\\Instrumentation\\UnitTestDataDB.mdf;Integrated Security=True");
+
+            repository.DropAll();
+
+            repository.InsertBook("1", "The Great Gatsby", "F. Scott Fitzgerald", 320, "9780743273565", "Scribner", "English");
+
+
+            IBook testBook = repository.GetBook_QuerySyntax(1);
 
             Assert.IsNotNull(testBook);
             Assert.AreEqual("1", testBook.Id);
@@ -85,64 +126,36 @@ namespace TestData {
         }
 
         [TestMethod]
-        public void InsertBook_ThenGet_ThenDropTable_QuerySyntax()
+        public void InsertStatusToTheBook_ThenUpdate()
         {
             IDataRepository repository = new DataRepository("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\Studia\\PrijectPT\\TestData\\Instrumentation\\UnitTestDataDB.mdf;Integrated Security=True");
 
             repository.DropAll();
 
-            IBook book = new Book("1", "The Great Gatsby", "F. Scott Fitzgerald", 320, "9780743273565", "Scribner", "English");
-            repository.InsertBook(book);
+            
+            repository.InsertBook("1", "The Great Gatsby", "F. Scott Fitzgerald", 320, "9780743273565", "Scribner", "English");
 
-            IBook testBook = repository.GetBook_QuerySyntax(1);
+            IBook testBook = repository.GetBook(1);
 
-            Assert.IsNotNull(testBook);
-            Assert.AreEqual("1", testBook.Id);
-            Assert.IsTrue(string.Equals(testBook.Title, "The Great Gatsby"));    
-            Assert.IsTrue(string.Equals(testBook.Author, "F. Scott Fitzgerald"));
-        }
 
-        [TestMethod]
-        public void InsertStatus_ThenGet_ThenDropTable()
-        {
-            IDataRepository repository = new DataRepository("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\Studia\\PrijectPT\\TestData\\Instrumentation\\UnitTestDataDB.mdf;Integrated Security=True");
-
-            repository.DropAll();
-
-            IBook book = new Book("1", "The Great Gatsby", "F. Scott Fitzgerald", 320, "9780743273565", "Scribner", "English");
-            repository.InsertBook(book);
-
-            IStatus status = new Status("1", book, true);
-            repository.InsertStatus(status);
+            
+            repository.InsertStatus("1", "1", true);
 
             IStatus testStatus = repository.GetStatus(1);
 
             Assert.IsNotNull(testStatus);
             Assert.AreEqual("1", testStatus.Id);
-            Assert.AreEqual(book.Id, testStatus.Book.Id);
+            Assert.AreEqual(testBook.Id, testStatus.Book.Id);
             Assert.IsTrue(testStatus.Availability);
-        }
 
-        [TestMethod]
-        public void InsertStatus_ThenGet_ThenDropTable_QuerySyntax()
-        {
-            IDataRepository repository = new DataRepository("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\Studia\\PrijectPT\\TestData\\Instrumentation\\UnitTestDataDB.mdf;Integrated Security=True");
+            repository.UpdateStatus("1", "1", false);
 
-            repository.DropAll();
-
-            IBook book = new Book("1", "The Great Gatsby", "F. Scott Fitzgerald", 320, "9780743273565", "Scribner", "English");
-            repository.InsertBook(book);
-
-            IStatus status = new Status("1", book, true);
-            repository.InsertStatus(status);
-
-            IStatus testStatus = repository.GetStatus_QuerySyntax(1);
-
-            Assert.IsNotNull(testStatus);
             Assert.AreEqual("1", testStatus.Id);
-            Assert.AreEqual(book.Id, testStatus.Book.Id);
-            Assert.IsTrue(testStatus.Availability);
+            Assert.AreEqual(testBook.Id, testStatus.Book.Id);
+            Assert.IsFalse(testStatus.Availability);
         }
+
+       
 
         [TestMethod]
         public void InsertEvent_ThenGet_ThenDropTable()
@@ -151,17 +164,16 @@ namespace TestData {
 
             repository.DropAll();
 
-            ICustomer customer = new Customer("1", "John", "Doe", 25, "123 Main St", "New York");
-            repository.InsertCustomer(customer);
+            repository.InsertCustomer("1", "John", "Doe", 25, "123 Main St", "New York");
 
-            IBook book = new Book("1", "The Great Gatsby", "F. Scott Fitzgerald", 320, "9780743273565", "Scribner", "English");
-            repository.InsertBook(book);
+            ICustomer customer = repository.GetCustomer(1);
+            repository.InsertBook("1", "The Great Gatsby", "F. Scott Fitzgerald", 320, "9780743273565", "Scribner", "English");
+            IBook book = repository.GetBook(1);
 
-            IStatus status = new Status("1", book, true);
-            repository.InsertStatus(status);
+            repository.InsertStatus("1", "1", true);
+            IStatus status = repository.GetStatus(1);
 
-            IEvent evnt = new Buy("1", customer, status, DateTime.Now);
-            repository.InsertEvent(evnt);
+            repository.InsertEvent("1", "1", "1", DateTime.Now, "Buy");
 
             IEvent testEvent = repository.GetEvent(1);
 
@@ -178,17 +190,19 @@ namespace TestData {
 
             repository.DropAll();
 
-            ICustomer customer = new Customer("1", "John", "Doe", 25, "123 Main St", "New York");
-            repository.InsertCustomer(customer);
+            repository.InsertCustomer("1", "John", "Doe", 25, "123 Main St", "New York");
 
-            IBook book = new Book("1", "The Great Gatsby", "F. Scott Fitzgerald", 320, "9780743273565", "Scribner", "English");
-            repository.InsertBook(book);
+            ICustomer customer = repository.GetCustomer(1);
 
-            IStatus status = new Status("1", book, true);
-            repository.InsertStatus(status);
+            repository.InsertBook("1", "The Great Gatsby", "F. Scott Fitzgerald", 320, "9780743273565", "Scribner", "English");
 
-            IEvent evnt = new Buy("1", customer, status, DateTime.Now);
-            repository.InsertEvent(evnt);
+            IBook book = repository.GetBook(1);
+
+            repository.InsertStatus("1", "1", true);
+
+            IStatus status = repository.GetStatus(1);
+
+            repository.InsertEvent("1", "1", "1", DateTime.Now, "Buy");
 
             IEvent testEvent = repository.GetEvent_QuerySyntax(1);
 
@@ -205,12 +219,11 @@ namespace TestData {
 
             repository.DropAll();
 
-            ICustomer customer = new Customer("1", "John", "Doe", 25, "123 Main St", "New York");
-            repository.InsertCustomer(customer);
+            repository.InsertCustomer("1", "John", "Doe", 25, "123 Main St", "New York");
 
-            customer.FirstName = "Jane";
-            customer.LastName = "Smith";
-            repository.UpdateCustomer(customer);
+            ICustomer customer = repository.GetCustomer(1);
+
+            repository.UpdateCustomer("1", "Jane", "Smith", 25, "123 Main St", "New York");
 
             ICustomer updatedCustomer = repository.GetCustomer(1);
 
@@ -227,12 +240,12 @@ namespace TestData {
 
             repository.DropAll();
 
-            IBook book = new Book("1", "The Great Gatsby", "F. Scott Fitzgerald", 320, "9780743273565", "Scribner", "English");
-            repository.InsertBook(book);
+            repository.InsertBook("1", "The Great Gatsby", "F. Scott Fitzgerald", 320, "9780743273565", "Scribner", "English");
 
-            book.Title = "Pride and Prejudice";
-            book.Author = "Jane Austen";
-            repository.UpdateBook(book);
+            IBook book = repository.GetBook(1);
+
+
+            repository.UpdateBook("1", "Pride and Prejudice", "Jane Austen", 320, "9780743273565", "Scribner", "English");
 
             IBook updatedBook = repository.GetBook(1);
 
@@ -249,14 +262,15 @@ namespace TestData {
 
             repository.DropAll();
 
-            IBook book = new Book("1", "The Great Gatsby", "F. Scott Fitzgerald", 320, "9780743273565", "Scribner", "English");
-            repository.InsertBook(book);
+            repository.InsertBook("1", "The Great Gatsby", "F. Scott Fitzgerald", 320, "9780743273565", "Scribner", "English");
 
-            IStatus status = new Status("1", book, true);
-            repository.InsertStatus(status);
+            IBook book = repository.GetBook(1);
 
-            status.Availability = false;
-            repository.UpdateStatus(status);
+            repository.InsertStatus("1", "1", true);
+
+            IStatus status = repository.GetStatus(1);
+
+            repository.UpdateStatus("1", "1", false);
 
             IStatus updatedStatus = repository.GetStatus(1);
 
@@ -273,20 +287,23 @@ namespace TestData {
 
             repository.DropAll();
 
-            ICustomer customer = new Customer("1", "John", "Doe", 25, "123 Main St", "New York");
-            repository.InsertCustomer(customer);
+            repository.InsertCustomer("1", "John", "Doe", 25, "123 Main St", "New York");
 
-            IBook book = new Book("1", "The Great Gatsby", "F. Scott Fitzgerald", 320, "9780743273565", "Scribner", "English");
-            repository.InsertBook(book);
+            ICustomer customer = repository.GetCustomer(1);
 
-            IStatus status = new Status("1", book, true);
-            repository.InsertStatus(status);
+            repository.InsertBook("1", "The Great Gatsby", "F. Scott Fitzgerald", 320, "9780743273565", "Scribner", "English");
 
-            IEvent evnt = new Buy("1", customer, status, DateTime.Now);
-            repository.InsertEvent(evnt);
+            IBook book = repository.GetBook(1);
 
-            evnt.Time = DateTime.Now.AddDays(-1);
-            repository.UpdateEvent(evnt);
+            repository.InsertStatus("1", "1", true);
+
+            IStatus status = repository.GetStatus(1);
+
+            repository.InsertEvent("1", "1", "1", DateTime.Now, "Buy");
+
+            IEvent testEvent = repository.GetEvent(1);
+
+            repository.UpdateEvent("1", "1", "1", DateTime.Now.AddDays(-1), "Buy");
 
             IEvent updatedEvent = repository.GetEvent(1);
 
