@@ -15,8 +15,8 @@ public interface IDataRepository
     List<ICustomer> GetAllCustomers();
     ICustomer GetCustomer(int id);
     ICustomer GetCustomer_QuerySyntax(int id);
-    void InsertCustomer(ICustomer newCustomer);
-    void UpdateCustomer(ICustomer updatedCustomer);
+    void InsertCustomer(string id, string firstName, string lastName, int age, string address, string city);
+    void UpdateCustomer(string id, string firstName, string lastName, int age, string address, string city);
     void DeleteCustomer(int customerId);
 
     // Books
@@ -24,24 +24,24 @@ public interface IDataRepository
     public List<IBook> GetAllBooks_QuerySyntax();
     IBook GetBook(int id);
     public IBook GetBook_QuerySyntax(int id);
-    void InsertBook(IBook newBook);
-    void UpdateBook(IBook updatedBook);
+    void InsertBook(string id, string title, string author, int pages, string ISBN, string publisher, string language);
+    void UpdateBook(string id, string title, string author, int pages, string ISBN, string publisher, string language);
     void DeleteBook(int bookId);
 
     // Statuses
     List<IStatus> GetAllStatuses();
     IStatus GetStatus(int id);
     public IStatus GetStatus_QuerySyntax(int id);
-    void InsertStatus(IStatus newStatus);
-    void UpdateStatus(IStatus updatedStatus);
+    void InsertStatus(string statusId, IBook book, bool available);
+    void UpdateStatus(string statusId, IBook book, bool available);
     void DeleteStatus(int statusId);
 
     // Events
     List<IEvent> GetAllEvents();
     IEvent GetEvent(int id);
     public IEvent GetEvent_QuerySyntax(int id);
-    void InsertEvent(IEvent newEvent);
-    void UpdateEvent(IEvent updatedEvent);
+    void InsertEvent(string id, ICustomer customer, IStatus status, DateTime date, string type, string reasonOrDescription = "");
+    void UpdateEvent(string id, ICustomer customer, IStatus status, DateTime date, string type, string reasonOrDescription = "");
     void DeleteEvent(int eventId);
 
     // Other methods

@@ -69,18 +69,18 @@ internal class DataRepository : IDataRepository
         }
     }
 
-    public void InsertCustomer(ICustomer customer)
+    public void InsertCustomer(string id, string firstName, string lastName, int age, string address, string city)
     {
         using (BookShopDBLDataContext dbContext = new BookShopDBLDataContext(this._connectionString))
         {
             Customers customerEntity = new Customers()
             {
-                Id = Convert.ToInt32(customer.Id),
-                FirstName = customer.FirstName,
-                LastName = customer.LastName,
-                Age = customer.Age,
-                Address = customer.Address,
-                City = customer.City
+                Id = Convert.ToInt32(id),
+                FirstName = firstName,
+                LastName = lastName,
+                Age = age,
+                Address = address,
+                City = city
             };
 
             dbContext.Customers.InsertOnSubmit(customerEntity);
@@ -89,20 +89,20 @@ internal class DataRepository : IDataRepository
         }
     }
 
-    public void UpdateCustomer(ICustomer updatedCustomer)
+    public void UpdateCustomer(string id, string firstName, string lastName, int age, string address, string city)
     {
         using (var dbContext = new BookShopDBLDataContext(_connectionString))
         {
-            var existingCustomer = dbContext.Customers.FirstOrDefault(c => c.Id.ToString() == updatedCustomer.Id);
+            var existingCustomer = dbContext.Customers.FirstOrDefault(c => c.Id.ToString() == id);
 
             if (existingCustomer != null)
             {
                 // Update the properties of the existing customer with the new values
-                existingCustomer.FirstName = updatedCustomer.FirstName;
-                existingCustomer.LastName = updatedCustomer.LastName;
-                existingCustomer.Age = updatedCustomer.Age;
-                existingCustomer.Address = updatedCustomer.Address;
-                existingCustomer.City = updatedCustomer.City;
+                existingCustomer.FirstName = firstName;
+                existingCustomer.LastName = lastName;
+                existingCustomer.Age = age;
+                existingCustomer.Address = address;
+                existingCustomer.City = city;
 
                 dbContext.SubmitChanges();
             }
@@ -191,19 +191,19 @@ internal class DataRepository : IDataRepository
         }   
     }
 
-    public void InsertBook(IBook newBook)
+    public void InsertBook(string id, string title, string author, int pages, string ISBN, string publisher, string language)
     {
         using (var dbContext = new BookShopDBLDataContext(_connectionString))
         {
             Books bookEntity = new Books()
             {
-                Id = int.Parse(newBook.Id),
-                Title = newBook.Title,
-                Author = newBook.Author,
-                Pages = newBook.Pages,
-                ISBN = newBook.ISBN,
-                Publisher = newBook.Publisher,
-                Language = newBook.Language,
+                Id = int.Parse(id),
+                Title = title,
+                Author = author,
+                Pages = pages,
+                ISBN = ISBN,
+                Publisher = publisher,
+                Language = language,
             };
 
             dbContext.Books.InsertOnSubmit(bookEntity);
@@ -211,21 +211,21 @@ internal class DataRepository : IDataRepository
         }
     }
 
-    public void UpdateBook(IBook updatedBook)
+    public void UpdateBook(string id, string title, string author, int pages, string ISBN, string publisher, string language)
     {
         using (var dbContext = new BookShopDBLDataContext(_connectionString))
         {
-            var existingBook = dbContext.Books.FirstOrDefault(c => c.Id.ToString() == updatedBook.Id);
+            var existingBook = dbContext.Books.FirstOrDefault(c => c.Id.ToString() == id);
 
             if (existingBook != null)
             {
                 // Update the properties of the existing customer with the new values
-                existingBook.Title = updatedBook.Title;
-                existingBook.Author = updatedBook.Author;
-                existingBook.Pages = updatedBook.Pages;
-                existingBook.ISBN = updatedBook.ISBN;
-                existingBook.Publisher = updatedBook.Publisher;
-                existingBook.Language = updatedBook.Language;
+                existingBook.Title = title;
+                existingBook.Author = author;
+                existingBook.Pages = pages;
+                existingBook.ISBN = ISBN;
+                existingBook.Publisher = publisher;
+                existingBook.Language = language;
 
                 dbContext.SubmitChanges();
             }
@@ -304,15 +304,15 @@ internal class DataRepository : IDataRepository
         }
     }
 
-    public void InsertStatus(IStatus newStatus)
+    public void InsertStatus(string statusId, IBook book, bool available)
     {
         using (var dbContext = new BookShopDBLDataContext(_connectionString))
         {
             var statusEntity = new Statuses()
             {
-                Id = int.Parse(newStatus.Id),
-                BookId = int.Parse(newStatus.Book.Id),
-                Availability = newStatus.Availability
+                Id = int.Parse(statusId),
+                BookId = int.Parse(book.Id),
+                Availability = available
             };
 
             dbContext.Statuses.InsertOnSubmit(statusEntity);
@@ -320,17 +320,17 @@ internal class DataRepository : IDataRepository
         }
     }
 
-    public void UpdateStatus(IStatus updatedStatus)
+    public void UpdateStatus(string statusId, IBook book, bool available)
     {
         using (var dbContext = new BookShopDBLDataContext(_connectionString))
         {
-            var existingStatus = dbContext.Statuses.FirstOrDefault(s => s.Id.ToString() == updatedStatus.Id);
+            var existingStatus = dbContext.Statuses.FirstOrDefault(s => s.Id.ToString() == statusId);
 
             if (existingStatus != null)
             {
                 // Update the properties of the existing status with the new values
-                existingStatus.BookId = int.Parse(updatedStatus.Book.Id);
-                existingStatus.Availability = updatedStatus.Availability;
+                existingStatus.BookId = int.Parse(book.Id);
+                existingStatus.Availability = available;
 
                 dbContext.SubmitChanges();
             }
@@ -482,112 +482,87 @@ internal class DataRepository : IDataRepository
         }
     }
 
-    public void InsertEvent(IEvent newEvent)
+    public void InsertEvent(string id, ICustomer customer, IStatus status, DateTime date, string type, string reasonOrDescription = "")
     {
         using (var dbContext = new BookShopDBLDataContext(_connectionString))
         {
-            if (newEvent is Buy)
+            
+            if (type == "Complaint")
             {
-                var buyEvent = (Buy)newEvent;
-
                 var eventEntity = new Events()
                 {
-                    Id = int.Parse(buyEvent.Id),
-                    StatusId = int.Parse(buyEvent.Status.Id),
-                    CustomerId = int.Parse(buyEvent.Customer.Id),
-                    Time = buyEvent.Time,
-                    Type = "Buy"
+                    Id = int.Parse(id),
+                    StatusId = int.Parse(status.Id),
+                    CustomerId = int.Parse(customer.Id),
+                    Time = date,
+                    Type = type,
+                    Reason = reasonOrDescription
                 };
 
                 dbContext.Events.InsertOnSubmit(eventEntity);
                 dbContext.SubmitChanges();
-            }
-            else if (newEvent is Return)
-            {
-                var returnEvent = (Return)newEvent;
 
+            } else if (type == "Review")
+            {
                 var eventEntity = new Events()
                 {
-                    Id = int.Parse(returnEvent.Id),
-                    StatusId = int.Parse(returnEvent.Status.Id),
-                    CustomerId = int.Parse(returnEvent.Customer.Id),
-                    Time = returnEvent.Time,
-                    Type = "Return"
+                    Id = int.Parse(id),
+                    StatusId = int.Parse(status.Id),
+                    CustomerId = int.Parse(customer.Id),
+                    Time = date,
+                    Type = type,
+                    Description = reasonOrDescription
                 };
 
                 dbContext.Events.InsertOnSubmit(eventEntity);
                 dbContext.SubmitChanges();
-            }
-            else if (newEvent is Review)
-            {
-                var reviewEvent = (Review)newEvent;
 
+            } else
+            {
                 var eventEntity = new Events()
                 {
-                    Id = int.Parse(reviewEvent.Id),
-                    StatusId = int.Parse(reviewEvent.Status.Id),
-                    CustomerId = int.Parse(reviewEvent.Customer.Id),
-                    Time = reviewEvent.Time,
-                    Type = "Review",
-                    Description = reviewEvent.Description
+                    Id = int.Parse(id),
+                    StatusId = int.Parse(status.Id),
+                    CustomerId = int.Parse(customer.Id),
+                    Time = date,
+                    Type = type
                 };
 
                 dbContext.Events.InsertOnSubmit(eventEntity);
                 dbContext.SubmitChanges();
-            }
-            else if (newEvent is Complaint)
-            {
-                var complaintEvent = (Complaint)newEvent;
 
-                var eventEntity = new Events()
-                {
-                    Id = int.Parse(complaintEvent.Id),
-                    StatusId = int.Parse(complaintEvent.Status.Id),
-                    CustomerId = int.Parse(complaintEvent.Customer.Id),
-                    Time = complaintEvent.Time,
-                    Type = "Complaint",
-                    Reason = complaintEvent.Reason
-                };
-
-                dbContext.Events.InsertOnSubmit(eventEntity);
-                dbContext.SubmitChanges();
-            }
-            else
-            {
-                throw new Exception("Wrong Event type");
-            }
+            }          
+            
         }
     }
 
-    public void UpdateEvent(IEvent updatedEvent)
+    public void UpdateEvent(string id, ICustomer customer, IStatus status, DateTime date, string type, string reasonOrDescription = "")
     {
         using (var dbContext = new BookShopDBLDataContext(_connectionString))
         {
-            var existingEvent = dbContext.Events.FirstOrDefault(e => e.Id == int.Parse(updatedEvent.Id));
+            var existingEvent = dbContext.Events.FirstOrDefault(e => e.Id == int.Parse(id));
 
             if (existingEvent != null)
             {
-                existingEvent.StatusId = int.Parse(updatedEvent.Status.Id);
-                existingEvent.CustomerId = int.Parse(updatedEvent.Customer.Id);
-                existingEvent.Time = updatedEvent.Time;
+                existingEvent.StatusId = int.Parse(status.Id);
+                existingEvent.CustomerId = int.Parse(customer.Id);
+                existingEvent.Time = date;
 
-                if (updatedEvent is Review)
+                if (type ==  "Review")
                 {
-                    var reviewEvent = (Review)updatedEvent;
                     existingEvent.Type = "Review";
-                    existingEvent.Description = reviewEvent.Description;
+                    existingEvent.Description = reasonOrDescription;
                     existingEvent.Reason = null;
                 }
-                else if (updatedEvent is Complaint)
+                else if (type == "Complaint")
                 {
-                    var complaintEvent = (Complaint)updatedEvent;
                     existingEvent.Type = "Complaint";
                     existingEvent.Description = null;
-                    existingEvent.Reason = complaintEvent.Reason;
+                    existingEvent.Reason = reasonOrDescription;
                 }
                 else
                 {
-                    existingEvent.Type = updatedEvent.GetType().Name;
+                    existingEvent.Type = type;
                     existingEvent.Description = null;
                     existingEvent.Reason = null;
                 }
