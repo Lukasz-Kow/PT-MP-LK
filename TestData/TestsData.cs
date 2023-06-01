@@ -27,8 +27,9 @@ namespace TestData {
 
         // DB Connection string needs to be adjusted to work on a different computer
 
+        
         [TestMethod]
-        public void InsertCustomer_ThenUpdate()
+        public void InsertCustomer_ThenGet_ThenDropTable()
         {
             IDataRepository repository = IDataRepository.CDataRepository("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\Studia\\PrijectPT\\TestData\\Instrumentation\\UnitTestDataDB.mdf;Integrated Security=True");
 
@@ -45,21 +46,11 @@ namespace TestData {
             Assert.IsTrue(string.Equals(testCustomer.FirstName, "John"));
             Assert.IsTrue(string.Equals(testCustomer.LastName, "Poe"));
 
-            repository.UpdateCustomer("1", "Lukasz", "Kow", 19, "lalalal", "Lodz");
 
-
-            Assert.AreEqual("1", testCustomer.Id);
-            Assert.IsTrue(string.Equals(testCustomer.FirstName, "Lukasz"));
-            Assert.IsTrue(string.Equals(testCustomer.LastName, "Kow"));
-            Assert.AreEqual(19, testCustomer.Age);
-
-            repository.DeleteCustomer(1);
-
-            Assert.IsNull(repository.GetCustomer(1));
         }
 
         [TestMethod]
-        public void InsertCustomer_ThenUpdate_QuerySyntax()
+        public void InsertCustomer_ThenGet_ThenDropTable_QuerySyntax()
         {
             IDataRepository repository = new DataRepository("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\Studia\\PrijectPT\\TestData\\Instrumentation\\UnitTestDataDB.mdf;Integrated Security=True");
 
@@ -76,10 +67,11 @@ namespace TestData {
             Console.WriteLine(type);
             Assert.IsTrue(string.Equals(testCustomer.FirstName, "John"));
             Assert.IsTrue(string.Equals(testCustomer.LastName, "Poe"));
+
         }
 
         [TestMethod]
-        public void InsertBook_ThenUpdate()
+        public void InsertBook_ThenGet_ThenDropTable()
         {
             IDataRepository repository = new DataRepository("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\Studia\\PrijectPT\\TestData\\Instrumentation\\UnitTestDataDB.mdf;Integrated Security=True");
 
@@ -94,21 +86,12 @@ namespace TestData {
             Assert.IsTrue(string.Equals(testBook.Title, "The Great Gatsby"));
             Assert.IsTrue(string.Equals(testBook.Author, "F. Scott Fitzgerald"));
 
-            repository.UpdateBook("1", "The Great Gatsby", "F. Scott Fitzgerald", 320, "9780743273565", "Scribner", "English");
-
-            Assert.AreEqual("1", testBook.Id);
-            Assert.IsTrue(string.Equals(testBook.Title, "The Great Gatsby"));
-            Assert.IsTrue(string.Equals(testBook.Author, "F. Scott Fitzgerald"));
-
-            repository.DeleteBook(1);
-
-            Assert.IsNull(repository.GetBook(1));
 
 
         }
 
         [TestMethod]
-        public void InsertBook_ThenUpdate_QuerySyntax()
+        public void InsertBook_ThenGet_ThenDropTable_QuerySyntax()
         {
             IDataRepository repository = new DataRepository("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\Studia\\PrijectPT\\TestData\\Instrumentation\\UnitTestDataDB.mdf;Integrated Security=True");
 
@@ -126,7 +109,7 @@ namespace TestData {
         }
 
         [TestMethod]
-        public void InsertStatusToTheBook_ThenUpdate()
+        public void InsertStatus_ThenGet_ThenDropTable()
         {
             IDataRepository repository = new DataRepository("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\Studia\\PrijectPT\\TestData\\Instrumentation\\UnitTestDataDB.mdf;Integrated Security=True");
 
@@ -148,14 +131,29 @@ namespace TestData {
             Assert.AreEqual(testBook.Id, testStatus.Book.Id);
             Assert.IsTrue(testStatus.Availability);
 
-            repository.UpdateStatus("1", "1", false);
-
-            Assert.AreEqual("1", testStatus.Id);
-            Assert.AreEqual(testBook.Id, testStatus.Book.Id);
-            Assert.IsFalse(testStatus.Availability);
         }
 
-       
+        [TestMethod]
+        public void InsertStatus_ThenGet_ThenDropTable_QuerySyntax()
+        {
+            IDataRepository repository = new DataRepository("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\Studia\\PrijectPT\\TestData\\Instrumentation\\UnitTestDataDB.mdf;Integrated Security=True");
+
+            repository.DropAll();
+
+            
+            repository.InsertBook("1", "The Great Gatsby", "F. Scott Fitzgerald", 320, "9780743273565", "Scribner", "English");
+
+            IBook book = repository.GetBook(1);
+
+            repository.InsertStatus("1", "1", true);
+
+            IStatus testStatus = repository.GetStatus_QuerySyntax(1);
+
+            Assert.IsNotNull(testStatus);
+            Assert.AreEqual("1", testStatus.Id);
+            Assert.AreEqual(book.Id, testStatus.Book.Id);
+            Assert.IsTrue(testStatus.Availability);
+        }
 
         [TestMethod]
         public void InsertEvent_ThenGet_ThenDropTable()

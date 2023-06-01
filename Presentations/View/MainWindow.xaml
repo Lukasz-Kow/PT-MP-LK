@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:Presentations.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid Background="Azure">
+    <Grid Background="White">
         <ContentControl Content="{Binding SelectedViewModel}" Grid.ColumnSpan="2">
 
 
