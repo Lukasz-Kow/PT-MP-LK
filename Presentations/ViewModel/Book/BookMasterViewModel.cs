@@ -12,9 +12,9 @@ namespace Presentations.ViewModel;
 
 internal class BookMasterViewModel: ViewModelBase
 {
-    public ICommand SwitchToUserMasterPage { get; set; }
+    public ICommand SwitchToCustomerMasterPage { get; set; }
 
-    public ICommand SwitchToStateMasterPage { get; set; }
+    public ICommand SwitchToStatusMasterPage { get; set; }
 
     public ICommand SwitchToEventMasterPage { get; set; }
 
@@ -164,8 +164,8 @@ internal class BookMasterViewModel: ViewModelBase
 
     public BookMasterViewModel(IBookModelOperations? model = null, IErrorPopup? informer = null)
     {
-        this.SwitchToUserMasterPage = new SwitchViewCommand("CustomerMasterView");
-        this.SwitchToStateMasterPage = new SwitchViewCommand("StatusMasterView");
+        this.SwitchToCustomerMasterPage = new SwitchViewCommand("CustomerMasterView");
+        this.SwitchToStatusMasterPage = new SwitchViewCommand("StatusMasterView");
         this.SwitchToEventMasterPage = new SwitchViewCommand("EventMasterView");
 
         this.AddBook = new OnClickCommand(e => this.StoreBook(), c => this.CanStoreBook());
