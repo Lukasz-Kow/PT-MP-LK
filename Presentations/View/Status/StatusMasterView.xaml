@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Presentations.View"
       xmlns:view="clr-namespace:Presentations.View"
-      xmlns:vm="clr-namespace:Presentations.ViewModel" x:Class="Presentations.View.StatusMasterView"
+      xmlns:vms="clr-namespace:Presentations.ViewModel" x:Class="Presentations.View.StatusMasterView"
       mc:Ignorable="d" 
       d:DesignHeight="500" d:DesignWidth="800">
 
@@ -15,7 +15,7 @@
             d:DesignHeight="480" d:DesignWidth="800" Margin="0,0,0,-30">
 
             <UserControl.DataContext>
-                <ObjectDataProvider ObjectType="vm:StatusMasterViewModel">
+                <ObjectDataProvider ObjectType="vms:StatusMasterViewModel">
                     <ObjectDataProvider.ConstructorParameters>
                         <x:Null/>
                         <x:Null/>

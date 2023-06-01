@@ -4,12 +4,12 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Presentations.View"
-      xmlns:vm="clr-namespace:Presentations.ViewModel" x:Class="Presentations.View.StatusDetailView"
+      xmlns:vms="clr-namespace:Presentations.ViewModel" x:Class="Presentations.View.StatusDetailView"
       mc:Ignorable="d" 
       d:DesignHeight="340" d:DesignWidth="220">
 
     <UserControl.DataContext>
-        <ObjectDataProvider ObjectType="vm:StatusDetailViewModel">
+        <ObjectDataProvider ObjectType="vms:StatusDetailViewModel">
             <ObjectDataProvider.ConstructorParameters>
                 <x:Null/>
                 <x:Null/>

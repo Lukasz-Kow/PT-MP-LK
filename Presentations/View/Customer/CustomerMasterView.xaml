@@ -5,11 +5,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:local="clr-namespace:Presentations.View;assembly=Presentations"
              xmlns:view="clr-namespace:Presentations.View"
-             xmlns:vm="clr-namespace:Presentations.ViewModel"
+             xmlns:vms="clr-namespace:Presentations.ViewModel"
              mc:Ignorable="d" d:DesignWidth="800" Height="500">
 
     <UserControl.DataContext>
-        <ObjectDataProvider ObjectType="vm:CustomerMasterViewModel">
+        <ObjectDataProvider ObjectType="vms:CustomerMasterViewModel">
             <ObjectDataProvider.ConstructorParameters>
                 <x:Null/>
                 <x:Null/>

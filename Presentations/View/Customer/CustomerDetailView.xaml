@@ -4,11 +4,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:local="clr-namespace:Presentations.View;assembly=Presentations"
-             xmlns:vm="clr-namespace:Presentations.ViewModel"
+             xmlns:vms="clr-namespace:Presentations.ViewModel"
              mc:Ignorable="d" Width="220" Height="380">
 
     <UserControl.DataContext>
-        <ObjectDataProvider ObjectType="vm:CustomerDetailViewModel">
+        <ObjectDataProvider ObjectType="vms:CustomerDetailViewModel">
             <ObjectDataProvider.ConstructorParameters>
                 <x:Null/>
                 <x:Null/>
