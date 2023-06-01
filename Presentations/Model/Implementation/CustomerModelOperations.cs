@@ -35,5 +35,10 @@ namespace Presentations.Model.Implementation
 
             return customerModels;
         }
+
+        public void UpdateCustomer(string customerId, string firstName, string lastName, int age, string address, string city)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

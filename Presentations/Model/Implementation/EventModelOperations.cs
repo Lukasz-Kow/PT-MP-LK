@@ -14,6 +14,11 @@ namespace Presentations.Model.Implementation
             services = IServices.Create("");
         }
 
+        private IEventModel Map(IEventDTO even)
+        {
+            return new EventModel(even.Id, even.StatusId, even.CustomerId, even.Time, even.Type, even.ReasonOrDescription);
+        }
+
         public void AddEvent(string Id, string statusId, string customerId, DateTime Time, string type, string? descriptionOrReason)
         {
             if (type == "Buy")
@@ -46,26 +51,15 @@ namespace Presentations.Model.Implementation
 
             foreach (var ev in events)
             {
-                if (ev is BuyModel buy)
-                {
-                    eventModels.Add(new BuyModel(buy.Id, buy.StatusId, buy.CustomerId, buy.Time));
-                }
-                else if (ev is ComplaintModel complaintModel)
-                {
-                    eventModels.Add(new ComplaintModel(complaintModel.Id, complaintModel.StatusId, complaintModel.CustomerId, complaintModel.Time, complaintModel.Reason));
-                }
-                else if (ev is ReviewModel rev)
-                {
-                    eventModels.Add(new ReviewModel(rev.Id, rev.StatusId, rev.CustomerId, rev.Time, rev.Description));
-                }
-                else if (ev is ReturnModel ret)
-                {
-                    eventModels.Add(new ReturnModel(ret.Id, ret.StatusId, ret.CustomerId, ret.Time));
-                }
-                
+                eventModels.Add(Map(ev));
             }
 
             return eventModels;
+        }
+
+        public void UpdateEvent(string Id, string statusId, string customerId, DateTime Time, string type, string? descriptionOrReason)
+        {
+            throw new NotImplementedException();
         }
     }
 }

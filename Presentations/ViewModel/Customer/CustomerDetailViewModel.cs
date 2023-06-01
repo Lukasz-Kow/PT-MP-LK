@@ -1,75 +1,125 @@
-﻿using Presentations.ViewModel.MVVMLight;
-using Presentations.Model;
+﻿using System.Windows.Input;
+using Presentations.Model.API;
+using Presentations.ViewModel;
+using Presentations.ViewModel.Commands;
+using Presentations;
 
-namespace Presentations.ViewModel.Customer
+namespace Presentations.ViewModel;
+
+internal class CustomerDetailViewModel : ViewModelBase
 {
-    public class CustomerDetailViewModel : ViewModelBase
+    public ICommand UpdateCustomer { get; set; }
+
+    private readonly ICustomerModelOperations _modelOperation;
+
+    private readonly IErrorPopup _informer;
+
+    private string _firstName;
+
+    public string FirstName
     {
-        private CustomerModel _customerModel;
-
-        public CustomerDetailViewModel(CustomerModel customerModel)
+        get => _firstName;
+        set
         {
-            _customerModel = customerModel;
+            _firstName = value;
+            OnPropertyChanged(nameof(FirstName));
         }
+    }
 
-        public string FirstName
-        {
-            get => _customerModel.FirstName;
-            set
-            {
-                _customerModel.FirstName = value;
-                RaisePropertyChanged();
-            }
-        }
+    private string _lastName;
 
-        public string LastName
+    public string LastName
+    {
+        get => _lastName;
+        set
         {
-            get => _customerModel.LastName;
-            set
-            {
-                _customerModel.LastName = value;
-                RaisePropertyChanged();
-            }
+            _lastName = value;
+            OnPropertyChanged(nameof(LastName));
         }
+    }
 
-        public string Id
-        {
-            get => _customerModel.Id;
-            set
-            {
-                _customerModel.Id = value;
-                RaisePropertyChanged();
-            }
-        }
+    private string _id;
 
-        public int Age
+    public string Id
+    {
+        get => _id;
+        set
         {
-            get => _customerModel.Age;
-            set
-            {
-                _customerModel.Age = value;
-                RaisePropertyChanged();
-            }
+            _id = value;
+            OnPropertyChanged(nameof(Id));
         }
+    }
 
-        public string Address
-        {
-            get => _customerModel.Address;
-            set
-            {
-                _customerModel.Address = value;
-                RaisePropertyChanged();
-            }
-        }
+    private int _age;
 
-        public string City
+    public int Age
+    {
+        get => _age;
+        set
         {
-            get => _customerModel.City;
-            set
-            {
-                _customerModel.City = value;
-                RaisePropertyChanged();
-            }
+            _age = value;
+            OnPropertyChanged(nameof(Age));
         }
+    }
+
+    private string _address;
+
+    public string Address
+    {
+        get => _address;
+        set
+        {
+            _address = value;
+            OnPropertyChanged(nameof(Address));
+        }
+    }
+
+    private string _city;
+
+    public string City
+    {
+        get => _city;
+        set
+        {
+            _city = value;
+            OnPropertyChanged(nameof(City));
+        }
+    }
+
+    public CustomerDetailViewModel(ICustomerModel model, ICustomerModelOperations? modelOps = null, IErrorPopup? informer = null)
+    {
+
+        this.Id = model.Id;
+        this.FirstName = model.FirstName;
+        this.LastName = model.LastName;
+        this.Age = model.Age;
+        this.Address = model.Address;
+        this.City = model.City;
+
+        this.UpdateCustomer = new OnClickCommand(e => this.Update(), c => this.CanUpdate());
+
+        this._modelOperation = modelOps ?? ICustomerModelOperations.CreateModelOperation();
+        this._informer = informer ?? new ErrorPopupHandler();
+    }
+
+    private void Update()
+    {
+        
+            this._modelOperation.UpdateCustomer(this.Id, this.FirstName, this.LastName, Age, Address, City);
+
+            this._informer.InformSuccess("Customer successfully updated!");
+        
+    }
+
+    private bool CanUpdate()
+    {
+        return !(
+            string.IsNullOrWhiteSpace(this.FirstName) ||
+            string.IsNullOrWhiteSpace(this.LastName) ||
+            string.IsNullOrWhiteSpace(this.Id) ||
+            string.IsNullOrWhiteSpace(this.Address) ||
+            string.IsNullOrWhiteSpace(this.City) ||
+            this.Age <= 0
+        );
     }
 }

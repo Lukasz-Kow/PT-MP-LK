@@ -1,131 +1,212 @@
-﻿using Presentations.Model;
-using Presentations.ViewModel.MVVMLight;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
+using Presentations.Model.API;
+using Presentations.ViewModel.Commands;
+using Presentations.ViewModel;
+using Presentations;
 
-namespace Presentations.ViewModel.Event
+namespace Presentations.ViewModel;
+
+internal class EventMasterViewModel : ViewModelBase
 {
-    public class EventMasterViewModel : ViewModelBase
+    public ICommand SwitchToUserMasterPage { get; set; }
+
+    public ICommand SwitchToProductMasterPage { get; set; }
+
+    public ICommand SwitchToStateMasterPage { get; set; }
+
+    public ICommand AddEvent { get; set; }
+
+    public ICommand RemoveEvent { get; set; }
+
+    private readonly IEventModelOperations _modelOperation;
+
+    private readonly IErrorPopup _informer;
+
+    private ObservableCollection<EventDetailViewModel> _events;
+
+    public ObservableCollection<EventDetailViewModel> Events
     {
-        private ObservableCollection<IEventModel> _events;
-        private IEventModel _selectedEvent;
-        private EventModelOperations _eventModelOperations;
-        private string _actionText;
-
-        public EventMasterViewModel()
+        get => _events;
+        set
         {
-            _events = new ObservableCollection<IEventModel>();
-            _eventModelOperations = new EventModelOperations();
-            AddEventCommand = new RelayCommand(AddEvent);
-            DeleteEventCommand = new RelayCommand(DeleteEvent);
-            FetchDataCommand = new RelayCommand(FetchData);
+            _events = value;
+            OnPropertyChanged(nameof(Events));
+        }
+    }
+
+    private string _id;
+
+    public string Id
+    {
+        get => _id;
+        set
+        {
+            _id = value;
+            OnPropertyChanged(nameof(Id));
+        }
+    }
+
+    private string _statusId;
+
+    public string StatusId
+    {
+        get => _statusId;
+        set
+        {
+            _statusId = value;
+            OnPropertyChanged(nameof(StatusId));
+        }
+    }
+
+    private string _customerId;
+
+    public string CustomerId
+    {
+        get => _customerId;
+        set
+        {
+            _customerId = value;
+            OnPropertyChanged(nameof(CustomerId));
+        }
+    }
+
+    private string _type;
+
+    public string Type
+    {
+        get => _type;
+        set
+        {
+            _type = value;
+            OnPropertyChanged(nameof(Type));
+        }
+    }
+
+    private string _reasonOrDescription;
+
+    public string ReasonOrDescription
+    {
+        get => _reasonOrDescription;
+        set
+        {
+            _reasonOrDescription = value;
+            OnPropertyChanged(nameof(ReasonOrDescription));
+        }
+    }
+
+    private bool _isEventSelected;
+
+    public bool IsEventSelected
+    {
+        get => _isEventSelected;
+        set
+        {
+            this.IsEventDetailVisible = value ? Visibility.Visible : Visibility.Hidden;
+
+            _isEventSelected = value;
+            OnPropertyChanged(nameof(IsEventSelected));
+        }
+    }
+
+    private Visibility _isEventDetailVisible;
+
+    public Visibility IsEventDetailVisible
+    {
+        get => _isEventDetailVisible;
+        set
+        {
+            _isEventDetailVisible = value;
+            OnPropertyChanged(nameof(IsEventDetailVisible));
+        }
+    }
+
+    private EventDetailViewModel _selectedDetailViewModel;
+
+    public EventDetailViewModel SelectedDetailViewModel
+    {
+        get => _selectedDetailViewModel;
+        set
+        {
+            _selectedDetailViewModel = value;
+            this.IsEventSelected = true;
+
+            OnPropertyChanged(nameof(SelectedDetailViewModel));
+        }
+    }
+
+    public EventMasterViewModel(IEventModelOperations? model = null, IErrorPopup? informer = null)
+    {
+        this.SwitchToUserMasterPage = new SwitchViewCommand("CustomerMasterView");
+        this.SwitchToStateMasterPage = new SwitchViewCommand("StatusMasterView");
+        this.SwitchToProductMasterPage = new SwitchViewCommand("BookMasterView");
+
+        this.AddEvent = new OnClickCommand(e => this.StoreEvent(), c => this.CanEvent());
+        this.RemoveEvent = new OnClickCommand(e => this.DeleteEvent());
+
+        this.Events = new ObservableCollection<EventDetailViewModel>();
+
+        this._modelOperation = IEventModelOperations.CreateModelOperation();
+        this._informer = informer ?? new ErrorPopupHandler();
+
+        this.IsEventSelected = false;
+
+        this.LoadEvents();
+    }
+
+    private bool CanEvent()
+    {
+        return !(
+            string.IsNullOrWhiteSpace(this.StatusId.ToString()) ||
+            string.IsNullOrWhiteSpace(this.CustomerId.ToString()) || 
+            string.IsNullOrWhiteSpace(this.Type.ToString())
+        );
+    }
+
+    private void StoreEvent()
+    {
+       
+        try
+        {
+            
+            this._modelOperation.AddEvent(Id, StatusId, CustomerId, DateTime.Now, Type, ReasonOrDescription);
+
+            this.LoadEvents();
+
+            this._informer.InformSuccess("Event successfully created!");
+        }
+        catch (Exception e)
+        {
+            this._informer.InformError(e.Message);
+        }
+        
+    }
+
+    private void DeleteEvent()
+    {
+        this._modelOperation.DeleteEvent(this.SelectedDetailViewModel.Id);
+
+        this.LoadEvents();
+
+        this._informer.InformSuccess("Event successfully deleted!");
+       
+    }
+
+    private async void LoadEvents()
+    {
+        List<IEventModel> Events = (List<IEventModel>)this._modelOperation.GetAllEvents();
+
+        this._events.Clear();
+
+        foreach (IEventModel e in Events)
+        {
+                
+            this._events.Add(new EventDetailViewModel(e));
         }
 
-        private string _eventId;
-        private string _statusId;
-        private string _customerId;
-        private DateTime _eventDate;
-        private string _type;
-        private string _descriptionOrReason;
-
-        public ObservableCollection<IEventModel> Events
-        {
-            get => _events;
-            set
-            {
-                _events = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public IEventModel SelectedEvent
-        {
-            get => _selectedEvent;
-            set
-            {
-                _selectedEvent = value;
-                RaisePropertyChanged();
-                LoadDetailViewModel();
-            }
-        }
-
-        public string ActionText
-        {
-            get => _actionText;
-            set
-            {
-                _actionText = value;
-                DisplayTextCommand.RaiseCanExecuteChanged();
-                RaisePropertyChanged();
-            }
-        }
-
-        public RelayCommand AddEventCommand { get; }
-        public RelayCommand DeleteEventCommand { get; }
-        public RelayCommand FetchDataCommand { get; }
-        public RelayCommand DisplayTextCommand { get; }
-
-        private void AddEvent()
-        {
-            if (_type == "Buy")
-            {
-                var eventModel = new BuyModel(_eventId, _statusId, _customerId, _eventDate);
-                Events.Add(eventModel);
-                _eventModelOperations.AddEvent(_eventId, _statusId, _customerId, _eventDate, _type, "");
-            }
-            else if (_type == "Return")
-            {
-                var eventModel = new ReturnModel(_eventId, _statusId, _customerId, _eventDate);
-                Events.Add(eventModel);
-                _eventModelOperations.AddEvent(_eventId, _statusId, _customerId, _eventDate, _type, "");
-            }
-            else if (_type == "Review")
-            {
-                var eventModel = new ReviewModel(_eventId, _statusId, _customerId, _eventDate, _descriptionOrReason);
-                Events.Add(eventModel);
-                _eventModelOperations.AddEvent(_eventId, _statusId, _customerId, _eventDate, _type, _descriptionOrReason);
-            }
-            else if (_type == "Complaint")
-            {
-                var eventModel = new ComplaintModel(_eventId, _statusId, _customerId, _eventDate, _descriptionOrReason);
-                Events.Add(eventModel);
-                _eventModelOperations.AddEvent(_eventId, _statusId, _customerId, _eventDate, _type, _descriptionOrReason);
-            }
-
-        }
-
-        private void DeleteEvent()
-        {
-            if (SelectedEvent != null)
-            {
-                Events.Remove(SelectedEvent);
-                _eventModelOperations.DeleteEvent(SelectedEvent.Id);
-                SelectedEvent = null;
-            }
-        }
-
-        private void FetchData()
-        {
-            var events = _eventModelOperations.GetAllEvents();
-            Events = new ObservableCollection<IEventModel>(events);
-        }
-
-        private void LoadDetailViewModel()
-        {
-            if (SelectedEvent != null)
-            {
-                var detailViewModel = new EventDetailViewModel(SelectedEvent);
-                // TODO: Pass the detailViewModel instance to the View for displaying additional info
-            }
-        }
-
-        private void ShowPopupWindow()
-        {
-            // TODO: Implement logic to show the popup window with ActionText
-        }
+        OnPropertyChanged(nameof(Events));
     }
 }

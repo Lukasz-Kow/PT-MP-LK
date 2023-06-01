@@ -1,50 +1,82 @@
-﻿using Presentations.Model;
-using Presentations.ViewModel.MVVMLight;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Windows.Input;
+using Presentations.Model.API;
+using Presentations.ViewModel;
+using Presentations.ViewModel.Commands;
+using Presentations;
 
-namespace Presentations.ViewModel.Status
+namespace Presentations.ViewModel;
+
+internal class StatusDetailViewModel : ViewModelBase
 {
-    public class StatusDetailViewModel : ViewModelBase
+    public ICommand UpdateStatus { get; set; }
+
+    private readonly IStatusModelOperations _modelOperation;
+
+    private readonly IErrorPopup _informer;
+
+    private string _id;
+
+    public string Id
     {
-        private StatusModel _status;
-
-        public StatusDetailViewModel(StatusModel status)
+        get => _id;
+        set
         {
-            _status = status;
+            _id = value;
+            OnPropertyChanged(nameof(Id));
         }
+    }
 
-        public string Id
-        {
-            get => _status.Id;
-            set
-            {
-                _status.Id = value;
-                RaisePropertyChanged();
-            }
-        }
+    private string _bookId;
 
-        public string BookId
+    public string BookId
+    {
+        get => _bookId;
+        set
         {
-            get => _status.BookId;
-            set
-            {
-                _status.BookId = value;
-                RaisePropertyChanged();
-            }
+            _bookId = value;
+            OnPropertyChanged(nameof(BookId));
         }
+    }
 
-        public bool Availability
+    private bool _available;
+
+    public bool Available
+    {
+        get => _available;
+        set
         {
-            get => _status.Availability;
-            set
-            {
-                _status.Availability = value;
-                RaisePropertyChanged();
-            }
+            _available = value;
+            OnPropertyChanged(nameof(Available));
         }
+    }
+
+    public StatusDetailViewModel(IStatusModel model, IStatusModelOperations? modelOps = null, IErrorPopup? informer = null)
+    {
+        this.Id = model.Id;
+        this.BookId = model.BookId;
+        this.Available = model.Availability;
+        this._modelOperation = modelOps;
+
+        this.UpdateStatus = new OnClickCommand(e => this.Update(), c => this.CanUpdate());
+
+        this._modelOperation = IStatusModelOperations.CreateModelOperation();
+        this._informer = informer ?? new ErrorPopupHandler();
+    }
+
+    private void Update()
+    {
+        
+        this._modelOperation.UpdateStatus(this.Id, this.BookId, this.Available);
+
+        this._informer.InformSuccess("Status successfully updated!");
+        
+    }
+
+    private bool CanUpdate()
+    {
+        return !(
+            string.IsNullOrWhiteSpace(this.Available.ToString()) || 
+            string.IsNullOrWhiteSpace(this.BookId)
+        );
     }
 }

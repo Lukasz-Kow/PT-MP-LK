@@ -3,7 +3,7 @@ using Presentations.ViewModel.Commands;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace Presentations.ViewModel.Book
+namespace Presentations.ViewModel
 {
     internal class BookDetailViewModel : ViewModelBase
     {

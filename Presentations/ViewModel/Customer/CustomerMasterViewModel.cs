@@ -1,102 +1,230 @@
-﻿using Presentations.Model;
-
-using Presentations.ViewModel.MVVMLight;
-
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
+using Presentations.Model.API;
+using Presentations.ViewModel.Commands;
+using Presentations.ViewModel;
+using Presentations;
 
-namespace Presentations.ViewModel.Customer
+namespace Presentations.ViewModel;
+
+internal class CustomerMasterViewModel : ViewModelBase
 {
-    public class CustomerMasterViewModel : ViewModelBase
+    public ICommand SwitchToProductMasterPage { get; set; }
+
+    public ICommand SwitchToStateMasterPage { get; set; }
+
+    public ICommand SwitchToEventMasterPage { get; set; }
+
+    public ICommand CreateCustomer { get; set; }
+
+    public ICommand RemoveCustomer { get; set; }
+
+    private readonly ICustomerModelOperations _modelOperation;
+
+    private readonly IErrorPopup _informer;
+
+    private ObservableCollection<CustomerDetailViewModel> _customers;
+
+    public ObservableCollection<CustomerDetailViewModel> Customers
     {
-        private ObservableCollection<CustomerModel> _customers;
-        private CustomerModel _selectedCustomer;
-        private CustomerModelOperations _customerModelOperations;
-        private string _actionText;
-
-        public CustomerMasterViewModel()
+        get => _customers;
+        set
         {
-            _customers = new ObservableCollection<CustomerModel>();
-            _customerModelOperations = new CustomerModelOperations();
-            AddCustomerCommand = new RelayCommand(AddCustomer);
-            DeleteCustomerCommand = new RelayCommand(DeleteCustomer);
-            FetchDataCommand = new RelayCommand(FetchData);
+            _customers = value;
+            OnPropertyChanged(nameof(Customers));
         }
+    }
 
-        private string _firstName;
-        private string _lastName;
-        private string _id;
-        private int _age;
-        private string _address;
-        private string _city;
+    private string _firstName;
 
-        public ObservableCollection<CustomerModel> Customers
+    public string FirstName
+    {
+        get => _firstName;
+        set
         {
-            get => _customers;
-            set
-            {
-                _customers = value;
-                RaisePropertyChanged();
-            }
+            _firstName = value;
+            OnPropertyChanged(nameof(FirstName));
         }
+    }
 
-        public CustomerModel SelectedCustomer
+    private string _lastName;
+
+    public string LastName
+    {
+        get => _lastName;
+        set
         {
-            get => _selectedCustomer;
-            set
-            {
-                _selectedCustomer = value;
-                RaisePropertyChanged();
-                LoadDetailViewModel();
-            }
+            _lastName = value;
+            OnPropertyChanged(nameof(LastName));
         }
+    }
 
-        public string ActionText
+    private string _id;
+
+    public string Id
+    {
+        get => _id;
+        set
         {
-            get => _actionText;
-            set
-            {
-                _actionText = value;
-                DisplayTextCommand.RaiseCanExecuteChanged();
-                RaisePropertyChanged();
-            }
+            _id = value;
+            OnPropertyChanged(nameof(Id));
         }
+    }
 
-        public RelayCommand AddCustomerCommand { get; }
-        public RelayCommand DeleteCustomerCommand { get; }
-        public RelayCommand FetchDataCommand { get; }
-        public RelayCommand DisplayTextCommand { get; }
+    private int _age;
 
-        private void AddCustomer()
+    public int Age
+    {
+        get => _age;
+        set
         {
-            var customerModel = new CustomerModel(_firstName, _lastName, _id, _age, _address, _city);
-            Customers.Add(customerModel);
-            _customerModelOperations.AddCustomer(_firstName, _lastName, _id, _age, _address, _city);
+            _age = value;
+            OnPropertyChanged(nameof(Age));
         }
+    }
 
-        private void DeleteCustomer()
+    private string _address;
+
+    public string Address
+    {
+        get => _address;
+        set
         {
-            if (SelectedCustomer != null)
-            {
-                Customers.Remove(SelectedCustomer);
-                _customerModelOperations.DeleteCustomer(SelectedCustomer.Id);
-                SelectedCustomer = null;
-            }
+            _address = value;
+            OnPropertyChanged(nameof(Address));
         }
+    }
 
-        private void FetchData()
+    private string _city;
+
+    public string City
+    {
+        get => _city;
+        set
         {
-            var customers = _customerModelOperations.GetAllCustomers();
-            Customers = new ObservableCollection<CustomerModel>(customers);
+            _city = value;
+            OnPropertyChanged(nameof(City));
         }
+    }
 
-        private void LoadDetailViewModel()
+    private bool _isCustomerSelected;
+
+    public bool IsCustomerSelected
+    {
+        get => _isCustomerSelected;
+        set
         {
-            if (SelectedCustomer != null)
-            {
-                var detailViewModel = new CustomerDetailViewModel(SelectedCustomer);
-                // TODO: Pass the detailViewModel instance to the View for displaying additional info
-            }
-        }
+            this.IsCustomerDetailVisible = value ? Visibility.Visible : Visibility.Hidden;
 
+            _isCustomerSelected = value;
+            OnPropertyChanged(nameof(IsCustomerSelected));
+        }
+    }
+
+    private Visibility _isCustomerDetailVisible;
+
+    public Visibility IsCustomerDetailVisible
+    {
+        get => _isCustomerDetailVisible;
+        set
+        {
+            _isCustomerDetailVisible = value;
+            OnPropertyChanged(nameof(IsCustomerDetailVisible));
+        }
+    }
+
+    private CustomerDetailViewModel _selectedDetailViewModel;
+
+    public CustomerDetailViewModel SelectedDetailViewModel
+    {
+        get => _selectedDetailViewModel;
+        set
+        {
+            _selectedDetailViewModel = value;
+            this.IsCustomerSelected = true;
+
+            OnPropertyChanged(nameof(SelectedDetailViewModel));
+        }
+    }
+
+    public CustomerMasterViewModel(ICustomerModelOperations? model = null, IErrorPopup? informer = null)
+    {
+        this.SwitchToProductMasterPage = new SwitchViewCommand("BookMasterView");
+        this.SwitchToStateMasterPage = new SwitchViewCommand("StatusMasterView");
+        this.SwitchToEventMasterPage = new SwitchViewCommand("EventMasterView");
+
+        this.CreateCustomer = new OnClickCommand(e => this.StoreCustomer(), c => this.CanStoreCustomer());
+        this.RemoveCustomer = new OnClickCommand(e => this.DeleteCustomer());
+
+        this.Customers = new ObservableCollection<CustomerDetailViewModel>();
+
+        this._modelOperation = model ?? ICustomerModelOperations.CreateModelOperation();
+        this._informer = informer ?? new ErrorPopupHandler();
+
+        this.IsCustomerSelected = false;
+
+        Task.Run(this.LoadCustomers);
+    }
+
+    private bool CanStoreCustomer()
+    {
+        return !(
+            string.IsNullOrWhiteSpace(this.FirstName) ||
+            string.IsNullOrWhiteSpace(this.LastName) ||
+            string.IsNullOrWhiteSpace(this.Id) ||
+            string.IsNullOrWhiteSpace(this.Address) ||
+            string.IsNullOrWhiteSpace(this.City) ||
+            this.Age <= 0
+        );
+    }
+
+    private void StoreCustomer()
+    {
+        
+
+        this._modelOperation.AddCustomer(FirstName, LastName, Id, Age, Address, City);
+
+        this._informer.InformSuccess("Customer successfully created!");
+
+        this.LoadCustomers();
+     
+    }
+
+    private void DeleteCustomer()
+    {
+       
+        try
+        {
+            this._modelOperation.DeleteCustomer(this.SelectedDetailViewModel.Id);
+
+            this._informer.InformSuccess("Customer successfully deleted!");
+
+            this.LoadCustomers();
+        }
+        catch (Exception e)
+        {
+            this._informer.InformError("Error while deleting customer :(");
+        }
+        
+    }
+
+    private async void LoadCustomers()
+    {
+        List<ICustomerModel> Customers = (List<ICustomerModel>)this._modelOperation.GetAllCustomers();
+
+        
+        this._customers.Clear();
+
+        foreach (ICustomerModel u in Customers)
+        {
+            this._customers.Add(new CustomerDetailViewModel(u));
+        }
+        
+
+        OnPropertyChanged(nameof(Customers));
     }
 }

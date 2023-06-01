@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Presentations.Model.API
 {
@@ -12,5 +9,8 @@ namespace Presentations.Model.API
         public string StatusId { get; set; }
         public string CustomerId { get; set; }
         public DateTime Time { get; set; }
+        public string Type { get; set; }
+        public string? ReasonOrDescription { get; set;}
+
     }
 }

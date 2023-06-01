@@ -14,6 +14,7 @@ namespace Presentations.Model.API
 
         public void AddEvent(string Id, string statusId, string customerId, DateTime Time, string type, string? descriptionOrReason);
         public void DeleteEvent(string Id);
+        public void UpdateEvent(string Id, string statusId, string customerId, DateTime Time, string type, string? descriptionOrReason);
         public IEnumerable<IEventModel> GetAllEvents();
 
     }

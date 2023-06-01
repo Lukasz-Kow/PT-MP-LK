@@ -1,105 +1,194 @@
-﻿using Presentations.Model;
-using Presentations.ViewModel.MVVMLight;
+﻿using Presentations.Model.API;
+using Presentations.ViewModel;
+using Presentations.ViewModel.Commands;
+using Presentations;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 
-namespace Presentations.ViewModel.Status
+namespace Presentations.ViewModel;
+
+internal class StatusMasterViewModel : ViewModelBase
 {
-    public class StatusMasterViewModel : ViewModelBase
+    public ICommand SwitchToCustomerMasterPage { get; set; }
+
+    public ICommand SwitchToProductMasterPage { get; set; }
+
+    public ICommand SwitchToEventMasterPage { get; set; }
+
+    public ICommand CreateStatus { get; set; }
+
+    public ICommand RemoveStatus { get; set; }
+
+    private readonly IStatusModelOperations _modelOperation;
+
+    private readonly IErrorPopup _informer;
+
+    private ObservableCollection<StatusDetailViewModel> _Statuses;
+
+    public ObservableCollection<StatusDetailViewModel> Statuses
     {
-        private ObservableCollection<StatusModel> _statuses;
-        private StatusModel _selectedStatus;
-        private StatusModelOperations _statusModelOperations;
-        private string _actionText;
-
-        public StatusMasterViewModel()
+        get => _Statuses;
+        set
         {
-            _statuses = new ObservableCollection<StatusModel>();
-            _statusModelOperations = new StatusModelOperations();
-            AddStatusCommand = new RelayCommand(AddStatus);
-            DeleteStatusCommand = new RelayCommand(DeleteStatus);
-            FetchDataCommand = new RelayCommand(FetchData);
+            _Statuses = value;
+            OnPropertyChanged(nameof(Statuses));
         }
+    }
 
-        private string _statusId;
-        private string _bookId;
-        private bool _availability;
+    private string _id;
 
-        public ObservableCollection<StatusModel> Statuses
+    public string Id
+    {
+        get => _id;
+        set
         {
-            get => _statuses;
-            set
-            {
-                _statuses = value;
-                RaisePropertyChanged();
-            }
+            _id = value;
+            OnPropertyChanged(nameof(Id));
         }
+    }
 
-        public StatusModel SelectedStatus
+    private string _bookId;
+
+    public string BookId
+    {
+        get => _bookId;
+        set
         {
-            get => _selectedStatus;
-            set
-            {
-                _selectedStatus = value;
-                RaisePropertyChanged();
-                LoadDetailViewModel();
-            }
+            _bookId = value;
+            OnPropertyChanged(nameof(BookId));
         }
+    }
 
-        public string ActionText
+    private bool _available;
+
+    public bool Available
+    {
+        get => _available;
+        set
         {
-            get => _actionText;
-            set
-            {
-                _actionText = value;
-                DisplayTextCommand.RaiseCanExecuteChanged();
-                RaisePropertyChanged();
-            }
+            _available = value;
+            OnPropertyChanged(nameof(Available));
         }
+    }
 
-        public RelayCommand AddStatusCommand { get; }
-        public RelayCommand DeleteStatusCommand { get; }
-        public RelayCommand FetchDataCommand { get; }
-        public RelayCommand DisplayTextCommand { get; }
+    private bool _isStatuseselected;
 
-        private void AddStatus()
+    public bool IsStatuseselected
+    {
+        get => _isStatuseselected;
+        set
         {
-            _statusModelOperations.AddStatus(_statusId, _bookId, _availability);
-            FetchData(); // Refresh the status list after adding a new status
-        }
+            this.IsStatusDetailVisible = value ? Visibility.Visible : Visibility.Hidden;
 
-        private void DeleteStatus()
-        {
-            if (SelectedStatus != null)
-            {
-                _statusModelOperations.DeleteStatus(SelectedStatus.Id);
-                Statuses.Remove(SelectedStatus);
-                SelectedStatus = null;
-            }
+            _isStatuseselected = value;
+            OnPropertyChanged(nameof(IsStatuseselected));
         }
+    }
 
-        private void FetchData()
-        {
-            var statuses = _statusModelOperations.GetAllStatuses();
-            Statuses = new ObservableCollection<StatusModel>(statuses);
-        }
+    private Visibility _isStatusDetailVisible;
 
-        private void LoadDetailViewModel()
+    public Visibility IsStatusDetailVisible
+    {
+        get => _isStatusDetailVisible;
+        set
         {
-            if (SelectedStatus != null)
-            {
-                var detailViewModel = new StatusDetailViewModel(SelectedStatus);
-                // TODO: Pass the detailViewModel instance to the View for displaying additional info
-            }
+            _isStatusDetailVisible = value;
+            OnPropertyChanged(nameof(IsStatusDetailVisible));
         }
+    }
 
-        private void ShowPopupWindow()
+    private StatusDetailViewModel _selectedDetailViewModel;
+
+    public StatusDetailViewModel SelectedDetailViewModel
+    {
+        get => _selectedDetailViewModel;
+        set
         {
-            // TODO: Implement logic to show the popup window with ActionText
+            _selectedDetailViewModel = value;
+            this.IsStatuseselected = true;
+
+            OnPropertyChanged(nameof(SelectedDetailViewModel));
         }
+    }
+
+    public StatusMasterViewModel(IStatusModelOperations? model = null, IErrorPopup? informer = null)
+    {
+        this.SwitchToCustomerMasterPage = new SwitchViewCommand("CustomerMasterView");
+        this.SwitchToProductMasterPage = new SwitchViewCommand("ProductMasterView");
+        this.SwitchToEventMasterPage = new SwitchViewCommand("EventMasterView");
+
+        this.CreateStatus = new OnClickCommand(e => this.StoreStatus(), c => this.CanStoreStatus());
+        this.RemoveStatus = new OnClickCommand(e => this.DeleteStatus());
+
+        this.Statuses = new ObservableCollection<StatusDetailViewModel>();
+
+        this._modelOperation = IStatusModelOperations.CreateModelOperation();
+        this._informer = informer ?? new ErrorPopupHandler();
+
+        this.IsStatuseselected = false;
+        
+        this.LoadStatuses();
+    }
+
+    private bool CanStoreStatus()
+    {
+        return !(
+            string.IsNullOrWhiteSpace(this.BookId.ToString()) ||
+            string.IsNullOrWhiteSpace(this.Id.ToString())
+        );
+    }
+
+    private void StoreStatus()
+    {
+        
+        try
+        {
+            this._modelOperation.AddStatus(Id, BookId, Available);
+
+            this.LoadStatuses();
+
+            this._informer.InformSuccess("Status successfully created!");
+        }
+        catch (Exception e)
+        {
+            this._informer.InformError(e.Message);
+        }
+        
+    }
+
+    private void DeleteStatus()
+    { 
+        try
+        {
+            this._modelOperation.DeleteStatus(this.SelectedDetailViewModel.Id);
+
+            this.LoadStatuses();
+
+            this._informer.InformSuccess("Status successfully deleted!");
+        }
+        catch (Exception e)
+        {
+            this._informer.InformError("Error while deleting Status :(");
+        }
+        
+    }
+
+    private async void LoadStatuses()
+    {
+        List<IStatusModel> Statuses = (List<IStatusModel>)this._modelOperation.GetAllStatuses();
+
+        
+        this._Statuses.Clear();
+
+        foreach (IStatusModel s in Statuses)
+        {
+            this._Statuses.Add(new StatusDetailViewModel(s));
+        }
+        
+
+        OnPropertyChanged(nameof(Statuses));
     }
 }

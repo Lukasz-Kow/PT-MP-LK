@@ -2,10 +2,7 @@
 using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Input;
-using Presentations.ViewModel.Event;
-using Presentations.ViewModel.Status;
 using Presentations.ViewModel;
-using Presentations.ViewModel.Customer;
 
 namespace Presentations.ViewModel.Commands;
 

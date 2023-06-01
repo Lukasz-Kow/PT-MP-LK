@@ -13,6 +13,7 @@ namespace Presentations.Model.API
 
         public void AddCustomer(string firstName, string lastName, string id, int age, string address, string city);
         public void DeleteCustomer(string customerId);
+        public void UpdateCustomer(string customerId, string firstName, string lastName, int age, string address, string city);
         public IEnumerable<ICustomerModel> GetAllCustomers();
     }
 }

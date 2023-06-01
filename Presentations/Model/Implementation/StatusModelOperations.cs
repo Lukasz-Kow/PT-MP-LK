@@ -32,7 +32,7 @@ namespace Presentations.Model.Implementation
 
             foreach (var status in statuses)
             {
-                statusModels.Add(new StatusModel(status.Id, status.Book.Id, status.Availability));
+                statusModels.Add(new StatusModel(status.Id, status.BookId, status.Availability));
             }
 
             return statusModels;

@@ -1,97 +1,120 @@
-﻿using Presentations.Model;
-using Presentations.ViewModel.MVVMLight;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using System.Windows.Input;
+using Presentations.Model.API;
+using Presentations.ViewModel;
+using Presentations.ViewModel.Commands;
+using Presentations;
 
-namespace Presentations.ViewModel.Event
+namespace Presentations.ViewModel;
+
+internal class EventDetailViewModel : ViewModelBase
 {
-    public class EventDetailViewModel : ViewModelBase
+    public ICommand UpdateEvent { get; set; }
+
+    private readonly IEventModelOperations _modelOperation;
+
+    private readonly IErrorPopup _informer;
+
+    private string _id;
+
+    public string Id
     {
-        private IEventModel _event;
-
-        public EventDetailViewModel(IEventModel eventModel)
+        get => _id;
+        set
         {
-            _event = eventModel;
+            _id = value;
+            OnPropertyChanged(nameof(Id));
         }
+    }
 
-        public string Id
-        {
-            get => _event.Id;
-            set
-            {
-                _event.Id = value;
-                RaisePropertyChanged();
-            }
-        }
+    private string _statusId;
 
-        public string StatusId
+    public string StatusId
+    {
+        get => _statusId;
+        set
         {
-            get => _event.StatusId;
-            set
-            {
-                _event.StatusId = value;
-                RaisePropertyChanged();
-            }
+            _statusId = value;
+            OnPropertyChanged(nameof(StatusId));
         }
+    }
 
-        public string CustomerId
-        {
-            get => _event.CustomerId;
-            set
-            {
-                _event.CustomerId = value;
-                RaisePropertyChanged();
-            }
-        }
+    private string _customerId;
 
-        public DateTime Time
+    public string CustomerId
+    {
+        get => _customerId;
+        set
         {
-            get => _event.Time;
-            set
-            {
-                _event.Time = value;
-                RaisePropertyChanged();
-            }
+            _customerId = value;
+            OnPropertyChanged(nameof(CustomerId));
         }
+    }
 
-        // Additional fields for Complaint event
-        public string Reason
-        {
-            get
-            {
-                if (_event is ComplaintModel complaintEvent)
-                    return complaintEvent.Reason;
-                return null;
-            }
-            set
-            {
-                if (_event is ComplaintModel complaintEvent)
-                {
-                    complaintEvent.Reason = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
+    private DateTime _eventDate;
 
-        public string Description
+    public DateTime EventDate
+    {
+        get => _eventDate;
+        set
         {
-            get
-            {
-                if (_event is ReviewModel complaintEvent)
-                    return complaintEvent.Description;
-                return null;
-            }
-            set
-            {
-                if (_event is ReviewModel complaintEvent)
-                {
-                    complaintEvent.Description = value;
-                    RaisePropertyChanged();
-                }
-            }
+            _eventDate = value;
+            OnPropertyChanged(nameof(EventDate));
         }
+    }
+
+    private string _type;
+
+    public string Type
+    {
+        get => _type;
+        set
+        {
+            _type = value;
+            OnPropertyChanged(nameof(Type));
+        }
+    }
+
+    private string _reasonOrDescription;
+
+    public string ReasonOrDescription
+    {
+        get => _reasonOrDescription;
+        set
+        {
+            _reasonOrDescription = value;
+            OnPropertyChanged(nameof(ReasonOrDescription));
+        }
+    }
+
+    public EventDetailViewModel(IEventModel modelEvent, IEventModelOperations? model = null, IErrorPopup? informer = null)
+    {
+        this.Id = modelEvent.Id;
+        this.StatusId = modelEvent.StatusId;
+        this.CustomerId = modelEvent.CustomerId;
+        this.EventDate = modelEvent.Time;
+        this.Type = modelEvent.Type;
+        this.ReasonOrDescription = modelEvent.ReasonOrDescription;
+
+
+        this.UpdateEvent = new OnClickCommand(e => this.Update(), c => this.CanUpdate());
+
+        this._modelOperation = IEventModelOperations.CreateModelOperation();
+        this._informer = informer ?? new ErrorPopupHandler();
+    }
+
+    private void Update()
+    {
+        this._modelOperation.UpdateEvent(this.Id, this.StatusId, this.CustomerId, this.EventDate, this.Type, this.ReasonOrDescription);
+
+        this._informer.InformSuccess("Event successfully updated!");
+       
+    }
+
+    private bool CanUpdate()
+    {
+        return !(
+            string.IsNullOrWhiteSpace(this.EventDate.ToString())
+        );
     }
 }

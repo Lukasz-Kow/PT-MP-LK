@@ -6,7 +6,6 @@ using System.Windows;
 using System.Windows.Input;
 using Presentations.Model;
 using Presentations.Model.API;
-using Presentations.ViewModel.Book;
 using Presentations.ViewModel.Commands;
 
 namespace Presentations.ViewModel;
