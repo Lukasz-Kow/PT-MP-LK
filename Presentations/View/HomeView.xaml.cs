@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Presentations.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,8 @@ namespace Presentations.View
         public HomeView()
         {
             InitializeComponent();
+
+            this.DataContext = new HomeViewModel();
         }
     }
 }
