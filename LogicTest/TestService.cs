@@ -1,7 +1,8 @@
 using Services.API;
 using Services.Implementation;
+using ServiceTest.Instrumentation;
+using Moq;
 using Data.API;
-using Data.Implementation;
 
 namespace TestService
 {
@@ -9,91 +10,103 @@ namespace TestService
     public class TestService
     {
         [TestMethod]
-        public void AddCustomerBookAndStatusAndRetrieveThem()
+        public void AddingEntitiesTest()
         {
 
-            IServices testService = IServices.Create("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\Studia\\PrijectPT\\TestData\\Instrumentation\\UnitTestDataDB.mdf;Integrated Security=True");
+            // Arrange
+            var mockDataRepo = new Mock<IDataRepository>();
+            
+            IServices testService = IServices.Create(mockDataRepo.Object);
 
-            testService.DropTables();
+            // Act
 
-            ICustomer customer1 = new Customer("10", "Lukasz", "Kowalczyk", 21, "Al.Politechniki", "Lodz");
-            testService.AddCustomer(customer1.FirstName, customer1.LastName, customer1.Id, customer1.Age, customer1.Address, customer1.City);
             IBook book1 = new Book("9", "Pan Tadeusz", "Adam Mickiewicz", 400, "SR2", "Greg", "Polish");
-            testService.AddBook(book1.Title, book1.Author, book1.Id, book1.Pages, book1.ISBN, book1.Publisher, book1.Language);
+
+            ICustomer customer1 = new Customer("10", "Marek", "Maerkk", 21, "Al.Politechniki", "Lodz");
+
             IStatus status1 = new Status("1", book1, true);
-            testService.AddStatus(status1.Id, status1.Book, status1.Availability);
 
-            List<IBook> booksFromDB = testService.GetAllBooks();
-            List<ICustomer> customersFromDB = testService.GetAllCustomers();
+            testService.AddBook(book1.Title, book1.Author, book1.Id, book1.Pages, book1.ISBN, book1.Publisher, book1.Language);
 
-            Assert.IsNotNull(booksFromDB);
-            Assert.IsNotNull(customersFromDB);
+            testService.AddCustomer(customer1.FirstName, customer1.LastName, customer1.Id, customer1.Age, customer1.Address, customer1.City);
 
-            Assert.AreEqual(1, booksFromDB.Count);
-            Assert.AreEqual(1, customersFromDB.Count);
+            testService.AddStatus(status1.Id, status1.Book.Id, status1.Availability);
 
-            Assert.AreEqual("10", customersFromDB[0].Id);
-            Assert.AreEqual("9", booksFromDB[0].Id);
+            // Assert
+
+            mockDataRepo.Verify(m => m.InsertBook(book1.Id, book1.Title, book1.Author, book1.Pages,
+                book1.ISBN, book1.Publisher, book1.Language), Times.Once);
+
+            mockDataRepo.Verify(m => m.InsertCustomer(customer1.Id, customer1.FirstName, customer1.LastName,
+                customer1.Age, customer1.Address, customer1.City), Times.Once);
+
+            mockDataRepo.Verify(m => m.InsertStatus(status1.Id, status1.Book.Id, status1.Availability), Times.Once);
+
+
         }
 
         [TestMethod]
-        public void AddCustomerBookAndStatusAndDeleteThem()
+        public void DeletingEntitiesTest()
         {
+            // Arrange
+            var mockDataRepo = new Mock<IDataRepository>();
 
-            IServices testService = IServices.Create("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\Studia\\PrijectPT\\TestData\\Instrumentation\\UnitTestDataDB.mdf;Integrated Security=True");
+            IServices testService = IServices.Create(mockDataRepo.Object);
 
-            testService.DropTables();
+            // Act
 
-            ICustomer customer1 = new Customer("10", "Lukasz", "Kowalczyk", 21, "Al.Politechniki", "Lodz");
-            testService.AddCustomer(customer1.FirstName, customer1.LastName, customer1.Id, customer1.Age, customer1.Address, customer1.City);
-            IBook book1 = new Book("9", "Pan Tadeusz", "Adam Mickiewicz", 400, "SR2", "Greg", "Polish");
-            testService.AddBook(book1.Title, book1.Author, book1.Id, book1.Pages, book1.ISBN, book1.Publisher, book1.Language);
-            IStatus status1 = new Status("1", book1, true);
-            testService.AddStatus(status1.Id, status1.Book, status1.Availability);
+            testService.DeleteBook("9");
 
-            List<IBook> booksFromDB = testService.GetAllBooks();
-            List<ICustomer> customersFromDB = testService.GetAllCustomers();
+            testService.DeleteCustomer("10");
 
-            Assert.IsNotNull(booksFromDB);
-            Assert.IsNotNull(customersFromDB);
+            testService.DeleteStatus("1");
 
-            Assert.AreEqual(1, booksFromDB.Count);
-            Assert.AreEqual(1, customersFromDB.Count);
+            // Assert
 
-            Assert.AreEqual("10", customersFromDB[0].Id);
-            Assert.AreEqual("9", booksFromDB[0].Id);
+            mockDataRepo.Verify(m => m.DeleteBook(9), Times.Once);
 
-            testService.DeleteStatus(status1.Id);
-            testService.DeleteBook(book1.Id);
-            testService.DeleteCustomer(customer1.Id);
-            
+            mockDataRepo.Verify(m => m.DeleteCustomer(10), Times.Once);
 
-            booksFromDB = testService.GetAllBooks();
-            customersFromDB = testService.GetAllCustomers();
+            mockDataRepo.Verify(m => m.DeleteStatus(1), Times.Once);
 
-            Assert.AreEqual(0, booksFromDB.Count);
-            Assert.AreEqual(0, customersFromDB.Count);
         }
 
         [TestMethod]
-        public void Add2BooksAndGetASingleOne()
+        public void GettersTest()
         {
-            IServices testService = IServices.Create("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\Studia\\PrijectPT\\TestData\\Instrumentation\\UnitTestDataDB.mdf;Integrated Security=True");
+            // Arrange
+            var mockDataRepo = new Mock<IDataRepository>();
 
-            testService.DropTables();
-            
-            IBook book1 = new Book("9", "Pan Tadeusz", "Adam Mickiewicz", 400, "SR2", "Greg", "Polish");
-            testService.AddBook(book1.Title, book1.Author, book1.Id, book1.Pages, book1.ISBN, book1.Publisher, book1.Language);
-            IBook book2 = new Book("10", "Pan Tadeusz", "Adam Mickiewicz", 400, "SR2", "Greg", "Polish");
-            testService.AddBook(book2.Title, book2.Author, book2.Id, book2.Pages, book2.ISBN, book2.Publisher, book2.Language);
+            IServices testService = IServices.Create(mockDataRepo.Object);
 
-            IBook bookFromDB = testService.GetBookById(book2.Id);
+            // Act
 
-            Assert.AreEqual(book2.Id, bookFromDB.Id);
-            Assert.AreEqual(book2.Title, bookFromDB.Title);
-            Assert.AreEqual(book2.Author, bookFromDB.Author);
-            Assert.AreEqual(book2.Pages, bookFromDB.Pages);
-            
+            testService.GetAllBooks();
+
+            testService.GetAllCustomers();
+
+            testService.GetAllStatuses();
+
+            testService.GetBookById("9");
+
+            testService.GetCustomerById("10");
+
+            testService.GetStatusById("1");
+
+            // Assert
+
+            mockDataRepo.Verify(m => m.GetAllBooks(), Times.Once);
+
+            mockDataRepo.Verify(m => m.GetAllCustomers(), Times.Once);
+
+            mockDataRepo.Verify(m => m.GetAllStatuses(), Times.Once);
+
+            mockDataRepo.Verify(m => m.GetBook(9), Times.Once);
+
+            mockDataRepo.Verify(m => m.GetCustomer(10), Times.Once);
+
+            mockDataRepo.Verify(m => m.GetStatus(1), Times.Once);
+
         }
         
     }

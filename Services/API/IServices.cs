@@ -13,6 +13,8 @@ namespace Services.API
         
         public static IServices Create(string connectionLink) => new dataServices(connectionLink);
 
+        public static IServices Create(IDataRepository dataRepo) => new dataServices(dataRepo);
+
         public void AddBook(string Title, string Author, string Id, int Pages, string ISBN, string Publisher, string Language);
         public void AddBuy(string Id, string statusId, string customerId, DateTime Time);
         public void AddComplaint(string Id, string statusId, string customerId, DateTime Time, string Reason);

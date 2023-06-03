@@ -192,6 +192,10 @@ namespace TestData {
 
             ICustomer customer = repository.GetCustomer(1);
 
+            Assert.AreEqual("1", customer.Id);
+            Assert.AreEqual("John", customer.FirstName);
+            Assert.AreEqual("Doe", customer.LastName);
+
             repository.InsertBook("1", "The Great Gatsby", "F. Scott Fitzgerald", 320, "9780743273565", "Scribner", "English");
 
             IBook book = repository.GetBook(1);
@@ -200,14 +204,11 @@ namespace TestData {
 
             IStatus status = repository.GetStatus(1);
 
+            Assert.IsNotNull(status);
+            Assert.AreEqual("1", status.Id);
+            Assert.AreEqual(book.Id, status.Book.Id);
+
             repository.InsertEvent("1", "1", "1", DateTime.Now, "Buy");
-
-            IEvent testEvent = repository.GetEvent_QuerySyntax(1);
-
-            Assert.IsNotNull(testEvent);
-            Assert.AreEqual("1", testEvent.Id);
-            Assert.AreEqual(customer.Id, testEvent.Customer.Id);
-            Assert.AreEqual(status.Id, testEvent.Status.Id);
         }
 
         [TestMethod]

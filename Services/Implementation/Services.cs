@@ -17,6 +17,13 @@ namespace Services.Implementation
             this.repository = IDataRepository.CDataRepository(connectionString);
         }
 
+        // TODO Add another constructor which only takes data
+
+        internal dataServices(IDataRepository repository)
+        {
+            this.repository = repository;
+        }
+
         private IBookDTO MAP(IBook book)
         {
             return new BookDTO(book.Id, book.Title, book.Author, book.Pages, book.ISBN, book.Publisher, book.Language);
@@ -98,22 +105,38 @@ namespace Services.Implementation
         {
             List<IBook> books = repository.GetAllBooks();
             List<IBookDTO> bookDTOs = new List<IBookDTO>();
-            foreach (IBook book in books)
+            try
             {
-                bookDTOs.Add(MAP(book));
+                foreach (IBook book in books)
+                {
+                    bookDTOs.Add(MAP(book));
+                }
+
+                return bookDTOs;
+            } 
+            catch (Exception e)
+            {
+                return null;
             }
-            return bookDTOs;
         }
 
         public List<ICustomerDTO> GetAllCustomers()
         {
             List<ICustomer> customers = repository.GetAllCustomers();
             List<ICustomerDTO> customerDTOs = new List<ICustomerDTO>();
-            foreach (ICustomer customer in customers)
+
+            try
             {
-                customerDTOs.Add(MAP(customer));
+                foreach (ICustomer customer in customers)
+                {
+                    customerDTOs.Add(MAP(customer));
+                }
+                return customerDTOs;
+            } 
+            catch (Exception e)
+            {
+                return null;
             }
-            return customerDTOs;
         }
 
         public void AddStatus(string StatusId, string bookId, bool availability)
@@ -131,42 +154,90 @@ namespace Services.Implementation
         {
             List<IStatus> statuses = repository.GetAllStatuses();
             List<IStatusDTO> statusDTOs = new List<IStatusDTO>();
-            foreach (IStatus status in statuses)
+
+            try
             {
-                statusDTOs.Add(MAP(status));
+                foreach (IStatus status in statuses)
+                {
+                    statusDTOs.Add(MAP(status));
+                }
+                return statusDTOs;
+            } 
+            catch (Exception e)
+            {
+                return null;
             }
-            return statusDTOs;
         }
 
         public List<IEventDTO> GetAllEvents()
         {
             List<IEvent> events = repository.GetAllEvents();
             List<IEventDTO> eventDTOs = new List<IEventDTO>();
-            foreach (IEvent eventO in events)
+
+            try
             {
-                eventDTOs.Add(MAP(eventO));
+                foreach (IEvent eventO in events)
+                {
+                    eventDTOs.Add(MAP(eventO));
+                }
+                return eventDTOs;
             }
-            return eventDTOs;
+            catch (Exception e)
+            {
+                return null;
+            }
+
         }
 
         public IBookDTO GetBookById(string Id)
         {
-            return MAP(repository.GetBook(int.Parse(Id)));
+            try
+            {
+                return MAP(repository.GetBook(int.Parse(Id)));
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+
+            
         }
 
         public ICustomerDTO GetCustomerById(string Id)
         {
-            return MAP(repository.GetCustomer(int.Parse(Id)));
+            try
+            {
+                return MAP(repository.GetCustomer(int.Parse(Id)));
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
+
 
         public IStatusDTO GetStatusById(string Id)
         {
-            return MAP(repository.GetStatus(int.Parse(Id)));
+            try
+            {
+                return MAP(repository.GetStatus(int.Parse(Id)));
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public IEventDTO GetEventById(string Id)
         {
-            return MAP(repository.GetEvent(int.Parse(Id)));
+            try
+            {
+                return MAP(repository.GetEvent(int.Parse(Id)));
+            } 
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public void AddComplaint(string Id, string statusId, string customerId, DateTime Time, string Reason)
