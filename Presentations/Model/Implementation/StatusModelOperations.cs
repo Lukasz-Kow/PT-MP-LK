@@ -10,7 +10,7 @@ namespace Presentations.Model.Implementation
 
         public StatusModelOperations()
         {
-            services = IServices.Create("");
+            services = IServices.Create(SettingsConsts.ConnectionString);
         }
 
         private IServices services;

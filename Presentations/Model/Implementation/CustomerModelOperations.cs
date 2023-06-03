@@ -10,7 +10,7 @@ namespace Presentations.Model.Implementation
 
         public CustomerModelOperations()
         {
-            services = IServices.Create("");
+            services = IServices.Create(SettingsConsts.ConnectionString);
         }
 
         public void AddCustomer(string firstName, string lastName, string id, int age, string address, string city)

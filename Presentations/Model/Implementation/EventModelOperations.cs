@@ -11,7 +11,7 @@ namespace Presentations.Model.Implementation
 
         public EventModelOperations()
         {
-            services = IServices.Create("");
+            services = IServices.Create(SettingsConsts.ConnectionString);
         }
 
         private IEventModel Map(IEventDTO even)

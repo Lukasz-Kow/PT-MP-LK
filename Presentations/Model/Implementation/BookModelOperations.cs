@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Presentations.Model.API;
 using Services.API;
+using Presentations.Model.Implementation;
 
 namespace Presentations.Model.Implementation
 {
@@ -10,7 +11,7 @@ namespace Presentations.Model.Implementation
 
         public BookModelOperations()
         {
-            Services = IServices.Create("");
+            Services = IServices.Create(ConnectionString);
         }
 
         private IServices Services { get; set; }
