@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Presentations.Model.API
 {
-    interface IEventModelOperations
+    public interface IEventModelOperations
     {
         static IEventModelOperations CreateModelOperation()
         {

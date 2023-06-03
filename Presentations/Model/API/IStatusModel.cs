@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Presentations.Model.API
 {
-    interface IStatusModel
+    public interface IStatusModel
     {
         public string BookId { get; set; }
 

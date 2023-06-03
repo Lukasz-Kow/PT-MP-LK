@@ -3,7 +3,7 @@
 
 namespace Presentations.Model.API
 {
-    interface IEventModel
+    public interface IEventModel
     {
         public string Id { get; set; }
         public string StatusId { get; set; }

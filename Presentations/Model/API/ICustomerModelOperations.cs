@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Presentations.Model.API
 {
-    interface ICustomerModelOperations
+    public interface ICustomerModelOperations
     {
 
         static ICustomerModelOperations CreateModelOperation()

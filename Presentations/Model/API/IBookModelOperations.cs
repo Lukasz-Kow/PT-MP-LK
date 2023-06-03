@@ -6,7 +6,7 @@ using Presentations.Model.Implementation;
 
 namespace Presentations.Model.API
 {
-    interface IBookModelOperations
+    public interface IBookModelOperations
     {
         static IBookModelOperations CreateModelOperation()
         {

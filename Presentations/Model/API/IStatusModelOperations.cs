@@ -5,7 +5,7 @@ namespace Presentations.Model.API
 {
     interface IStatusModelOperations
     {
-        static IStatusModelOperations CreateModelOperation()
+        public static IStatusModelOperations CreateModelOperation()
         {
             return new StatusModelOperations();
         }
