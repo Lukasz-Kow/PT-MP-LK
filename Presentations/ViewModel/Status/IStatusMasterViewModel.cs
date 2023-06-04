@@ -7,6 +7,11 @@ namespace Presentations.ViewModel
 {
     public interface IStatusMasterViewModel
     {
+        static IStatusMasterViewModel Create(IStatusModelOperations model, bool? showPopups = true)
+        {
+            return new StatusMasterViewModel(model, showPopups);
+        }
+
         ICommand SwitchToCustomerMasterPage { get; set; }
         ICommand SwitchToProductMasterPage { get; set; }
         ICommand SwitchToEventMasterPage { get; set; }

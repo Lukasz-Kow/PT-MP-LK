@@ -2,12 +2,17 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
+using Presentations.Model.API;
 using Presentations.ViewModel.Event;
 
 namespace Presentations.ViewModel
 {
     public interface IEventMasterViewModel
     {
+        static IEventMasterViewModel Create(IEventModelOperations model, bool? showPopups = true)
+        {
+            return new EventMasterViewModel(model, showPopups);
+        }
         ICommand SwitchToUserMasterPage { get; set; }
         ICommand SwitchToProductMasterPage { get; set; }
         ICommand SwitchToStateMasterPage { get; set; }
@@ -22,5 +27,6 @@ namespace Presentations.ViewModel
         bool IsEventSelected { get; set; }
         Visibility IsEventDetailVisible { get; set; }
         IEventDetailViewModel SelectedDetailViewModel { get; set; }
+
     }
 }
