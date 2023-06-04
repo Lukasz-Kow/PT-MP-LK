@@ -10,7 +10,7 @@ using Presentations;
 
 namespace Presentations.ViewModel;
 
-internal class EventMasterViewModel : ViewModelBase
+internal class EventMasterViewModel : ViewModelBase, IEventMasterViewModel
 {
     public ICommand SwitchToUserMasterPage { get; set; }
 

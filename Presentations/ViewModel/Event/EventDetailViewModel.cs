@@ -4,10 +4,11 @@ using Presentations.Model.API;
 using Presentations.ViewModel;
 using Presentations.ViewModel.Commands;
 using Presentations;
+using Presentations.ViewModel.Event;
 
 namespace Presentations.ViewModel;
 
-internal class EventDetailViewModel : ViewModelBase
+internal class EventDetailViewModel : ViewModelBase, IEventDetailViewModel
 {
     public ICommand UpdateEvent { get; set; }
 

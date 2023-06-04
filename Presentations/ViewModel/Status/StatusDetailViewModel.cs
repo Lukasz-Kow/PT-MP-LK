@@ -6,7 +6,7 @@ using Presentations;
 
 namespace Presentations.ViewModel;
 
-internal class StatusDetailViewModel : ViewModelBase
+internal class StatusDetailViewModel : ViewModelBase, IStatusDetailViewModel
 {
     public ICommand UpdateStatus { get; set; }
 

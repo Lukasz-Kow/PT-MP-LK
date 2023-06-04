@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace Presentations.ViewModel;
 
-internal class StatusMasterViewModel : ViewModelBase
+internal class StatusMasterViewModel : ViewModelBase, IStatusMasterViewModel
 {
     public ICommand SwitchToCustomerMasterPage { get; set; }
 
