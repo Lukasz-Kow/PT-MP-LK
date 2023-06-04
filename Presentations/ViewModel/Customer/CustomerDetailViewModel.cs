@@ -6,7 +6,7 @@ using Presentations;
 
 namespace Presentations.ViewModel;
 
-internal class CustomerDetailViewModel : ViewModelBase
+internal class CustomerDetailViewModel : ViewModelBase, ICustomerDetailViewModel
 {
     public ICommand UpdateCustomer { get; set; }
 

@@ -6,12 +6,11 @@ using System.Windows;
 using System.Windows.Input;
 using Presentations.Model.API;
 using Presentations.ViewModel.Commands;
-using Presentations.ViewModel;
-using Presentations;
+
 
 namespace Presentations.ViewModel;
 
-internal class CustomerMasterViewModel : ViewModelBase
+internal class CustomerMasterViewModel : ViewModelBase, ICustomerMasterViewModel
 {
     public ICommand SwitchToProductMasterPage { get; set; }
 
@@ -27,9 +26,9 @@ internal class CustomerMasterViewModel : ViewModelBase
 
     private readonly IErrorPopup _informer;
 
-    private ObservableCollection<CustomerDetailViewModel> _customers;
+    private ObservableCollection<ICustomerDetailViewModel> _customers;
 
-    public ObservableCollection<CustomerDetailViewModel> Customers
+    public ObservableCollection<ICustomerDetailViewModel> Customers
     {
         get => _customers;
         set
@@ -137,9 +136,9 @@ internal class CustomerMasterViewModel : ViewModelBase
         }
     }
 
-    private CustomerDetailViewModel _selectedDetailViewModel;
+    private ICustomerDetailViewModel _selectedDetailViewModel;
 
-    public CustomerDetailViewModel SelectedDetailViewModel
+    public ICustomerDetailViewModel SelectedDetailViewModel
     {
         get => _selectedDetailViewModel;
         set
@@ -160,7 +159,7 @@ internal class CustomerMasterViewModel : ViewModelBase
         this.CreateCustomer = new OnClickCommand(e => this.StoreCustomer(), c => this.CanStoreCustomer());
         this.RemoveCustomer = new OnClickCommand(e => this.DeleteCustomer());
 
-        this.Customers = new ObservableCollection<CustomerDetailViewModel>();
+        this.Customers = new ObservableCollection<ICustomerDetailViewModel>();
 
         this._modelOperation = model ?? ICustomerModelOperations.CreateModelOperation();
         this._informer = informer ?? new ErrorPopupHandler();
@@ -214,7 +213,7 @@ internal class CustomerMasterViewModel : ViewModelBase
 
     private async void LoadCustomers()
     {
-        List<ICustomerModel> Customers = (List<ICustomerModel>)this._modelOperation.GetAllCustomers();
+        IEnumerable<ICustomerModel> Customers = this._modelOperation.GetAllCustomers();
 
         
         this._customers.Clear();

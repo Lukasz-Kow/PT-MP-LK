@@ -10,7 +10,7 @@ using Presentations.ViewModel.Commands;
 
 namespace Presentations.ViewModel;
 
-internal class BookMasterViewModel: ViewModelBase
+internal class BookMasterViewModel: ViewModelBase, IBookMasterViewModel
 {
     public ICommand SwitchToCustomerMasterPage { get; set; }
 
@@ -26,9 +26,9 @@ internal class BookMasterViewModel: ViewModelBase
 
     private readonly IErrorPopup _informer;
 
-    private ObservableCollection<BookDetailViewModel> _books;
+    private ObservableCollection<IBookDetailViewModel> _books;
 
-    public ObservableCollection<BookDetailViewModel> Books
+    public ObservableCollection<IBookDetailViewModel> Books
     {
         get => _books;
         set
@@ -148,9 +148,9 @@ internal class BookMasterViewModel: ViewModelBase
         }
     }
 
-    private BookDetailViewModel _selectedDetailViewModel;
+    private IBookDetailViewModel _selectedDetailViewModel;
 
-    public BookDetailViewModel SelectedDetailViewModel
+    public IBookDetailViewModel SelectedDetailViewModel
     {
         get => _selectedDetailViewModel;
         set
@@ -162,6 +162,7 @@ internal class BookMasterViewModel: ViewModelBase
         }
     }
 
+
     public BookMasterViewModel(IBookModelOperations? model = null, IErrorPopup? informer = null)
     {
         this.SwitchToCustomerMasterPage = new SwitchViewCommand("CustomerMasterView");
@@ -171,14 +172,14 @@ internal class BookMasterViewModel: ViewModelBase
         this.AddBook = new OnClickCommand(e => this.StoreBook(), c => this.CanStoreBook());
         this.DeleteBook = new OnClickCommand(e => this.DeleteProduct());
 
-        this.Books = new ObservableCollection<BookDetailViewModel>();
+        this.Books = new ObservableCollection<IBookDetailViewModel>();
 
         this._modelOperation = model ?? IBookModelOperations.CreateModelOperation();
         this._informer = informer ?? new ErrorPopupHandler();
 
         this.IsBookSelected = false;
 
-        Task.Run(this.LoadBooks);
+        this.LoadBooks();
     }
 
     private bool CanStoreBook()
@@ -222,9 +223,9 @@ internal class BookMasterViewModel: ViewModelBase
        
     }
 
-    private async void LoadBooks()
+    private void LoadBooks()
     {
-        List<IBookModel> Books = (List<IBookModel>) this._modelOperation.GetAllBooks();
+        IEnumerable<IBookModel> Books = this._modelOperation.GetAllBooks();
 
         
         this._books.Clear();

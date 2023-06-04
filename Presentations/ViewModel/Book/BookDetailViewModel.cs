@@ -5,7 +5,7 @@ using System.Windows.Input;
 
 namespace Presentations.ViewModel
 {
-    internal class BookDetailViewModel : ViewModelBase
+    internal class BookDetailViewModel : ViewModelBase, IBookDetailViewModel
     {
         private IBookModel _bookModel;
 

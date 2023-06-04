@@ -11,7 +11,7 @@ namespace Presentations.Model.Implementation
 
         public BookModelOperations()
         {
-            Services = IServices.Create(ConnectionString);
+            Services = IServices.Create(SettingsConsts.ConnectionString);
         }
 
         private IServices Services { get; set; }
