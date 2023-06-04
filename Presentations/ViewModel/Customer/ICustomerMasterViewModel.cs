@@ -10,9 +10,9 @@ namespace Presentations.ViewModel
     public interface ICustomerMasterViewModel
     {
 
-        static ICustomerMasterViewModel Create(ICustomerModelOperations model)
+        static ICustomerMasterViewModel Create(ICustomerModelOperations model, bool? showPopups = true)
         {
-            return new CustomerMasterViewModel(model);
+            return new CustomerMasterViewModel(model, showPopups);
         }
 
         ICommand SwitchToProductMasterPage { get; set; }

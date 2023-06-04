@@ -163,7 +163,7 @@ internal class BookMasterViewModel: ViewModelBase, IBookMasterViewModel
     }
 
 
-    public BookMasterViewModel(IBookModelOperations? model = null, IErrorPopup? informer = null)
+    public BookMasterViewModel(IBookModelOperations? model = null, bool? showPopups = true, IErrorPopup? informer = null)
     {
         this.SwitchToCustomerMasterPage = new SwitchViewCommand("CustomerMasterView");
         this.SwitchToStatusMasterPage = new SwitchViewCommand("StatusMasterView");
@@ -175,7 +175,12 @@ internal class BookMasterViewModel: ViewModelBase, IBookMasterViewModel
         this.Books = new ObservableCollection<IBookDetailViewModel>();
 
         this._modelOperation = model ?? IBookModelOperations.CreateModelOperation();
-        this._informer = informer ?? new ErrorPopupHandler();
+
+        if (showPopups == true)
+        {
+            this._informer = informer ?? new ErrorPopupHandler();
+        }
+       
 
         this.IsBookSelected = false;
 
@@ -201,7 +206,10 @@ internal class BookMasterViewModel: ViewModelBase, IBookMasterViewModel
 
         this.LoadBooks();
 
-        this._informer.InformSuccess("Book added successfully!");
+        if (this._informer != null)
+        {
+            this._informer.InformSuccess("Book added successfully!");
+        }
 
     }
 
@@ -214,11 +222,17 @@ internal class BookMasterViewModel: ViewModelBase, IBookMasterViewModel
 
             this.LoadBooks();
 
-            this._informer.InformSuccess("Product deleted successfully!");
+            if (this._informer != null)
+            {
+                this._informer.InformSuccess("Product deleted successfully!");
+            }
         }
         catch (Exception e)
         {
-            this._informer.InformError("Error while deleting product! Remember to remove all associated statuses!");
+            if (this._informer != null)
+            {
+                this._informer.InformError("Error while deleting product! Remember to remove all associated statuses!");
+            }
         }
        
     }

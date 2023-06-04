@@ -8,9 +8,9 @@ namespace Presentations.ViewModel
 {
     public interface IBookMasterViewModel
     {
-        static IBookMasterViewModel Create(IBookModelOperations model)
+        static IBookMasterViewModel Create(IBookModelOperations model, bool? showPopups = true)
         {
-            return new BookMasterViewModel(model);
+            return new BookMasterViewModel(model, showPopups);
         }
 
         public ICommand SwitchToCustomerMasterPage { get; set; }

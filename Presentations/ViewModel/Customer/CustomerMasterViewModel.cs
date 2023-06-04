@@ -150,7 +150,7 @@ internal class CustomerMasterViewModel : ViewModelBase, ICustomerMasterViewModel
         }
     }
 
-    public CustomerMasterViewModel(ICustomerModelOperations? model = null, IErrorPopup? informer = null)
+    public CustomerMasterViewModel(ICustomerModelOperations? model = null, bool? showPopups = true, IErrorPopup? informer = null)
     {
         this.SwitchToProductMasterPage = new SwitchViewCommand("BookMasterView");
         this.SwitchToStateMasterPage = new SwitchViewCommand("StatusMasterView");
@@ -162,7 +162,11 @@ internal class CustomerMasterViewModel : ViewModelBase, ICustomerMasterViewModel
         this.Customers = new ObservableCollection<ICustomerDetailViewModel>();
 
         this._modelOperation = model ?? ICustomerModelOperations.CreateModelOperation();
-        this._informer = informer ?? new ErrorPopupHandler();
+
+        if (showPopups == true)
+        {
+            this._informer = informer ?? new ErrorPopupHandler();
+        }
 
         this.IsCustomerSelected = false;
 
@@ -187,7 +191,10 @@ internal class CustomerMasterViewModel : ViewModelBase, ICustomerMasterViewModel
 
         this._modelOperation.AddCustomer(FirstName, LastName, Id, Age, Address, City);
 
-        this._informer.InformSuccess("Customer successfully created!");
+        if (this._informer != null)
+        {
+            this._informer.InformSuccess("Customer successfully created!");
+        }
 
         this.LoadCustomers();
      
@@ -200,13 +207,15 @@ internal class CustomerMasterViewModel : ViewModelBase, ICustomerMasterViewModel
         {
             this._modelOperation.DeleteCustomer(this.SelectedDetailViewModel.Id);
 
-            this._informer.InformSuccess("Customer successfully deleted!");
+            if (this._informer != null)
+                this._informer.InformSuccess("Customer successfully deleted!");
 
             this.LoadCustomers();
         }
         catch (Exception e)
         {
-            this._informer.InformError("Error while deleting customer :(");
+            if (this._informer != null)
+                this._informer.InformError("Error while deleting customer :(");
         }
         
     }

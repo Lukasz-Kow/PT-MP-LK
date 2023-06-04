@@ -138,7 +138,7 @@ internal class EventMasterViewModel : ViewModelBase
         }
     }
 
-    public EventMasterViewModel(IEventModelOperations? model = null, IErrorPopup? informer = null)
+    public EventMasterViewModel(IEventModelOperations? model = null, bool? showPopups = true, IErrorPopup? informer = null)
     {
         this.SwitchToUserMasterPage = new SwitchViewCommand("CustomerMasterView");
         this.SwitchToStateMasterPage = new SwitchViewCommand("StatusMasterView");
@@ -150,7 +150,9 @@ internal class EventMasterViewModel : ViewModelBase
         this.Events = new ObservableCollection<EventDetailViewModel>();
 
         this._modelOperation = IEventModelOperations.CreateModelOperation();
-        this._informer = informer ?? new ErrorPopupHandler();
+
+        if (this._informer != null)
+            this._informer = informer ?? new ErrorPopupHandler();
 
         this.IsEventSelected = false;
 
@@ -176,11 +178,13 @@ internal class EventMasterViewModel : ViewModelBase
 
             this.LoadEvents();
 
-            this._informer.InformSuccess("Event successfully created!");
+            if (this._informer != null)
+                this._informer.InformSuccess("Event successfully created!");
         }
         catch (Exception e)
         {
-            this._informer.InformError(e.Message);
+            if (this._informer != null)
+                this._informer.InformError(e.Message);
         }
         
     }
@@ -191,7 +195,8 @@ internal class EventMasterViewModel : ViewModelBase
 
         this.LoadEvents();
 
-        this._informer.InformSuccess("Event successfully deleted!");
+        if (this._informer != null)
+            this._informer.InformSuccess("Event successfully deleted!");
        
     }
 

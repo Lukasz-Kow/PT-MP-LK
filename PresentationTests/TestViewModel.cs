@@ -16,7 +16,7 @@ namespace PresentationTests
             // Arrange
             var mockBookModelOperations = new Mock<IBookModelOperations>();
 
-            IBookMasterViewModel bookMasterViewModel = IBookMasterViewModel.Create(mockBookModelOperations.Object);
+            IBookMasterViewModel bookMasterViewModel = IBookMasterViewModel.Create(mockBookModelOperations.Object, false);
            
 
             // Act
@@ -53,7 +53,7 @@ namespace PresentationTests
             // Arrange
             var mockCustomerModelOperations = new Mock<ICustomerModelOperations>();
 
-            ICustomerMasterViewModel customerMasterViewModel = ICustomerMasterViewModel.Create(mockCustomerModelOperations.Object);
+            ICustomerMasterViewModel customerMasterViewModel = ICustomerMasterViewModel.Create(mockCustomerModelOperations.Object, false);
 
             // Act
 

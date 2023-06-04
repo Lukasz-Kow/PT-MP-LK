@@ -114,7 +114,7 @@ internal class StatusMasterViewModel : ViewModelBase
         }
     }
 
-    public StatusMasterViewModel(IStatusModelOperations? model = null, IErrorPopup? informer = null)
+    public StatusMasterViewModel(IStatusModelOperations? model = null, bool? showPopups = true, IErrorPopup? informer = null)
     {
         this.SwitchToCustomerMasterPage = new SwitchViewCommand("CustomerMasterView");
         this.SwitchToProductMasterPage = new SwitchViewCommand("ProductMasterView");
@@ -126,7 +126,9 @@ internal class StatusMasterViewModel : ViewModelBase
         this.Statuses = new ObservableCollection<StatusDetailViewModel>();
 
         this._modelOperation = IStatusModelOperations.CreateModelOperation();
-        this._informer = informer ?? new ErrorPopupHandler();
+
+        if (this._informer != null)
+            this._informer = informer ?? new ErrorPopupHandler();
 
         this.IsStatuseselected = false;
         
@@ -150,11 +152,13 @@ internal class StatusMasterViewModel : ViewModelBase
 
             this.LoadStatuses();
 
-            this._informer.InformSuccess("Status successfully created!");
+            if (this._informer != null)
+                this._informer.InformSuccess("Status successfully created!");
         }
         catch (Exception e)
         {
-            this._informer.InformError(e.Message);
+            if (this._informer != null)
+                this._informer.InformError(e.Message);
         }
         
     }
@@ -167,11 +171,13 @@ internal class StatusMasterViewModel : ViewModelBase
 
             this.LoadStatuses();
 
-            this._informer.InformSuccess("Status successfully deleted!");
+            if (this._informer != null)
+                this._informer.InformSuccess("Status successfully deleted!");
         }
         catch (Exception e)
         {
-            this._informer.InformError("Error while deleting Status :(");
+            if (this._informer != null)
+                this._informer.InformError("Error while deleting Status :(");
         }
         
     }
