@@ -96,12 +96,14 @@ namespace PresentationTests
             eventMasterViewModel.Type = "EventType";
             eventMasterViewModel.ReasonOrDescription = "EventDescription";
 
-            eventMasterViewModel.AddEvent.Execute(null);
+            eventMasterViewModel.AddEvent.Execute("test");
 
             // Assert
             Assert.AreEqual("EventId", eventMasterViewModel.Id);
             Assert.AreEqual("StatusId", eventMasterViewModel.StatusId);
             Assert.AreEqual("CustomerId", eventMasterViewModel.CustomerId);
+
+            mockEventModelOperations.Verify(x => x.GetAllEvents(), Times.AtLeastOnce);
 
             mockEventModelOperations.Verify(x => x.AddEvent(
                 eventMasterViewModel.Id,
@@ -112,9 +114,7 @@ namespace PresentationTests
                 eventMasterViewModel.ReasonOrDescription
             ), Times.Once);
 
-            mockEventModelOperations.Verify(x => x.GetAllEvents(), Times.AtLeastOnce);
-
-            mockEventModelOperations.Verify(x => x.AddEvent(eventMasterViewModel.Id, eventMasterViewModel.StatusId, eventMasterViewModel.CustomerId, It.IsAny<DateTime>(), eventMasterViewModel.Type, eventMasterViewModel.ReasonOrDescription), Times.Once);
+            //mockEventModelOperations.Verify(x => x.AddEvent(eventMasterViewModel.Id, eventMasterViewModel.StatusId, eventMasterViewModel.CustomerId, It.IsAny<DateTime>(), eventMasterViewModel.Type, eventMasterViewModel.ReasonOrDescription), Times.Once);
         }
 
         [TestMethod]
@@ -130,7 +130,7 @@ namespace PresentationTests
             statusMasterViewModel.BookId = "BookId";
             statusMasterViewModel.Available = true;
 
-            statusMasterViewModel.CreateStatus.Execute(null);
+            statusMasterViewModel.CreateStatus.Execute("test");
 
             // Assert
             Assert.AreEqual("Id", statusMasterViewModel.Id);

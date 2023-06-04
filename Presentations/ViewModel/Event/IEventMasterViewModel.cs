@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 using Presentations.Model.API;
-using Presentations.ViewModel.Event;
 
 namespace Presentations.ViewModel
 {

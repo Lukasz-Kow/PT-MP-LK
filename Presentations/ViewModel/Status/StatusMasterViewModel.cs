@@ -26,9 +26,9 @@ internal class StatusMasterViewModel : ViewModelBase, IStatusMasterViewModel
 
     private readonly IErrorPopup _informer;
 
-    private ObservableCollection<StatusDetailViewModel> _Statuses;
+    private ObservableCollection<IStatusDetailViewModel> _Statuses;
 
-    public ObservableCollection<StatusDetailViewModel> Statuses
+    public ObservableCollection<IStatusDetailViewModel> Statuses
     {
         get => _Statuses;
         set
@@ -100,9 +100,9 @@ internal class StatusMasterViewModel : ViewModelBase, IStatusMasterViewModel
         }
     }
 
-    private StatusDetailViewModel _selectedDetailViewModel;
+    private IStatusDetailViewModel _selectedDetailViewModel;
 
-    public StatusDetailViewModel SelectedDetailViewModel
+    public IStatusDetailViewModel SelectedDetailViewModel
     {
         get => _selectedDetailViewModel;
         set
@@ -123,11 +123,11 @@ internal class StatusMasterViewModel : ViewModelBase, IStatusMasterViewModel
         this.CreateStatus = new OnClickCommand(e => this.StoreStatus(), c => this.CanStoreStatus());
         this.RemoveStatus = new OnClickCommand(e => this.DeleteStatus());
 
-        this.Statuses = new ObservableCollection<StatusDetailViewModel>();
+        this.Statuses = new ObservableCollection<IStatusDetailViewModel>();
 
-        this._modelOperation = IStatusModelOperations.CreateModelOperation();
+        this._modelOperation = model ?? IStatusModelOperations.CreateModelOperation();
 
-        if (this._informer != null)
+        if (showPopups == true)
             this._informer = informer ?? new ErrorPopupHandler();
 
         this.IsStatuseselected = false;
@@ -182,9 +182,9 @@ internal class StatusMasterViewModel : ViewModelBase, IStatusMasterViewModel
         
     }
 
-    private async void LoadStatuses()
+    private void LoadStatuses()
     {
-        List<IStatusModel> Statuses = (List<IStatusModel>)this._modelOperation.GetAllStatuses();
+        IEnumerable<IStatusModel> Statuses = this._modelOperation.GetAllStatuses();
 
         
         this._Statuses.Clear();

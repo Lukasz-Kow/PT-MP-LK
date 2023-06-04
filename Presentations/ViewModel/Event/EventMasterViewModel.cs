@@ -26,9 +26,9 @@ internal class EventMasterViewModel : ViewModelBase, IEventMasterViewModel
 
     private readonly IErrorPopup _informer;
 
-    private ObservableCollection<EventDetailViewModel> _events;
+    private ObservableCollection<IEventDetailViewModel> _events;
 
-    public ObservableCollection<EventDetailViewModel> Events
+    public ObservableCollection<IEventDetailViewModel> Events
     {
         get => _events;
         set
@@ -124,9 +124,9 @@ internal class EventMasterViewModel : ViewModelBase, IEventMasterViewModel
         }
     }
 
-    private EventDetailViewModel _selectedDetailViewModel;
+    private IEventDetailViewModel _selectedDetailViewModel;
 
-    public EventDetailViewModel SelectedDetailViewModel
+    public IEventDetailViewModel SelectedDetailViewModel
     {
         get => _selectedDetailViewModel;
         set
@@ -147,11 +147,11 @@ internal class EventMasterViewModel : ViewModelBase, IEventMasterViewModel
         this.AddEvent = new OnClickCommand(e => this.StoreEvent(), c => this.CanEvent());
         this.RemoveEvent = new OnClickCommand(e => this.DeleteEvent());
 
-        this.Events = new ObservableCollection<EventDetailViewModel>();
+        this.Events = new ObservableCollection<IEventDetailViewModel>();
 
-        this._modelOperation = IEventModelOperations.CreateModelOperation();
+        this._modelOperation = model ?? IEventModelOperations.CreateModelOperation();
 
-        if (this._informer != null)
+        if (showPopups == true)
             this._informer = informer ?? new ErrorPopupHandler();
 
         this.IsEventSelected = false;
@@ -200,9 +200,9 @@ internal class EventMasterViewModel : ViewModelBase, IEventMasterViewModel
        
     }
 
-    private async void LoadEvents()
+    private void LoadEvents()
     {
-        List<IEventModel> Events = (List<IEventModel>)this._modelOperation.GetAllEvents();
+        IEnumerable<IEventModel> Events = this._modelOperation.GetAllEvents();
 
         this._events.Clear();
 

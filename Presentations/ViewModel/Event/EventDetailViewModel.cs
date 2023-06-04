@@ -4,7 +4,6 @@ using Presentations.Model.API;
 using Presentations.ViewModel;
 using Presentations.ViewModel.Commands;
 using Presentations;
-using Presentations.ViewModel.Event;
 
 namespace Presentations.ViewModel;
 

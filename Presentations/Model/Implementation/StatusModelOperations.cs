@@ -25,7 +25,7 @@ namespace Presentations.Model.Implementation
             services.DeleteStatus(statusId);
         }
 
-        public IEnumerable<StatusModel> GetAllStatuses()
+        public IEnumerable<IStatusModel> GetAllStatuses()
         {
             var statuses = services.GetAllStatuses();
             var statusModels = new List<StatusModel>();
