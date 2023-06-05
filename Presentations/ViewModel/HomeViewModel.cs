@@ -13,7 +13,7 @@ namespace Presentations.ViewModel
 
         public HomeViewModel()
         {
-            this.StartAppCommand = new SwitchViewCommand("UserMasterView");
+            this.StartAppCommand = new SwitchViewCommand("BookMasterView");
 
             this.ExitAppCommand = new CloseAppCommand();
         }
