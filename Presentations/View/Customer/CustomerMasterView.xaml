@@ -22,13 +22,13 @@
             <RowDefinition Height="171*"/>
             <RowDefinition Height="79*"/>
         </Grid.RowDefinitions>
-        <Button Content="Statuses" Margin="636,0,74,0" VerticalAlignment="Top" Height="50"
+        <Button Content="Statuses" Margin="636,40,74,0" VerticalAlignment="Top" Height="30"
                 Command="{Binding SwitchToStatusMasterPage}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-        <Button Content="Events" Margin="446,0,264,0" VerticalAlignment="Top" Height="50"
+        <Button Content="Events" Margin="446,40,264,0" VerticalAlignment="Top" Height="30"
                 Command="{Binding SwitchToEventMasterPage}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-        <Button Content="Books" HorizontalAlignment="Left" Margin="264,0,0,0" VerticalAlignment="Top" Width="90" Height="50"
+        <Button Content="Books" HorizontalAlignment="Left" Margin="264,40,0,0" VerticalAlignment="Top" Width="90" Height="30"
             Command="{Binding SwitchToBookMasterPage}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-        <Button Content="Customers" HorizontalAlignment="Left" Margin="74,0,0,0" VerticalAlignment="Top" Width="90" Height="50"/>
+        <Button Content="Customers" HorizontalAlignment="Left" Margin="74,40,0,0" VerticalAlignment="Top" Width="90" Height="30"/>
         <ListView Margin="10,127,450,40" 
                     ItemsSource="{Binding Customers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     SelectedItem="{Binding SelectedDetailViewModel}" d:ItemsSource="{d:SampleData ItemCount=5}" Grid.RowSpan="2"
@@ -43,17 +43,17 @@
         </ListView>
 
         <view:CustomerDetailView
-                        Margin="355,92,217,48"
-                        DataContext="{Binding SelectedDetailViewModel}" Height="340" Width="220" Grid.RowSpan="2"
+                        Margin="359,102,221,41"
+                        DataContext="{Binding SelectedDetailViewModel}" Width="220" Grid.RowSpan="2" Loaded="CustomerDetailView_Loaded"
                         />
-        <Button Content="Delete" Background="Azure" HorizontalAlignment="Left" Margin="420,58,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
+        <Button Content="Delete" HorizontalAlignment="Left" Margin="424,122,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
             Command="{Binding RemoveCustomer}" Grid.Row="1"/>
-        <Button Content="Add" Background="Azure" HorizontalAlignment="Left" Margin="641,252,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="91"
+        <Button Content="Add" HorizontalAlignment="Left" Margin="641,252,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="91"
             Command="{Binding CreateCustomer}"/>
         <StackPanel Margin="594,142,0,0"
             VerticalAlignment="Top"
             Background="White" Height="92" HorizontalAlignment="Left" Width="186">
-            <Label Content="First name:" FontSize="10" Width="57"/>
+            <Label Content="First name:" FontSize="10" Width="75" FontFamily="Arial Black"/>
             <TextBox Height="20" Width="120"
                 Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                 TextWrapping="Wrap"
@@ -68,7 +68,7 @@
                 </Validation.ErrorTemplate>
             </TextBox>
 
-            <Label Content="Last name:" FontSize="10" Width="57"/>
+            <Label Content="Last name:" FontSize="10" Width="75" FontFamily="Arial Black"/>
             <TextBox Height="20" Width="120"
                 Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                 TextWrapping="Wrap"

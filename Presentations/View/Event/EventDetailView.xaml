@@ -26,7 +26,7 @@
             <StackPanel
                         VerticalAlignment="Top"
                         Background="White" Height="320">
-                <Label Content="Event id:" HorizontalAlignment="Center"/>
+                <Label Content="Event id:" HorizontalAlignment="Center" FontFamily="Arial Black"/>
                 <TextBox Height="20" Width="120"
                          Text="{Binding Id, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                          TextWrapping="Wrap"
@@ -41,7 +41,7 @@
                     </Validation.ErrorTemplate>
                 </TextBox>
 
-                <Label Content="State id:" HorizontalAlignment="Center"/>
+                <Label Content="State id:" HorizontalAlignment="Center" FontFamily="Arial Black"/>
                 <TextBox Height="20" Width="120"
                          Text="{Binding StateId, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                          TextWrapping="Wrap"
@@ -56,7 +56,7 @@
                     </Validation.ErrorTemplate>
                 </TextBox>
 
-                <Label Content="User id:" HorizontalAlignment="Center"/>
+                <Label Content="User id:" HorizontalAlignment="Center" FontFamily="Arial Black"/>
                 <TextBox Height="20" Width="120"
                          Text="{Binding UserId, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                          TextWrapping="Wrap"
@@ -70,7 +70,7 @@
                         </ControlTemplate>
                     </Validation.ErrorTemplate>
                 </TextBox>
-                <Label Content="Event date:" Width="70"/>
+                <Label Content="Event date:" Width="85" FontFamily="Arial Black"/>
                 <TextBox Height="20" Width="120"
                     Text="{Binding EventDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:MM/dd/yyyy}}"
                     TextWrapping="Wrap"
@@ -84,7 +84,7 @@
                         </ControlTemplate>
                     </Validation.ErrorTemplate>
                 </TextBox>
-                <Label Content="Type:" Width="39"/>
+                <Label Content="Type:" Width="45" FontFamily="Arial Black"/>
                 <TextBox Height="20" Width="120"
                     Text="{Binding Type, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                     TextWrapping="Wrap"
@@ -98,7 +98,7 @@
                         </ControlTemplate>
                     </Validation.ErrorTemplate>
                 </TextBox>
-                <Label Content="Reason or Description:" Width="120"/>
+                <Label Content="Reason or Description:" Width="150" FontFamily="Arial Black" FontSize="11"/>
                 <TextBox Height="20" Width="120"
                     Text="{Binding Type, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                     TextWrapping="Wrap"
@@ -118,7 +118,7 @@
 
             </StackPanel>
         </GroupBox>
-        <Button Content="Update" Background="Azure" HorizontalAlignment="Center" Margin="0,320,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
+        <Button Content="Update" HorizontalAlignment="Center" Margin="0,320,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
             Command="{Binding UpdateEvent}"/>
     </Grid>
 </UserControl>

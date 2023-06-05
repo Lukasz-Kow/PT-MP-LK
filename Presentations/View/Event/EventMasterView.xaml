@@ -23,15 +23,15 @@
 
             <Grid Background="White" Margin="0,0,0,0">
                 <local:EventDetailView
-                    Margin="355,92,217,48"
-                    DataContext="{Binding SelectedDetailViewModel}" Height="340" Width="220"
+                    Margin="359,117,221,52"
+                    DataContext="{Binding SelectedDetailViewModel}" Width="220"
                         />
-                <Button Content="States" Margin="636,0,74,0" VerticalAlignment="Top" Height="50"
+                <Button Content="States" Margin="636,40,74,0" VerticalAlignment="Top" Height="30"
                     Command="{Binding SwitchToStatusMasterPage}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-                <Button Content="Events" Margin="446,0,264,0" VerticalAlignment="Top" Height="50"/>
-                <Button Content="Products" HorizontalAlignment="Left" Margin="264,0,0,0" VerticalAlignment="Top" Width="90" Height="50"
+                <Button Content="Events" Margin="446,40,264,0" VerticalAlignment="Top" Height="30"/>
+                <Button Content="Products" HorizontalAlignment="Left" Margin="264,40,0,0" VerticalAlignment="Top" Width="90" Height="30"
                     Command="{Binding SwitchToBookMasterPage}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-                <Button Content="Users" HorizontalAlignment="Left" Margin="74,0,0,0" VerticalAlignment="Top" Width="90" Height="50"
+                <Button Content="Users" HorizontalAlignment="Left" Margin="74,40,0,0" VerticalAlignment="Top" Width="90" Height="30"
                     Command="{Binding SwitchToCustomerMasterPage}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
                 <ListView Margin="10,127,450,40" 
                     ItemsSource="{Binding Events, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -47,17 +47,17 @@
                     </ListView.View>
                 </ListView>
 
-                <Button Content="Delete" Background="Azure" HorizontalAlignment="Left" Margin="420,397,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
+                <Button Content="Delete" HorizontalAlignment="Left" Margin="424,494,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
                 Command="{Binding RemoveEvent}"/>
 
-                <Button Content="Add" Background="Azure" HorizontalAlignment="Left" Margin="642,255,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
+                <Button Content="Add" HorizontalAlignment="Left" Margin="642,255,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
                     Command="{Binding PlacedEvent}"/>
-                <Button Content="Buy" Background="Azure" HorizontalAlignment="Left" Margin="642,300,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
+                <Button Content="Buy" HorizontalAlignment="Left" Margin="642,300,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
                     Command="{Binding PayedEvent}"/>
                 <StackPanel Margin="594,142,0,0"
                     VerticalAlignment="Top"
                     Background="White" Height="92" HorizontalAlignment="Left" Width="186">
-                    <Label Content="Status ID:" FontSize="10" Width="47"/>
+                    <Label Content="Status ID:" FontSize="10" Width="65" FontFamily="Arial Black"/>
                     <TextBox Height="20" Width="120"
                         Text="{Binding StatusId, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                         TextWrapping="Wrap"
@@ -72,7 +72,7 @@
                         </Validation.ErrorTemplate>
                     </TextBox>
 
-                    <Label Content="Customer ID:" FontSize="10" Width="45"/>
+                    <Label Content="Customer ID:" FontSize="10" Width="90" FontFamily="Arial Black"/>
                     <TextBox Height="20" Width="120"
                         Text="{Binding CustomerId, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                         TextWrapping="Wrap"

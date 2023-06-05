@@ -21,11 +21,11 @@
 
         <GroupBox Width="220"
                     HorizontalAlignment="Center"
-                    Header="Status details:" Margin="0,16,0,76">
+                    Header="Status details:" Margin="0,16,0,130">
             <StackPanel
                         VerticalAlignment="Top"
-                        Background="White" Height="233">
-                <Label Content="ID:" HorizontalAlignment="Center"/>
+                        Background="White" Height="174">
+                <Label Content="ID:" HorizontalAlignment="Center" FontFamily="Arial Black"/>
                 <TextBox Height="20" Width="120"
                             Text="{Binding Id, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                             TextWrapping="Wrap"
@@ -40,7 +40,7 @@
                     </Validation.ErrorTemplate>
                 </TextBox>
 
-                <Label Content="Book id:" HorizontalAlignment="Center"/>
+                <Label Content="Book id:" HorizontalAlignment="Center" FontFamily="Arial Black"/>
                 <TextBox Height="20" Width="120"
                             Text="{Binding BookId, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                             TextWrapping="Wrap"
@@ -55,7 +55,7 @@
                     </Validation.ErrorTemplate>
                 </TextBox>
 
-                <Label Content="Available:" HorizontalAlignment="Center"/>
+                <Label Content="Available:" HorizontalAlignment="Center" FontFamily="Arial Black"/>
                 <TextBox Height="20" Width="120"
                             Text="{Binding Available, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                             TextWrapping="Wrap"
@@ -73,7 +73,7 @@
 
             </StackPanel>
         </GroupBox>
-        <Button Content="Update" Background="Azure" HorizontalAlignment="Center" Margin="0,269,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
-                    Command="{Binding UpdateStatus}"/>
+        <Button Content="Update" RenderTransformOrigin="0.227,0.242"
+                    Command="{Binding UpdateStatus}" Margin="65,229,65,85"/>
     </Grid>
 </UserControl>

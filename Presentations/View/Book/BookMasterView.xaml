@@ -22,16 +22,16 @@
             </UserControl.DataContext>
 
             <Grid Background="White" Margin="0,0,0,0">
-                <Button Content="Statuses" Margin="636,0,74,0" VerticalAlignment="Top" Height="50"
+                <Button Content="Statuses" Margin="636,40,74,0" VerticalAlignment="Top" Height="30"
                     Command="{Binding SwitchToStatusMasterPage}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-                <Button Content="Events" Margin="446,0,264,0" VerticalAlignment="Top" Height="50"
+                <Button Content="Events" Margin="446,40,264,0" VerticalAlignment="Top" Height="30"
                     Command="{Binding SwitchToEventMasterPage}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-                <Button Content="Books" HorizontalAlignment="Left" Margin="264,0,0,0" VerticalAlignment="Top" Width="90" Height="50" />
-                <Button Content="Customers" HorizontalAlignment="Left" Margin="74,0,0,0" VerticalAlignment="Top" Width="90" Height="50"
+                <Button Content="Books" HorizontalAlignment="Left" Margin="264,40,0,0" VerticalAlignment="Top" Width="90" Height="30" />
+                <Button Content="Customers" HorizontalAlignment="Left" Margin="74,40,0,0" VerticalAlignment="Top" Width="90" Height="30"
                     Command="{Binding SwitchToCustomerMasterPage}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
                 <ListView Margin="10,127,450,40" 
                     ItemsSource="{Binding Books, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    SelectedItem="{Binding SelectedDetailViewModel}" Height="340"
+                    SelectedItem="{Binding SelectedDetailViewModel}" Height="340" SelectionChanged="ListView_SelectionChanged"
                     >
                     <ListView.View>
                         <GridView>
@@ -43,17 +43,17 @@
                     </ListView.View>
                 </ListView>
                 <local:BookDetailView
-                    Margin="355,92,217,48"
-                    DataContext="{Binding SelectedDetailViewModel}" Height="340" Width="220"
+                    Margin="359,117,221,31"
+                    DataContext="{Binding SelectedDetailViewModel}" Width="220"
                         />
-                <Button Content="Delete" Background="Azure" HorizontalAlignment="Left" Margin="420,397,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
+                <Button Content="Delete" HorizontalAlignment="Left" Margin="424,504,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
                     Command="{Binding DeleteBook}"/>
-                <Button Content="Add" Background="Azure" HorizontalAlignment="Left" Margin="642,300,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
+                <Button Content="Add" HorizontalAlignment="Left" Margin="642,300,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
                     Command="{Binding AddBook}"/>
                 <StackPanel Margin="594,142,0,0"
                     VerticalAlignment="Top"
                     Background="White" Height="145" HorizontalAlignment="Left" Width="186">
-                    <Label Content="Book Title:" FontSize="10" Width="76"/>
+                    <Label Content="Book Title:" FontSize="10" Width="76" FontFamily="Arial Black"/>
                     <TextBox Height="20" Width="120"
                         Text="{Binding Title, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                         TextWrapping="Wrap"
@@ -68,7 +68,7 @@
                         </Validation.ErrorTemplate>
                     </TextBox>
 
-                    <Label Content="Book Author:" FontSize="10" Width="65"/>
+                    <Label Content="Book Author:" FontSize="10" Width="80" FontFamily="Arial Black"/>
                     <TextBox Height="20" Width="120"
                         Text="{Binding Author, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                         TextWrapping="Wrap"
@@ -82,7 +82,7 @@
                             </ControlTemplate>
                         </Validation.ErrorTemplate>
                     </TextBox>
-                    <Label Content="Pages:" FontSize="10" Width="65"/>
+                    <Label Content="Pages:" FontSize="10" Width="65" FontFamily="Arial Black"/>
                     <TextBox Height="20" Width="120"
                         Text="{Binding Pages, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                         TextWrapping="Wrap"

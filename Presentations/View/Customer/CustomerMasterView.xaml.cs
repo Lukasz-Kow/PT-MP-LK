@@ -23,5 +23,6 @@ namespace Presentations.View
         {
             InitializeComponent();
         }
+
     }
 }
