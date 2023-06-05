@@ -5,8 +5,7 @@ using System.Windows;
 using System.Windows.Input;
 using Presentations.Model.API;
 using Presentations.ViewModel.Commands;
-using Presentations.ViewModel;
-using Presentations;
+
 
 namespace Presentations.ViewModel;
 

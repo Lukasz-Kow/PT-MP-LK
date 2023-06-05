@@ -1,8 +1,6 @@
 ﻿using System.Windows.Input;
 using Presentations.Model.API;
-using Presentations.ViewModel;
 using Presentations.ViewModel.Commands;
-using Presentations;
 
 namespace Presentations.ViewModel;
 

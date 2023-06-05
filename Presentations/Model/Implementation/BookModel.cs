@@ -1,7 +1,5 @@
 ﻿using Presentations.Model.API;
-using Services.API;
-using System.Collections.Generic;
-using System.Windows.Documents;
+
 
 namespace Presentations.Model.Implementation
 {

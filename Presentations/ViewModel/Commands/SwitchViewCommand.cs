@@ -2,7 +2,6 @@
 using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Input;
-using Presentations.ViewModel;
 
 namespace Presentations.ViewModel.Commands;
 

@@ -270,37 +270,37 @@ namespace Services.Implementation
 
         public void UpdateBook(string Title, string Author, string Id, int Pages, string ISBN, string Publisher, string Language)
         {
-            throw new NotImplementedException();
+            repository.UpdateBook(Id, Title, Author, Pages, ISBN, Publisher, Language);
         }
 
         public void UpdateCustomer(string FirstName, string LastName, string Id, int Age, string Address, string City)
         {
-            throw new NotImplementedException();
+            repository.UpdateCustomer(Id, FirstName, LastName, Age, Address, City);
         }
 
         public void UpdateStatus(string StatusId, string bookId, bool availability)
         {
-            throw new NotImplementedException();
+            repository.UpdateStatus(StatusId, bookId, availability);
         }
 
         public void UpdateBuy(string Id, string statusId, string customerId, DateTime Time)
         {
-            throw new NotImplementedException();
+            repository.UpdateEvent(Id, customerId, statusId, Time, "Buy");
         }
 
         public void UpdateComplaint(string Id, string statusId, string customerId, DateTime Time, string Reason)
         {
-            throw new NotImplementedException();
+            repository.UpdateEvent(Id, customerId, statusId, Time, "Complaint", Reason);
         }
 
         public void UpdateReview(string Id, string statusId, string customerId, DateTime Time, string description)
         {
-            throw new NotImplementedException();
+            repository.UpdateEvent(Id, customerId, statusId, Time, "Review", description);
         }
 
         public void UpdateReturn(string Id, string statusId, string customerId, DateTime Time)
         {
-            throw new NotImplementedException();
+            repository.UpdateEvent(Id, customerId, statusId, Time, "Return");
         }
 
       

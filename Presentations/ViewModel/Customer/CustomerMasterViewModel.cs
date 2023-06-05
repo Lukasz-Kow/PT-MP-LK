@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Presentations.Model.API;
@@ -170,7 +169,7 @@ internal class CustomerMasterViewModel : ViewModelBase, ICustomerMasterViewModel
 
         this.IsCustomerSelected = false;
 
-        Task.Run(this.LoadCustomers);
+        this.LoadCustomers();
     }
 
     private bool CanStoreCustomer()

@@ -1,6 +1,5 @@
 ﻿
 using Presentations.Model.API;
-using Services.API;
 
 namespace Presentations.Model.Implementation
 {

@@ -1,7 +1,5 @@
 ﻿using Presentations.Model.API;
-using Presentations.ViewModel;
 using Presentations.ViewModel.Commands;
-using Presentations;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
