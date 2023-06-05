@@ -1,9 +1,7 @@
 using Moq;
 using Presentations.Model.API;
-using Presentations.View;
 using Presentations.ViewModel;
-using static System.Net.Mime.MediaTypeNames;
-using System.Windows.Controls;
+using PresentationTests.Generators;
 
 namespace PresentationTests
 {
@@ -139,6 +137,164 @@ namespace PresentationTests
 
             mockModelOperations.Verify(x => x.GetAllStatuses(), Times.AtLeastOnce);
             mockModelOperations.Verify(x => x.AddStatus(statusMasterViewModel.Id, statusMasterViewModel.BookId, statusMasterViewModel.Available), Times.Once);
+        }
+
+        [TestMethod]
+        public void BookModelOperationsRandomData()
+        {
+            // Arrange
+            var mockBookModelOperations = new Mock<IBookModelOperations>();
+
+            IBookMasterViewModel bookMasterViewModel = IBookMasterViewModel.Create(mockBookModelOperations.Object, false);
+
+            RandomDataGenerator bookGenerator = new RandomDataGenerator();
+
+            // Act
+
+            string author = bookGenerator.GenerateRandomString(10);
+            string title = bookGenerator.GenerateRandomString(20);
+            string id = bookGenerator.GenerateRandomString(2);
+            int pages = bookGenerator.GenerateRandomInt(1, 500);
+            string isbn = bookGenerator.GenerateRandomString(10);
+            string publisher = bookGenerator.GenerateRandomString(10);
+            string language = bookGenerator.GenerateRandomString(10);
+
+            bookMasterViewModel.Author = author;
+            bookMasterViewModel.Title = title;
+            bookMasterViewModel.Id = id;
+            bookMasterViewModel.Pages = pages;
+            bookMasterViewModel.ISBN = isbn;
+            bookMasterViewModel.Publisher = publisher;
+            bookMasterViewModel.Language = language;
+
+            bookMasterViewModel.AddBook.Execute(bookMasterViewModel.Author);
+
+            // Assert
+
+            Assert.AreEqual(author, bookMasterViewModel.Author);
+            Assert.AreEqual(title, bookMasterViewModel.Title);
+            Assert.AreEqual(id, bookMasterViewModel.Id);
+
+            mockBookModelOperations.Verify(x => x.GetAllBooks(), Times.AtLeastOnce);
+
+            mockBookModelOperations.Verify(x => x.AddBook(bookMasterViewModel.Title, bookMasterViewModel.Author,
+                bookMasterViewModel.Id, bookMasterViewModel.Pages, bookMasterViewModel.ISBN, bookMasterViewModel.Publisher,
+                bookMasterViewModel.Language), Times.Once);
+        }
+
+        [TestMethod]
+        public void CustomerModelOperationsRandomData()
+        {
+            // Arrange
+            var mockCustomerModelOperations = new Mock<ICustomerModelOperations>();
+
+            ICustomerMasterViewModel customerMasterViewModel = ICustomerMasterViewModel.Create(mockCustomerModelOperations.Object, false);
+
+            RandomDataGenerator customerGenerator = new RandomDataGenerator();
+
+            // Act
+
+            string firstName = customerGenerator.GenerateRandomString(10);
+            string lastName = customerGenerator.GenerateRandomString(10);
+            string id = customerGenerator.GenerateRandomString(2);
+            int age = customerGenerator.GenerateRandomInt(1, 100);
+            string address = customerGenerator.GenerateRandomString(10);
+            string city = customerGenerator.GenerateRandomString(10);
+
+            customerMasterViewModel.FirstName = firstName;
+            customerMasterViewModel.LastName = lastName;
+            customerMasterViewModel.Id = id;
+            customerMasterViewModel.Age = age;
+            customerMasterViewModel.Address = address;
+            customerMasterViewModel.City = city;
+
+            customerMasterViewModel.CreateCustomer.Execute(customerMasterViewModel.FirstName);
+
+            // Assert
+
+            Assert.AreEqual(firstName, customerMasterViewModel.FirstName);
+            Assert.AreEqual(lastName, customerMasterViewModel.LastName);
+            Assert.AreEqual(id, customerMasterViewModel.Id);
+
+            mockCustomerModelOperations.Verify(x => x.GetAllCustomers(), Times.AtLeastOnce);
+
+            mockCustomerModelOperations.Verify(x => x.AddCustomer(customerMasterViewModel.FirstName, customerMasterViewModel.LastName,
+                               customerMasterViewModel.Id, customerMasterViewModel.Age, customerMasterViewModel.Address, customerMasterViewModel.City), Times.Once);
+        }
+
+        [TestMethod]
+        public void EventModelOperationsRandomData()
+        {
+            // Arrange
+            var mockEventModelOperations = new Mock<IEventModelOperations>();
+
+            IEventMasterViewModel eventMasterViewModel = IEventMasterViewModel.Create(mockEventModelOperations.Object, false);
+
+            // Act
+
+            RandomDataGenerator eventGenerator = new RandomDataGenerator();
+
+            string id = eventGenerator.GenerateRandomString(2);
+            string statusId = eventGenerator.GenerateRandomString(2);
+            string customerId = eventGenerator.GenerateRandomString(2);
+            string type = eventGenerator.GenerateRandomString(10);
+            string reasonOrDescription = eventGenerator.GenerateRandomString(10);
+            
+            eventMasterViewModel.Id = id;
+            eventMasterViewModel.StatusId = statusId;
+            eventMasterViewModel.CustomerId = customerId;
+            eventMasterViewModel.Type = type;
+            eventMasterViewModel.ReasonOrDescription = reasonOrDescription;
+
+            eventMasterViewModel.AddEvent.Execute(eventMasterViewModel.Id);
+
+            // Assert
+
+            Assert.AreEqual(id, eventMasterViewModel.Id);
+            Assert.AreEqual(statusId, eventMasterViewModel.StatusId);
+            Assert.AreEqual(customerId, eventMasterViewModel.CustomerId);
+            Assert.AreEqual(type, eventMasterViewModel.Type);
+            Assert.AreEqual(reasonOrDescription, eventMasterViewModel.ReasonOrDescription);
+
+            mockEventModelOperations.Verify(x => x.GetAllEvents(), Times.AtLeastOnce);
+
+            mockEventModelOperations.Verify(x => x.AddEvent(eventMasterViewModel.Id, eventMasterViewModel.StatusId, eventMasterViewModel.CustomerId,
+                It.IsAny<DateTime>(), eventMasterViewModel.Type, eventMasterViewModel.ReasonOrDescription), Times.Once);
+
+        }
+
+        [TestMethod]
+        public void StatusModelOperationsRandomData()
+        {
+            // Arrange
+            var mockModelOperations = new Mock<IStatusModelOperations>();
+
+            IStatusMasterViewModel statusMasterViewModel = IStatusMasterViewModel.Create(mockModelOperations.Object, false);
+
+            RandomDataGenerator randomDataGenerator = new RandomDataGenerator();
+            // Act
+
+            string id = randomDataGenerator.GenerateRandomString(2);
+            string bookId = randomDataGenerator.GenerateRandomString(2);
+            bool available = randomDataGenerator.GenerateRandomBool();
+
+            statusMasterViewModel.Id = id;
+            statusMasterViewModel.BookId = bookId;
+            statusMasterViewModel.Available = available;
+
+            statusMasterViewModel.CreateStatus.Execute(statusMasterViewModel.Id);
+
+            // Assert
+
+            Assert.AreEqual(id, statusMasterViewModel.Id);
+            Assert.AreEqual(bookId, statusMasterViewModel.BookId);
+            Assert.AreEqual(available, statusMasterViewModel.Available);
+
+            mockModelOperations.Verify(x => x.GetAllStatuses(), Times.AtLeastOnce);
+
+            mockModelOperations.Verify(x => x.AddStatus(statusMasterViewModel.Id, statusMasterViewModel.BookId,
+                statusMasterViewModel.Available), Times.Once);
+
         }
     }
 }
