@@ -31,8 +31,7 @@
                     Command="{Binding SwitchToCustomerMasterPage}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
                 <ListView Margin="10,127,450,40" 
                     ItemsSource="{Binding Books, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    SelectedItem="{Binding SelectedDetailViewModel}" Height="340" SelectionChanged="ListView_SelectionChanged"
-                    >
+                    SelectedItem="{Binding SelectedDetailViewModel}" Height="340">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Id" Width="110" DisplayMemberBinding="{Binding Id}"/>
