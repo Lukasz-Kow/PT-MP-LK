@@ -51,9 +51,9 @@
                 Command="{Binding RemoveEvent}"/>
 
                 <Button Content="Add" Background="Azure" HorizontalAlignment="Left" Margin="642,255,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
-                    Command="{Binding PlacedEvent}" Click="Button_Click"/>
+                    Command="{Binding PlacedEvent}"/>
                 <Button Content="Buy" Background="Azure" HorizontalAlignment="Left" Margin="642,300,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
-                    Command="{Binding PayedEvent}" Click="Button_Click"/>
+                    Command="{Binding PayedEvent}"/>
                 <StackPanel Margin="594,142,0,0"
                     VerticalAlignment="Top"
                     Background="White" Height="92" HorizontalAlignment="Left" Width="186">

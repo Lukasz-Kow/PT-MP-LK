@@ -31,7 +31,7 @@
         <Button Content="Customers" HorizontalAlignment="Left" Margin="74,0,0,0" VerticalAlignment="Top" Width="90" Height="50"/>
         <ListView Margin="10,127,450,40" 
                     ItemsSource="{Binding Customers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    SelectedItem="{Binding SelectedDetailViewModel}" SelectionChanged="ListView_SelectionChanged" d:ItemsSource="{d:SampleData ItemCount=5}" Grid.RowSpan="2"
+                    SelectedItem="{Binding SelectedDetailViewModel}" d:ItemsSource="{d:SampleData ItemCount=5}" Grid.RowSpan="2"
                     >
             <ListView.View>
                 <GridView>
@@ -47,9 +47,9 @@
                         DataContext="{Binding SelectedDetailViewModel}" Height="340" Width="220" Grid.RowSpan="2"
                         />
         <Button Content="Delete" Background="Azure" HorizontalAlignment="Left" Margin="420,58,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
-            Command="{Binding RemoveCustomer}" Click="Button_Click" Grid.Row="1"/>
+            Command="{Binding RemoveCustomer}" Grid.Row="1"/>
         <Button Content="Add" Background="Azure" HorizontalAlignment="Left" Margin="641,252,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="91"
-            Command="{Binding CreateCustomer}" Click="Button_Click"/>
+            Command="{Binding CreateCustomer}"/>
         <StackPanel Margin="594,142,0,0"
             VerticalAlignment="Top"
             Background="White" Height="92" HorizontalAlignment="Left" Width="186">
